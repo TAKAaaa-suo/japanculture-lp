@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How it works — JapanCulture</title>
+  <meta name="description" content="Request → Quote → Pay → We buy & store → We ship. Proxy shopping for Singapore, US & Australia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/config.js"></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="6" fill="currentColor"/>
+                        <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                    </svg>
+                    <span>JapanCulture</span>
+                </a>
+
+                <nav class="nav" id="nav">
+                    <a href="index.html#how-it-works">How it works</a>
+                    <a href="index.html#pricing">Fees</a>
+                    <a href="category/news.html">News</a>
+                    <a href="category/store-items.html">Store Items</a>
+                    <a href="category/bonus-items.html">Bonus</a>
+                    <a href="category/weekly-pickups.html">Pickups</a>
+                </nav>
+
+                <button class="btn btn-primary" onclick="openRequestForm()">Request</button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+  <main>
+    <div class="container">
+      <header class="page-header">
+        <h1>How it works</h1>
+        <p>From request to delivery: check schedule → send request → get quote → pay → we buy & store → we ship & you track.</p>
+      </header>
+
+      <div class="steps">
+        <div class="step">
+          <span class="step__title">1. Check schedule</span>
+          <p class="step__text">On the homepage you’ll see the next store visit date, order deadline (Thursday), and which stores we’re visiting. Place your request before the deadline.</p>
+        </div>
+        <div class="step">
+          <span class="step__title">2. Send request</span>
+          <p class="step__text">Use the request form to send: product name, reference photo (optional), preferred store or “any”, and budget if you like. From an article you can pre-fill the item.</p>
+        </div>
+        <div class="step">
+          <span class="step__title">3. Get quote</span>
+          <p class="step__text">We’ll email you a quote within 24 hours with: request fee, item fee, shipping, packaging, and total (all in USD). Quote is valid for 24 hours.</p>
+        </div>
+        <div class="step">
+          <span class="step__title">4. Pay</span>
+          <p class="step__text">Pay via the link we send. We do not buy until payment is complete. No surprises—shipping is confirmed in the quote before you pay.</p>
+        </div>
+        <div class="step">
+          <span class="step__title">5. We buy & store</span>
+          <p class="step__text">On the scheduled Friday we visit the store(s) and buy your items. We check, photograph if needed, and store for up to 30 days so we can combine shipments.</p>
+        </div>
+        <div class="step">
+          <span class="step__title">6. We ship & you track</span>
+          <p class="step__text">We ship twice per month. You’ll get a tracking number by email. We ship to Singapore, United States, and Australia. Customs and duties are your responsibility.</p>
+        </div>
+      </div>
+
+      <h2 style="margin-top: var(--space-2xl);">Flow FAQ</h2>
+      <div class="accordion" style="max-width: 640px;">
+        <div class="accordion__item">
+          <button type="button" class="accordion__head">When will I get my quote?</button>
+          <div class="accordion__body"><div class="accordion__body-inner">We aim to send your quote within 24 hours. You'll get an email with the total (item + fee + shipping) valid for 24 hours.</div></div>
+        </div>
+        <div class="accordion__item">
+          <button type="button" class="accordion__head">What happens after I pay?</button>
+          <div class="accordion__body"><div class="accordion__body-inner">We buy your items on the next Friday store run, then inspect and store them. We ship twice per month and send you the tracking number.</div></div>
+        </div>
+      </div>
+
+      <p class="muted" style="margin-top: var(--space-xl);">For shipping rates and packaging, see <a href="shipping.html">Shipping & packaging</a>. For countries we serve and legal notes, see our Terms and <a href="faq.html">FAQ</a>.</p>
+    </div>
+
+    </div>
+  </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <rect width="32" height="32" rx="6" fill="currentColor"/>
+                            <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                        </svg>
+                        <span>JapanCulture</span>
+                    </div>
+                    <p>Your trusted gateway to Japan-exclusive merchandise since 2015.</p>
+                    <div class="footer-social">
+                        <a href="#">Twitter</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">Discord</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Service</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="fees.html">Pricing</a></li>
+                        <li><a href="shipping.html">Shipping Info</a></li>
+                        <li><a href="index.html#calendar">Store Schedule</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="category/news.html">News</a></li>
+                        <li><a href="category/store-items.html">Store Items</a></li>
+                        <li><a href="category/bonus-items.html">Bonus Items</a></li>
+                        <li><a href="category/weekly-pickups.html">Weekly Pickups</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="tokushoho.html">Specified Commercial Transactions Act</a></li>
+                        <li><a href="fees.html">Refund Policy</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:orders@japanculture.com">orders@japanculture.com</a></li>
+                        <li>Singapore &bull; USA &bull; Australia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p><strong>Important:</strong> Customs duties and import taxes are the buyer's responsibility. Amounts vary by country.</p>
+                <p>&copy; 2026 JapanCulture. This is a proxy purchase service, not a retail store. All trademarks belong to their respective owners.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&uarr;</button>
+</body>
+</html>

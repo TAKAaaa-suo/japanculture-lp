@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service — JapanCulture</title>
+    <meta name="description" content="Terms of Service for JapanCulture proxy purchasing service. Read our terms regarding service usage, payments, cancellations, and shipping.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .legal-page {
+            padding: calc(80px + var(--space-xl)) 0 var(--space-2xl);
+            background: var(--color-bg-light);
+            color: var(--color-text-dark);
+        }
+        .legal-page .container {
+            max-width: 820px;
+        }
+        .legal-header {
+            margin-bottom: var(--space-xl);
+        }
+        .legal-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-sm);
+        }
+        .legal-meta {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        .legal-toc {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+        .legal-toc h2 {
+            font-size: 1.125rem;
+            margin-bottom: var(--space-md);
+        }
+        .legal-toc ol {
+            margin: 0;
+            padding-left: var(--space-md);
+        }
+        .legal-toc li {
+            margin-bottom: var(--space-xs);
+        }
+        .legal-toc a {
+            color: var(--color-primary);
+            font-weight: 500;
+        }
+        .legal-section {
+            margin-bottom: var(--space-xl);
+        }
+        .legal-section h2 {
+            font-size: 1.5rem;
+            color: var(--color-text-dark);
+            padding-bottom: var(--space-sm);
+            border-bottom: 2px solid var(--color-primary);
+            margin-bottom: var(--space-md);
+        }
+        .legal-section h3 {
+            font-size: 1.125rem;
+            margin-top: var(--space-md);
+            margin-bottom: var(--space-sm);
+        }
+        .legal-section p,
+        .legal-section li {
+            line-height: 1.8;
+            color: #374151;
+            margin-bottom: var(--space-sm);
+        }
+        .legal-section ul,
+        .legal-section ol {
+            padding-left: var(--space-md);
+            margin-bottom: var(--space-md);
+        }
+        .legal-section ul li {
+            list-style: disc;
+        }
+        .legal-section ol li {
+            list-style: decimal;
+        }
+        .legal-highlight {
+            background: #fef2f2;
+            border-left: 4px solid var(--color-primary);
+            padding: var(--space-md);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin: var(--space-md) 0;
+        }
+        .legal-highlight p {
+            margin-bottom: 0;
+        }
+        .legal-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--space-md) 0;
+        }
+        .legal-table th,
+        .legal-table td {
+            padding: var(--space-sm);
+            border: 1px solid #e5e7eb;
+            text-align: left;
+        }
+        .legal-table th {
+            background: #f9fafb;
+            font-weight: 600;
+        }
+        @media (min-width: 1024px) {
+            .legal-header h1 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+    <script src="js/config.js"></script>
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="6" fill="currentColor"/>
+                        <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                    </svg>
+                    <span>JapanCulture</span>
+                </a>
+
+                <nav class="nav" id="nav">
+                    <a href="index.html#how-it-works">How it works</a>
+                    <a href="index.html#pricing">Fees</a>
+                    <a href="category/news.html">News</a>
+                    <a href="category/store-items.html">Store Items</a>
+                    <a href="category/bonus-items.html">Bonus</a>
+                    <a href="category/weekly-pickups.html">Pickups</a>
+                </nav>
+
+                <button class="btn btn-primary" onclick="openRequestForm()">Request</button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Legal Content -->
+    <main class="legal-page">
+        <div class="container">
+            <div class="legal-header">
+                <h1>Terms of Service</h1>
+                <p class="legal-meta">Last updated: February 22, 2026</p>
+            </div>
+
+            <!-- Table of Contents -->
+            <div class="legal-toc">
+                <h2>Table of Contents</h2>
+                <ol>
+                    <li><a href="#service-description">Service Description</a></li>
+                    <li><a href="#eligibility">Eligibility</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#payment">Payment</a></li>
+                    <li><a href="#cancellation-refund">Cancellation &amp; Refund</a></li>
+                    <li><a href="#shipping">Shipping</a></li>
+                    <li><a href="#customs">Customs &amp; Import Duties</a></li>
+                    <li><a href="#liability">Liability</a></li>
+                    <li><a href="#intellectual-property">Intellectual Property</a></li>
+                    <li><a href="#store-credit">Store Credit</a></li>
+                    <li><a href="#modifications">Modifications</a></li>
+                    <li><a href="#governing-law">Governing Law</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ol>
+            </div>
+
+            <p>Welcome to JapanCulture. By using our service, you agree to the following Terms of Service. Please read them carefully before submitting a request.</p>
+
+            <!-- 1. Service Description -->
+            <section class="legal-section" id="service-description">
+                <h2>1. Service Description</h2>
+                <p>JapanCulture operates a <strong>proxy purchasing service</strong> (also referred to as "buying agent" or "purchasing agent" service). We purchase items from Japanese retail stores on your behalf and ship them to your address internationally.</p>
+                <div class="legal-highlight">
+                    <p><strong>Important:</strong> JapanCulture is not an e-commerce store and does not sell merchandise. We do not hold inventory. Every purchase is made at a physical retail store in Japan based on your specific request. This is a service (task-based engagement), not a product sale.</p>
+                </div>
+                <p>When you place a request, you are commissioning us to visit a specific store, locate and purchase the requested item(s), verify authenticity and condition, and arrange international shipping to you. Ownership of the purchased item(s) transfers to you at the point of purchase at the store.</p>
+            </section>
+
+            <!-- 2. Eligibility -->
+            <section class="legal-section" id="eligibility">
+                <h2>2. Eligibility</h2>
+                <p>Our service is currently available to customers in the following countries only:</p>
+                <ul>
+                    <li><strong>Singapore (SG)</strong></li>
+                    <li><strong>United States (US)</strong></li>
+                    <li><strong>Australia (AU)</strong></li>
+                </ul>
+                <p>You must be <strong>at least 18 years of age</strong> to use this service. By submitting a request, you confirm that you meet these eligibility requirements. Requests from countries outside the above list will not be accepted.</p>
+            </section>
+
+            <!-- 3. How It Works -->
+            <section class="legal-section" id="how-it-works">
+                <h2>3. How It Works</h2>
+                <p>The proxy purchasing process follows these steps:</p>
+                <ol>
+                    <li><strong>Request</strong> &mdash; You submit a request form specifying the item(s) you want, preferred store, reference photos, and budget limit.</li>
+                    <li><strong>Quote</strong> &mdash; We send you a detailed quote within 10 minutes, including: service fee, commission, estimated item cost, shipping estimate, and packaging fee (all in USD).</li>
+                    <li><strong>Payment</strong> &mdash; You review and pay the quoted amount. No purchase is made until payment is received.</li>
+                    <li><strong>Purchase</strong> &mdash; On the scheduled Store Run day (every Friday), we visit the designated store and purchase your item(s).</li>
+                    <li><strong>Verification</strong> &mdash; We inspect the item(s), photograph them for confirmation, and store them at our facility.</li>
+                    <li><strong>Shipping</strong> &mdash; Items are shipped internationally on fixed shipping dates (twice per month) with tracking provided.</li>
+                </ol>
+                <p>If the requested item is unavailable at the designated store, we will attempt to locate it at nearby stores. If we cannot purchase it, you will be notified and offered a full refund or store credit.</p>
+            </section>
+
+            <!-- 4. Pricing -->
+            <section class="legal-section" id="pricing">
+                <h2>4. Pricing</h2>
+                <p>All prices are quoted and charged in <strong>US Dollars (USD)</strong>. Our fee structure consists of a service fee plus a commission based on the item price:</p>
+
+                <table class="legal-table">
+                    <thead>
+                        <tr>
+                            <th>Service Type</th>
+                            <th>Service Fee</th>
+                            <th>Commission</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Standard (1-2 items)</td>
+                            <td>$45</td>
+                            <td>15% of item price</td>
+                        </tr>
+                        <tr>
+                            <td>Standard (3+ items)</td>
+                            <td>$45</td>
+                            <td>12% of item price</td>
+                        </tr>
+                        <tr>
+                            <td>Rare Item Search</td>
+                            <td>$65</td>
+                            <td>18% of item price</td>
+                        </tr>
+                        <tr>
+                            <td>Event Proxy (per event)</td>
+                            <td>$80</td>
+                            <td>20% of item price</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>Additional costs borne by the customer include: shipping, packaging ($2-$6 depending on size), and any applicable customs duties or import taxes.</p>
+                <p>The exchange rate between JPY and USD is locked at the time the quote is issued. The quoted amount will not change due to subsequent exchange rate fluctuations.</p>
+                <p>For the complete fee breakdown and calculation examples, please see our <a href="fees.html">Fees page</a>.</p>
+            </section>
+
+            <!-- 5. Payment -->
+            <section class="legal-section" id="payment">
+                <h2>5. Payment</h2>
+                <p>All payments must be made <strong>in advance</strong>. We will not purchase any item until full payment has been received. Accepted payment methods:</p>
+                <ul>
+                    <li><strong>PayPal</strong></li>
+                    <li><strong>Stripe</strong> (credit/debit card)</li>
+                    <li><strong>Wise</strong> (bank transfer)</li>
+                </ul>
+                <p>Quotes are <strong>valid for 24 hours</strong> from the time of issuance. If payment is not received within this period, the quote will expire and a new quote may need to be requested.</p>
+                <p>JapanCulture does not store your credit card information. All payment processing is handled securely by the respective payment provider (PayPal, Stripe, or Wise).</p>
+            </section>
+
+            <!-- 6. Cancellation & Refund -->
+            <section class="legal-section" id="cancellation-refund">
+                <h2>6. Cancellation &amp; Refund</h2>
+
+                <h3>Before Purchase</h3>
+                <p>If we have not yet purchased the item at the store, you may cancel your request and receive a <strong>full refund</strong>, no questions asked.</p>
+
+                <h3>After Purchase</h3>
+                <div class="legal-highlight">
+                    <p><strong>Once we have purchased the item at the store, cash refunds are not available.</strong> Instead, we will issue a store credit for the full amount paid. Since the item has already been purchased on your behalf and ownership has transferred to you, we cannot reverse the transaction.</p>
+                </div>
+
+                <p>Store credit terms:</p>
+                <ul>
+                    <li>Valid for <strong>90 days</strong> from the date of issuance</li>
+                    <li><strong>Partial use is allowed</strong> &mdash; you may split the credit across multiple future requests</li>
+                    <li>Expired credit <strong>cannot be carried over</strong> or extended</li>
+                </ul>
+                <p>For details on store credit, see <a href="#store-credit">Section 11</a>.</p>
+            </section>
+
+            <!-- 7. Shipping -->
+            <section class="legal-section" id="shipping">
+                <h2>7. Shipping</h2>
+                <p>We ship internationally on <strong>fixed dates, twice per month</strong>. Specific shipping dates are announced on our website (e.g., March 8, March 22).</p>
+
+                <h3>Free Storage</h3>
+                <p>We store your purchased items at our facility <strong>free of charge for up to 30 days</strong>. This allows you to combine multiple purchases into a single shipment and save on shipping costs.</p>
+
+                <h3>Shipping Costs</h3>
+                <p>Shipping costs and packaging fees are <strong>entirely borne by the customer</strong>. Estimated shipping rates vary by country and package size. You will see the exact shipping cost in your quote before payment.</p>
+
+                <table class="legal-table">
+                    <thead>
+                        <tr>
+                            <th>Destination</th>
+                            <th>Small (~0.5 kg)</th>
+                            <th>Medium (~2 kg)</th>
+                            <th>Large (~5 kg)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Singapore</td>
+                            <td>$18</td>
+                            <td>$28</td>
+                            <td>$45</td>
+                        </tr>
+                        <tr>
+                            <td>United States</td>
+                            <td>$22</td>
+                            <td>$35</td>
+                            <td>$55</td>
+                        </tr>
+                        <tr>
+                            <td>Australia</td>
+                            <td>$24</td>
+                            <td>$38</td>
+                            <td>$58</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Tracking</h3>
+                <p>All shipments include tracking. We ship via EMS, DHL, or FedEx. You will receive your tracking number via email once your package has been dispatched.</p>
+
+                <p>For the complete shipping guide, see our <a href="shipping.html">Shipping page</a>.</p>
+            </section>
+
+            <!-- 8. Customs & Import Duties -->
+            <section class="legal-section" id="customs">
+                <h2>8. Customs &amp; Import Duties</h2>
+                <div class="legal-highlight">
+                    <p><strong>All customs duties, import taxes, and any fees imposed by your country's customs authority are entirely the customer's responsibility.</strong> JapanCulture has no control over these charges and cannot predict the exact amounts.</p>
+                </div>
+                <p>We will include an estimated customs/duty amount in your quote where possible, but the final amount is determined by your country's customs authority upon arrival.</p>
+                <p>If your package is held or returned by customs, any additional fees or re-shipping costs are the customer's responsibility.</p>
+
+                <h3>Notice for United States Customers</h3>
+                <p>Please be aware that the U.S. government has revised the de minimis exemption (previously $800 threshold for duty-free imports). Depending on the current regulations at the time of your import, duties may apply to packages that were previously exempt. We recommend checking the latest U.S. Customs and Border Protection guidelines before placing your order.</p>
+            </section>
+
+            <!-- 9. Liability -->
+            <section class="legal-section" id="liability">
+                <h2>9. Liability</h2>
+
+                <h3>Shipping Damage or Loss</h3>
+                <p>In the event of damage or loss during transit, JapanCulture will assist with the claim process within the scope of the <strong>carrier's shipping insurance</strong>. Our liability is limited to the coverage provided by the shipping carrier (EMS, DHL, or FedEx). We recommend reviewing the carrier's insurance terms for high-value items.</p>
+
+                <h3>Item Unavailability</h3>
+                <p>If an item is out of stock at the designated store and we cannot locate it at alternative stores, we will promptly notify you and offer your choice of:</p>
+                <ul>
+                    <li>A <strong>full refund</strong> of the amount paid for that item, or</li>
+                    <li><strong>Store credit</strong> of the equivalent amount</li>
+                </ul>
+
+                <h3>Authenticity Guarantee</h3>
+                <p>We purchase exclusively from official, authorized Japanese retail stores. <strong>We do not handle counterfeit, replica, or bootleg merchandise.</strong> Every item is photographed after purchase for your verification before shipping.</p>
+
+                <h3>Limitation</h3>
+                <p>JapanCulture is not responsible for delays caused by customs processing, postal service disruptions, natural disasters, or other force majeure events. Our total liability for any single request shall not exceed the total amount paid by the customer for that request.</p>
+            </section>
+
+            <!-- 10. Intellectual Property -->
+            <section class="legal-section" id="intellectual-property">
+                <h2>10. Intellectual Property</h2>
+                <p>JapanCulture deals exclusively in <strong>authentic, officially licensed merchandise</strong> purchased from authorized retail stores in Japan. All product names, brand names, trademarks, and copyrights referenced on our website belong to their respective owners.</p>
+                <p>The resale of genuine goods purchased through legitimate retail channels is permitted under the <strong>doctrine of exhaustion</strong> (first sale doctrine). Once a product has been lawfully sold by or with the consent of the rights holder, the rights holder's distribution rights with respect to that particular copy are exhausted.</p>
+                <p>JapanCulture acts as a purchasing agent and does not manufacture, reproduce, or modify any merchandise.</p>
+            </section>
+
+            <!-- 11. Store Credit -->
+            <section class="legal-section" id="store-credit">
+                <h2>11. Store Credit</h2>
+                <p>Store credit may be issued in lieu of a cash refund when a cancellation occurs after the item has been purchased. Store credit terms:</p>
+                <ul>
+                    <li><strong>Partial use is allowed:</strong> You may apply store credit across multiple requests. For example, a $100 credit can be used as $60 on one request and $40 on another.</li>
+                    <li><strong>Validity period:</strong> Store credit is valid for <strong>90 days</strong> from the date of issuance.</li>
+                    <li><strong>No carryover:</strong> Expired store credit cannot be extended, renewed, or transferred to a new credit.</li>
+                    <li><strong>Balance inquiry:</strong> To check your store credit balance, contact us via email.</li>
+                </ul>
+            </section>
+
+            <!-- 12. Modifications -->
+            <section class="legal-section" id="modifications">
+                <h2>12. Modifications</h2>
+                <p>JapanCulture reserves the right to update or modify these Terms of Service at any time. Changes will be posted on this page with an updated "Last updated" date. We recommend reviewing these terms periodically.</p>
+                <p>Continued use of the service after any changes constitutes your acceptance of the updated terms. For significant changes, we will provide notice on our website.</p>
+            </section>
+
+            <!-- 13. Governing Law -->
+            <section class="legal-section" id="governing-law">
+                <h2>13. Governing Law</h2>
+                <p>These Terms of Service are governed by and construed in accordance with the <strong>laws of Japan</strong>. Any disputes arising from or in connection with these terms shall be subject to the exclusive jurisdiction of the courts of Japan.</p>
+            </section>
+
+            <!-- 14. Contact -->
+            <section class="legal-section" id="contact">
+                <h2>14. Contact</h2>
+                <p>If you have any questions or concerns about these Terms of Service, please contact us:</p>
+                <ul>
+                    <li><strong>Email:</strong> <a href="mailto:hello@japanculture.com">hello@japanculture.com</a></li>
+                    <li><strong>Orders &amp; Support:</strong> <a href="mailto:orders@japanculture.com">orders@japanculture.com</a></li>
+                </ul>
+                <p>We aim to respond to all inquiries within 24 hours.</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <rect width="32" height="32" rx="6" fill="currentColor"/>
+                            <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                        </svg>
+                        <span>JapanCulture</span>
+                    </div>
+                    <p>Your trusted gateway to Japan-exclusive merchandise since 2015.</p>
+                    <div class="footer-social">
+                        <a href="#">Twitter</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">Discord</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Service</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="fees.html">Pricing</a></li>
+                        <li><a href="shipping.html">Shipping Info</a></li>
+                        <li><a href="index.html#calendar">Store Schedule</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="category/news.html">News</a></li>
+                        <li><a href="category/store-items.html">Store Items</a></li>
+                        <li><a href="category/bonus-items.html">Bonus Items</a></li>
+                        <li><a href="category/weekly-pickups.html">Weekly Pickups</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="tokushoho.html">Specified Commercial Transactions Act</a></li>
+                        <li><a href="fees.html">Refund Policy</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:orders@japanculture.com">orders@japanculture.com</a></li>
+                        <li>Singapore &bull; USA &bull; Australia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p><strong>Important:</strong> Customs duties and import taxes are the buyer's responsibility. Amounts vary by country.</p>
+                <p>&copy; 2026 JapanCulture. This is a proxy purchase service, not a retail store. All trademarks belong to their respective owners.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&uarr;</button>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sample store item — Official Japanese Anime Merchandise</title>
+  <meta name="description" content="Example item you can request via Official Japanese Anime Merchandise. Quote in 24h, shipping before payment.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="site-logo">Official Japanese Anime Merchandise</a>
+      <nav>
+        <ul class="nav">
+          <li><a href="../how-it-works.html">How it works</a></li>
+          <li><a href="../fees.html">Fees</a></li>
+          <li><a href="../category/news.html">News</a></li>
+          <li><a href="../category/store-items.html">Store Items</a></li>
+          <li><a href="../category/bonus-items.html">Bonus Items</a></li>
+          <li><a href="../category/weekly-pickups.html">Weekly Pickups</a></li>
+          <li><a href="#" class="btn" data-request>Request</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="container section">
+      <header class="page-header">
+        <p class="muted" style="margin-bottom: 0.25rem;">Store Items · Feb 2025</p>
+        <h1>Sample store item</h1>
+      </header>
+
+      <div class="article-body">
+        <p>This is a sample article. Replace with your real item: description, images, store, and price range if you know it.</p>
+        <p>We can pick this up on our next store run. Place your request before the Thursday deadline so we can include it in the Friday buy.</p>
+        <p>Shipping is quoted before you pay. We ship to Singapore, United States, and Australia. See <a href="../shipping.html">Shipping</a> for rough rates.</p>
+      </div>
+
+      <div class="article-cta">
+        <p><strong>Want this item?</strong> We’ll quote you within 24 hours. Shipping cost is confirmed before payment.</p>
+        <p>
+          <a href="#" class="btn" data-request data-item-name="Sample store item" data-item-ref="sample-item">Request this item</a>
+        </p>
+        <p class="muted" style="font-size: 0.9rem;">Orders close Thursday. Next store run and deadline are on the <a href="../index.html#upcoming-trip">homepage</a>.</p>
+      </div>
+
+      <p class="muted" style="margin-top: var(--space-xl);"><a href="../category/store-items.html">← Store Items</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="#">Terms</a>
+        <a href="../shipping.html">Shipping</a>
+        <a href="../fees.html">Fees</a>
+        <a href="../faq.html">FAQ</a>
+        <a href="mailto:hello@example.com">Contact</a>
+      </div>
+      <p class="footer-note">We ship to Singapore, US & Australia. Customs and import rules depend on your country; please check locally.</p>
+    </div>
+  </footer>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    // Set item_url to current page for Tally (main.js uses it when building request URL)
+    document.querySelectorAll('[data-request][data-item-name]').forEach(function(el) {
+      if (!el.getAttribute('data-item-url')) el.setAttribute('data-item-url', window.location.href);
+    });
+  </script>
+</body>
+</html>

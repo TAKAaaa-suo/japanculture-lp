@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特定商取引法に基づく表示 / Notation Based on Specified Commercial Transactions Act - JapanCulture</title>
+    <meta name="description" content="JapanCulture - 特定商取引法に基づく表示。Notation based on the Specified Commercial Transactions Act.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .legal-page {
+            padding: calc(80px + var(--space-xl)) 0 var(--space-2xl);
+            min-height: 100vh;
+        }
+        .legal-page .container {
+            max-width: 900px;
+        }
+        .legal-title {
+            text-align: center;
+            margin-bottom: var(--space-xs);
+        }
+        .legal-subtitle {
+            text-align: center;
+            color: var(--color-text-gray);
+            font-size: 1.125rem;
+            margin-bottom: var(--space-2xl);
+        }
+        .legal-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--space-xl);
+        }
+        .legal-table th,
+        .legal-table td {
+            padding: var(--space-md);
+            border: 1px solid var(--color-border);
+            text-align: left;
+            vertical-align: top;
+        }
+        .legal-table th {
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+            white-space: nowrap;
+            width: 220px;
+            font-size: 0.95rem;
+        }
+        .legal-table td {
+            color: var(--color-text-gray);
+            line-height: 1.8;
+        }
+        .legal-table .ja {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .legal-table .en {
+            display: block;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+        .legal-table .th-ja {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        .legal-table .th-en {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--color-text-gray);
+        }
+        .legal-note {
+            padding: var(--space-md);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            color: var(--color-text-gray);
+            line-height: 1.8;
+        }
+        .legal-note p {
+            margin-bottom: var(--space-sm);
+        }
+        .legal-note p:last-child {
+            margin-bottom: 0;
+        }
+        @media (max-width: 767px) {
+            .legal-table th {
+                width: 120px;
+                font-size: 0.85rem;
+                padding: var(--space-sm);
+            }
+            .legal-table td {
+                padding: var(--space-sm);
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <script src="js/config.js"></script>
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="6" fill="currentColor"/>
+                        <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                    </svg>
+                    <span>JapanCulture</span>
+                </a>
+
+                <nav class="nav" id="nav">
+                    <a href="index.html#how-it-works">How it works</a>
+                    <a href="index.html#pricing">Fees</a>
+                    <a href="category/news.html">News</a>
+                    <a href="category/store-items.html">Store Items</a>
+                    <a href="category/bonus-items.html">Bonus</a>
+                    <a href="category/weekly-pickups.html">Pickups</a>
+                </nav>
+
+                <button class="btn btn-primary" onclick="openRequestForm()">Request</button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Legal Content -->
+    <section class="legal-page">
+        <div class="container">
+            <h1 class="legal-title">特定商取引法に基づく表示</h1>
+            <p class="legal-subtitle">Notation Based on the Specified Commercial Transactions Act</p>
+
+            <table class="legal-table">
+                <tbody>
+                    <tr>
+                        <th>
+                            <span class="th-ja">販売業者名（屋号）</span>
+                            <span class="th-en">Business Name</span>
+                        </th>
+                        <td>
+                            <span class="ja">Japan Culture</span>
+                            <span class="en">Japan Culture</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span class="th-ja">代表者・運営責任者</span>
+                            <span class="th-en">Representative</span>
+                        </th>
+                        <td>
+                            <span class="ja">[YOUR_NAME]</span>
+                            <span class="en">[YOUR_NAME]</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span class="th-ja">所在地</span>
+                            <span class="th-en">Address</span>
+                        </th>
+                        <td>
+                            <span class="ja">[YOUR_ADDRESS]</span>
+                            <span class="en">[YOUR_ADDRESS]</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span class="th-ja">電話番号</span>
+                            <span class="th-en">Phone</span>
+                        </th>
+                        <td>
+                            <span class="ja">[YOUR_PHONE]</span>
+                            <span class="en">[YOUR_PHONE]</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span class="th-ja">メールアドレス</span>
+                            <span class="th-en">Email</span>
+                        </th>
+                        <td>
+                            <span class="ja">hello@[YOUR_DOMAIN]</span>
+                            <span class="en">hello@[YOUR_DOMAIN]</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span class="th-ja">サービス内容</span>
+                            <span class="th-en">Service Description</span>
+                        </th>
+                        <td>
+                            <span class="ja">日本国内のアニメ・漫画関連グッズの代理購入および国際発送サービス。在庫販売は行わず、お客様のご依頼に基づき、日本国内店舗にて商品を代理購入し、検品・梱包のうえ国際発送いたします。</span>
+                            <span class="en">Proxy purchasing and international shipping service for anime and manga merchandise available exclusively in Japan. We do not sell inventory; we purchase items on behalf of customers from Japanese retail stores, inspect, pack, and ship internationally.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span class="th-ja">販売価格</span>
+                            <span class="th-en">Pricing</span>
+                        </th>
+                        <td>
+                            <span class="ja">依頼料：$45 USD〜（サービスタイプにより異なる）+ 商品価格の12〜20%の手数料。送料・梱包料・関税は別途お客様負担。詳細は<a href="fees.html">料金ページ</a>をご確認ください。</span>
+                            <span class="en">Service fee: from $45 USD (varies by service type) + 12-20% commission on item price. Shipping, packaging, and customs duties are charged separately. See <a href="fees.html">fee details</a> for more information.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span class="th-ja">商品代金以外の必要料金</span>
+                            <span class="th-en">Additional Costs</span>
+                        </th>
+                        <td>
+                            <span class="ja">国際送料（$18〜$58 USD、国・サイズにより異なる）、梱包料（$2〜$6 USD）、関税・輸入税（受取国の税関規定に準拠、お客様負担）</span>
+                            <span class="en">International shipping ($18-$58 USD depending on country and size), packaging fee ($2-$6 USD), customs duties and import taxes (subject to destination country regulations, buyer's responsibility)</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span class="th-ja">支払方法</span>
+                            <span class="th-en">Payment Methods</span>
+                        </th>
+                        <td>
+                            <span class="ja">PayPal、Stripe（クレジットカード）、Wise（銀行送金）</span>
+                            <span class="en">PayPal, Stripe (credit card), Wise (bank transfer)</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span class="th-ja">支払時期</span>
+                            <span class="th-en">Payment Timing</span>
+                        </th>
+                        <td>
+                            <span class="ja">お見積もりご承諾後、商品購入前にお支払いいただきます（前払い制）。お支払い確認後に買付を実行いたします。</span>
+                            <span class="en">Payment is required after accepting the quote and before purchase (prepayment). We proceed with purchasing only after payment confirmation.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span class="th-ja">サービス提供時期</span>
+                            <span class="th-en">Service Delivery</span>
+                        </th>
+                        <td>
+                            <span class="ja">お支払い確認後、次回の店舗巡回日（毎週金曜日）に購入を実行します。商品は最大30日間無料保管し、月2回の固定発送日に国際発送いたします。配送所要日数は7〜14日程度（配送方法・配送先により異なります）。</span>
+                            <span class="en">After payment confirmation, items are purchased on the next weekly store run (every Friday). Items are stored free for up to 30 days and shipped on our bi-monthly fixed shipping dates. Delivery takes approximately 7-14 days depending on shipping method and destination.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span class="th-ja">キャンセル・返金</span>
+                            <span class="th-en">Cancellation &amp; Refund</span>
+                        </th>
+                        <td>
+                            <span class="ja"><strong>購入実行前：</strong>全額返金いたします。<br><strong>購入実行後：</strong>返金はお受けできません。同額のストアクレジットを発行いたします（有効期限90日、分割使用可、他者への譲渡可）。<br><strong>商品が購入できなかった場合：</strong>全額返金またはストアクレジットでの対応をお選びいただけます。</span>
+                            <span class="en"><strong>Before purchase:</strong> Full refund available.<br><strong>After purchase:</strong> Refunds are not available. Store credit of equivalent value will be issued (valid for 90 days, can be split across orders, transferable).<br><strong>If item is unavailable:</strong> Choice of full refund or store credit.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span class="th-ja">返品・交換</span>
+                            <span class="th-en">Returns &amp; Exchanges</span>
+                        </th>
+                        <td>
+                            <span class="ja">代理購入サービスの性質上、お客様都合による返品・交換はお受けできません。商品の破損・誤購入等、当方の責に帰する場合は個別に対応いたします。</span>
+                            <span class="en">Due to the nature of our proxy purchasing service, returns and exchanges for buyer's convenience are not accepted. Issues caused by our error (damage, wrong item) will be addressed on a case-by-case basis.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span class="th-ja">対象国</span>
+                            <span class="th-en">Service Areas</span>
+                        </th>
+                        <td>
+                            <span class="ja">シンガポール、アメリカ合衆国、オーストラリア</span>
+                            <span class="en">Singapore, United States of America, Australia</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="legal-note">
+                <p><strong>表示価格について / About Displayed Prices:</strong><br>
+                すべての料金は USD（米ドル）表記です。日本円建ての商品価格はお見積もり時点の為替レートにて換算いたします。<br>
+                All prices are displayed in USD. Japanese yen item prices are converted at the exchange rate at the time of quotation.</p>
+                <p><strong>決済情報について / Payment Security:</strong><br>
+                クレジットカード情報等の決済情報は PayPal / Stripe / Wise が処理し、当サービスでは保持いたしません。<br>
+                Payment information such as credit card details is processed by PayPal / Stripe / Wise. We do not store your payment information.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <rect width="32" height="32" rx="6" fill="currentColor"/>
+                            <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                        </svg>
+                        <span>JapanCulture</span>
+                    </div>
+                    <p>Your trusted gateway to Japan-exclusive merchandise since 2015.</p>
+                    <div class="footer-social">
+                        <a href="#">Twitter</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">Discord</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Service</h4>
+                    <ul>
+                        <li><a href="index.html#how-it-works">How It Works</a></li>
+                        <li><a href="index.html#pricing">Pricing</a></li>
+                        <li><a href="shipping.html">Shipping Info</a></li>
+                        <li><a href="index.html#calendar">Store Schedule</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="category/news.html">News</a></li>
+                        <li><a href="category/store-items.html">Store Items</a></li>
+                        <li><a href="category/bonus-items.html">Bonus Items</a></li>
+                        <li><a href="category/weekly-pickups.html">Weekly Pickups</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="tokushoho.html">Specified Commercial Transactions Act</a></li>
+                        <li><a href="fees.html">Refund Policy</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:orders@japanculture.com">orders@japanculture.com</a></li>
+                        <li>Singapore &bull; USA &bull; Australia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p><strong>Important:</strong> Customs duties and import taxes are the buyer's responsibility. Amounts vary by country.</p>
+                <p>&copy; 2026 JapanCulture. This is a proxy purchase service, not a retail store. All trademarks belong to their respective owners.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&uarr;</button>
+</body>
+</html>

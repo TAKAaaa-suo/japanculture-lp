@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fees — JapanCulture</title>
+  <meta name="description" content="Request fee $45 + 15% or 12%. Rare/event options. All amounts in USD. Shipping and tax are your responsibility.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/config.js"></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="6" fill="currentColor"/>
+                        <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                    </svg>
+                    <span>JapanCulture</span>
+                </a>
+
+                <nav class="nav" id="nav">
+                    <a href="index.html#how-it-works">How it works</a>
+                    <a href="index.html#pricing">Fees</a>
+                    <a href="category/news.html">News</a>
+                    <a href="category/store-items.html">Store Items</a>
+                    <a href="category/bonus-items.html">Bonus</a>
+                    <a href="category/weekly-pickups.html">Pickups</a>
+                </nav>
+
+                <button class="btn btn-primary" onclick="openRequestForm()">Request</button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+  <main>
+    <div class="container">
+      <header class="page-header">
+        <h1>Fees</h1>
+        <p>All amounts in USD. Shipping, customs, and packaging are your responsibility. See <a href="shipping.html">Shipping</a> for rates.</p>
+      </header>
+
+      <div class="which-service flowchart" style="margin-bottom: var(--space-2xl); padding: var(--space-xl); background: var(--color-surface); border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+        <h2>Which service do I need?</h2>
+        <p class="muted" style="margin-bottom: var(--space-lg);">Follow the questions below. Each answer leads to one service type.</p>
+        <div class="flowchart__step">
+          <div class="flowchart__q">Q1: Is it currently in stores? (Animate, Toranoana, general stock)</div>
+          <div class="flowchart__branches">
+            <div class="flowchart__branch flowchart__branch--yes">
+              <span class="flowchart__label">YES</span>
+              <div class="flowchart__result flowchart__result--standard"><strong>→ Standard</strong> — $45 + 15% (1–2 items) or 12% (3+). Use this for most requests.</div>
+            </div>
+            <div class="flowchart__branch flowchart__branch--no">
+              <span class="flowchart__label">NO</span>
+              <div class="flowchart__q flowchart__q--sub">Q2: Is it at an event? (Comiket, convention, lottery ticket)</div>
+              <div class="flowchart__branches flowchart__branches--indent">
+                <div class="flowchart__branch flowchart__branch--yes">
+                  <span class="flowchart__label">YES</span>
+                  <div class="flowchart__result flowchart__result--event"><strong>→ Event</strong> — $80 + 20%. <span class="event-notice">Book at least 2 weeks before the event.</span> $30 refund if lottery not won.</div>
+                </div>
+                <div class="flowchart__branch flowchart__branch--no">
+                  <span class="flowchart__label">NO</span>
+                  <div class="flowchart__result flowchart__result--rare"><strong>→ Rare / secondhand</strong> — $65 + 18%. We search multiple places. If not found: $20 research fee only.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Standard proxy (store items)</h2>
+      <p class="muted">Examples: anime goods from Animate, Toranoana, general store stock.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Amount (USD)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Request fee (per request)</td>
+              <td>$45</td>
+            </tr>
+            <tr>
+              <td>Item fee (1–2 items)</td>
+              <td>15% of item total</td>
+            </tr>
+            <tr>
+              <td>Item fee (3+ items)</td>
+              <td>12% of item total</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">Example: 2 items totaling $100 → $45 + $15 = $60 (fees only; plus shipping & packaging).</p>
+
+      <h2>Rare / secondhand / specialty</h2>
+      <p>For hard-to-find items. <strong>Examples:</strong> out-of-print figures, specific doujinshi, dolls, discontinued cards. We search multiple stores; if we can't find it, you pay only $20 research fee.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Amount (USD)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Request fee (per request)</td>
+              <td>$65</td>
+            </tr>
+            <tr>
+              <td>Item fee (when found)</td>
+              <td>18% of item total</td>
+            </tr>
+            <tr>
+              <td>If not found</td>
+              <td>$20 research fee only</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">We’ll confirm this option and the $20 research fee before you commit.</p>
+
+      <h2>Event proxy (e.g. Comiket, only events)</h2>
+      <p class="event-notice-block" style="padding: var(--space-md); background: rgba(232,93,93,0.1); border-radius: var(--radius); border-left: 4px solid var(--color-accent); margin-bottom: var(--space-md);"><strong>Book at least 2 weeks before the event.</strong> Example: event on March 15 → deadline to request is March 1. We cannot accept last-minute event requests.</p>
+      <p>Same-day buying, line-standing, circle visits. $30 refund if lottery ticket not won.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Amount (USD)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Base fee (per event)</td>
+              <td>$80</td>
+            </tr>
+            <tr>
+              <td>Item fee</td>
+              <td>20% of item total</td>
+            </tr>
+            <tr>
+              <td>3+ circles (same event)</td>
+              <td>$60 per circle + 18%</td>
+            </tr>
+            <tr>
+              <td>If lottery ticket not won</td>
+              <td>$30 refund</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">Reservation must be made at least 2 weeks before the event date.</p>
+
+      <p><button class="btn btn-primary" onclick="openRequestForm()">Request</button></p>
+    </div>
+  </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <rect width="32" height="32" rx="6" fill="currentColor"/>
+                            <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                        </svg>
+                        <span>JapanCulture</span>
+                    </div>
+                    <p>Your trusted gateway to Japan-exclusive merchandise since 2015.</p>
+                    <div class="footer-social">
+                        <a href="#">Twitter</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">Discord</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Service</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="fees.html">Pricing</a></li>
+                        <li><a href="shipping.html">Shipping Info</a></li>
+                        <li><a href="index.html#calendar">Store Schedule</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="category/news.html">News</a></li>
+                        <li><a href="category/store-items.html">Store Items</a></li>
+                        <li><a href="category/bonus-items.html">Bonus Items</a></li>
+                        <li><a href="category/weekly-pickups.html">Weekly Pickups</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="tokushoho.html">Specified Commercial Transactions Act</a></li>
+                        <li><a href="fees.html">Refund Policy</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:orders@japanculture.com">orders@japanculture.com</a></li>
+                        <li>Singapore &bull; USA &bull; Australia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p><strong>Important:</strong> Customs duties and import taxes are the buyer's responsibility. Amounts vary by country.</p>
+                <p>&copy; 2026 JapanCulture. This is a proxy purchase service, not a retail store. All trademarks belong to their respective owners.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&uarr;</button>
+</body>
+</html>

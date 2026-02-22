@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Visit Schedule - JapanCulture</title>
+    <meta name="description" content="Our weekly store visit schedule across Tokyo. We visit 8+ anime stores every Friday including Akihabara, Ikebukuro, and Shibuya.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/config.js"></script>
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="6" fill="currentColor"/>
+                        <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                    </svg>
+                    <span>JapanCulture</span>
+                </a>
+                <nav class="nav" id="nav">
+                    <a href="index.html#how-it-works">How it works</a>
+                    <a href="index.html#pricing">Fees</a>
+                    <a href="category/news.html">News</a>
+                    <a href="category/store-items.html">Store Items</a>
+                </nav>
+                <button class="btn btn-primary" onclick="openRequestForm()">Request</button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="section section-light" style="padding-top: 120px;">
+        <div class="container">
+            <div class="section-header">
+                <h2>Weekly Store Visit Schedule</h2>
+                <p>Every Friday, we visit 8+ anime stores across Tokyo to find your items</p>
+            </div>
+
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div style="background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-xl); margin-bottom: var(--space-xl);">
+                    <h3 style="margin-bottom: var(--space-md);">Order Deadline</h3>
+                    <p><strong>Thursday 11:59 PM JST</strong> - Submit your request by Thursday night to be included in Friday's store run.</p>
+                </div>
+
+                <h3 style="margin-bottom: var(--space-lg);">Friday Route</h3>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">01</div>
+                        <h3>Akihabara</h3>
+                        <p>Animate Akihabara, Kotobukiya, AmiAmi, Mandarake Complex, and specialty figure shops.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">02</div>
+                        <h3>Ikebukuro</h3>
+                        <p>Animate Main Store (world's largest), K-Books, Lashinbang, and Otome Road shops.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">03</div>
+                        <h3>Shibuya / Harajuku</h3>
+                        <p>Pokemon Center Shibuya, Jump Shop, Kiddy Land, and pop-up event venues.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">04</div>
+                        <h3>Nakano Broadway</h3>
+                        <p>Mandarake (multiple specialty shops), vintage figure stores, and rare collectible dealers.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: var(--space-2xl);">
+                    <p style="color: var(--color-text-gray); margin-bottom: var(--space-lg);">Need something from a specific store? Let us know in your request.</p>
+                    <button class="btn btn-primary" onclick="openRequestForm()">Submit a Request</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 JapanCulture. This is a proxy purchase service, not a retail store.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&uarr;</button>
+</body>
+</html>

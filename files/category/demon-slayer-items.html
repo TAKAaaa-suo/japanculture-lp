@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demon Slayer Items — JapanCulture</title>
+    <meta name="description" content="Store-exclusive Demon Slayer (Kimetsu no Yaiba) goods: ufotable Cafe, Animate fairs, theater merch, pop-up and department store events, collab restaurants. We proxy from Japan.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .page-hero {
+            padding: calc(80px + 2rem) 0 2rem;
+            background: var(--color-bg-medium);
+            border-bottom: 1px solid var(--color-border);
+        }
+        .page-hero h1 { margin-bottom: 0.5rem; }
+        .page-hero p { color: var(--color-text-gray); margin: 0; }
+        .items-section { padding: var(--space-2xl) 0; }
+        .items-section h2 {
+            font-size: 1.35rem;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-sm);
+            border-bottom: 2px solid var(--color-primary);
+        }
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: var(--space-lg);
+        }
+        .item-card {
+            background: var(--color-bg-dark);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .item-card:hover { border-color: var(--color-primary); }
+        .item-card__image {
+            aspect-ratio: 1;
+            background: var(--color-bg-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-gray);
+            font-size: 0.875rem;
+        }
+        .item-card__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .item-card__body { padding: var(--space-md); }
+        .item-card__title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+        .item-card__desc {
+            font-size: 0.875rem;
+            color: var(--color-text-gray);
+            margin: 0;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: var(--space-xl);
+            color: var(--color-primary);
+            font-weight: 500;
+        }
+        .back-link:hover { text-decoration: none; }
+        .store-catch { font-size: 0.9rem; color: var(--color-text-gray); margin-bottom: var(--space-md); font-style: italic; }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="6" fill="currentColor"/>
+                        <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                    </svg>
+                    <span>JapanCulture</span>
+                </a>
+                <nav class="nav" id="nav">
+                    <a href="../index.html#how-it-works">How it works</a>
+                    <a href="../index.html#pricing">Fees</a>
+                    <a href="../index.html#what-we-find">What We Find</a>
+                    <a href="../index.html#cta">Request</a>
+                </nav>
+                <button class="btn btn-primary" onclick="openRequestForm()">Request</button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <a href="../index.html#what-we-find" class="back-link">← Back to What We Find</a>
+                <h1>Demon Slayer Items</h1>
+                <p>Visit-required items from Animate Akihabara, Animate Ikebukuro, ufotable Cafe (Nakano etc.), and TOHO Cinemas. In-store and theater attendance exclusives.</p>
+            </div>
+        </section>
+
+        <div class="container">
+            <!-- アニメイト秋葉原店 -->
+            <section class="items-section">
+                <h2>1. Animate Akihabara (Building 1 & 2)</h2>
+                <div class="items-grid">
+                    <div class="item-card">
+                        <div class="item-card__image"><img src="../images/placeholder.svg" data-src="../images/demon-slayer-items/fair-card.jpg" alt="Fair distribution card, mini shikishi"></div>
+                        <div class="item-card__body">
+                            <h3 class="item-card__title">Fair distribution card / mini shikishi</h3>
+                            <p class="item-card__desc">Animate-limited fair. Reprint: low.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- アニメイト池袋本店 -->
+            <section class="items-section">
+                <h2>2. Animate Ikebukuro (flagship)</h2>
+                <p class="store-catch">Theater collab fair bonus pickup point; visitor bonus exchange announcements sometimes posted here.</p>
+                <div class="items-grid">
+                    <div class="item-card">
+                        <div class="item-card__image"><img src="../images/placeholder.svg" data-src="../images/demon-slayer-items/theater-fair-bonus.jpg" alt="Theater collab fair bonus"></div>
+                        <div class="item-card__body">
+                            <h3 class="item-card__title">Theater collab fair bonus</h3>
+                            <p class="item-card__desc">Visitor bonus exchange / fair pickup. Reprint: case by case.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ufotable Cafe（中野ほか） -->
+            <section class="items-section">
+                <h2>3. ufotable Cafe (Nakano etc.) — Demon Slayer collab</h2>
+                <p class="store-catch">Cafe is often fully booked. Check store updates or X (Twitter) for in-store bonus availability.</p>
+                <div class="items-grid">
+                    <div class="item-card">
+                        <div class="item-card__image"><img src="../images/placeholder.svg" data-src="../images/demon-slayer-items/cafe-coaster.jpg" alt="Coaster, postcard"></div>
+                        <div class="item-card__body">
+                            <h3 class="item-card__title">Coaster / postcard (in-store bonus)</h3>
+                            <p class="item-card__desc">With visit or reservation. Design rotates by period. Reprint: often none.</p>
+                        </div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-card__image"><img src="../images/placeholder.svg" data-src="../images/demon-slayer-items/cafe-acrylic.jpg" alt="Cafe acrylic stand, can badge"></div>
+                        <div class="item-card__body">
+                            <h3 class="item-card__title">Cafe-limited goods (acrylic stand, can badge, etc.)</h3>
+                            <p class="item-card__desc">Sold at cafe. Reprint: limited.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOHO Cinemas（日比谷 / 新宿 等） -->
+            <section class="items-section">
+                <h2>4. TOHO Cinemas (Hibiya, Shinjuku, etc.) — theater visitor bonus</h2>
+                <p class="store-catch">“Visitor thank-you” items only at the cinema are a strong reason for overseas fans to visit Japan.</p>
+                <div class="items-grid">
+                    <div class="item-card">
+                        <div class="item-card__image"><img src="../images/placeholder.svg" data-src="../images/demon-slayer-items/visitor-bonus.jpg" alt="Visitor bonus"></div>
+                        <div class="item-card__body">
+                            <h3 class="item-card__title">Visitor bonus (e.g. weekly message board)</h3>
+                            <p class="item-card__desc">During release period only. Reprint: none (period-limited).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="items-section" style="padding-bottom: 3rem;">
+                <p style="text-align: center;">
+                    <a href="../index.html#cta" class="btn btn-primary">Request a Demon Slayer item</a>
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p><a href="../index.html">JapanCulture</a> — Your gateway to Japan-exclusive merchandise.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shipping & packaging — JapanCulture</title>
+  <meta name="description" content="Shipping estimate before payment. Rates by country and size. We store up to 30 days and ship twice per month.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/config.js"></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="6" fill="currentColor"/>
+                        <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                    </svg>
+                    <span>JapanCulture</span>
+                </a>
+
+                <nav class="nav" id="nav">
+                    <a href="index.html#how-it-works">How it works</a>
+                    <a href="index.html#pricing">Fees</a>
+                    <a href="category/news.html">News</a>
+                    <a href="category/store-items.html">Store Items</a>
+                    <a href="category/bonus-items.html">Bonus</a>
+                    <a href="category/weekly-pickups.html">Pickups</a>
+                </nav>
+
+                <button class="btn btn-primary" onclick="openRequestForm()">Request</button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+  <main>
+    <div class="container">
+      <header class="page-header">
+        <h1>Shipping & packaging</h1>
+        <p><strong>Shipping estimate before payment.</strong> Your quote will include the shipping cost so you see it before you pay. No surprises.</p>
+      </header>
+
+      <div class="save-shipping section" style="padding: var(--space-xl) 0;">
+        <h2>Save up to 66% with combined shipping</h2>
+        <p class="muted">We store your items <strong>free for 30 days</strong> and ship twice per month. Combine multiple purchases into one shipment = much lower shipping cost.</p>
+        <div class="before-after">
+          <div class="before-after__col before-after__col--before">
+            <h3>Without us</h3>
+            <p class="before-after__value">5 shipments × $19 ≈ <strong>$95</strong></p>
+            <p class="muted">Sending each item separately</p>
+          </div>
+          <div class="before-after__arrow">→</div>
+          <div class="before-after__col before-after__col--after">
+            <h3>With us</h3>
+            <p class="before-after__value">1 combined shipment ≈ <strong>$35</strong></p>
+            <p class="muted">30-day free storage, then we ship together</p>
+          </div>
+        </div>
+        <p class="storage-claim text-center"><strong>30-day free storage</strong> — no extra fee. We ship twice per month on fixed dates.</p>
+      </div>
+
+      <h2>Shipping estimates (USD)</h2>
+      <p class="muted">Rough guide by destination and size. Final cost is confirmed in your quote before payment.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Destination</th>
+              <th>Small (~0.5kg)</th>
+              <th>Medium (~2kg)</th>
+              <th>Large (~5kg)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Singapore</td>
+              <td>$18</td>
+              <td>$28</td>
+              <td>$45</td>
+            </tr>
+            <tr>
+              <td>United States</td>
+              <td>$22</td>
+              <td>$35</td>
+              <td>$55</td>
+            </tr>
+            <tr>
+              <td>Australia</td>
+              <td>$24</td>
+              <td>$38</td>
+              <td>$58</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="font-size: 0.9rem;">Estimates only. Final shipping cost will be confirmed in your quote before payment.</p>
+
+      <h2>Packaging (USD)</h2>
+      <p>Packaging is charged separately from shipping:</p>
+      <ul>
+        <li><strong>Small</strong> — $2 (e.g. acrylics, small goods)</li>
+        <li><strong>Medium</strong> — $4 (multiple items)</li>
+        <li><strong>Large</strong> — $6 (large items or big bundles)</li>
+      </ul>
+
+      <h2>Storage & dispatch</h2>
+      <p>We store your items for up to 30 days at no extra cost so we can combine orders and reduce shipping. We ship <strong>twice per month</strong> on fixed dates (e.g. “Next shipping: Mar 8, Mar 22”). You’ll get the exact dates in your quote and by email.</p>
+
+      <p class="muted">Customs and duties are your responsibility. We only ship to Singapore, United States, and Australia.</p>
+    </div>
+
+    </div>
+  </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <rect width="32" height="32" rx="6" fill="currentColor"/>
+                            <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                        </svg>
+                        <span>JapanCulture</span>
+                    </div>
+                    <p>Your trusted gateway to Japan-exclusive merchandise since 2015.</p>
+                    <div class="footer-social">
+                        <a href="#">Twitter</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">Discord</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Service</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="fees.html">Pricing</a></li>
+                        <li><a href="shipping.html">Shipping Info</a></li>
+                        <li><a href="index.html#calendar">Store Schedule</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="category/news.html">News</a></li>
+                        <li><a href="category/store-items.html">Store Items</a></li>
+                        <li><a href="category/bonus-items.html">Bonus Items</a></li>
+                        <li><a href="category/weekly-pickups.html">Weekly Pickups</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="tokushoho.html">Specified Commercial Transactions Act</a></li>
+                        <li><a href="fees.html">Refund Policy</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:orders@japanculture.com">orders@japanculture.com</a></li>
+                        <li>Singapore &bull; USA &bull; Australia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p><strong>Important:</strong> Customs duties and import taxes are the buyer's responsibility. Amounts vary by country.</p>
+                <p>&copy; 2026 JapanCulture. This is a proxy purchase service, not a retail store. All trademarks belong to their respective owners.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&uarr;</button>
+</body>
+</html>

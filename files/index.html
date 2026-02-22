@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JapanCulture | Japan-Exclusive Anime Goods Delivered Worldwide</title>
+    <meta name="description" content="Your personal shopper in Tokyo's best anime stores. We buy Japan-exclusive figures, acrylic stands, and limited-edition merchandise every Friday and ship to Singapore, USA & Australia.">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="canonical" href="https://japanculture.com/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="JapanCulture | Japan-Exclusive Anime Goods Delivered Worldwide">
+    <meta property="og:description" content="Your personal shopper in Tokyo's best anime stores. We buy Japan-exclusive merchandise directly from stores and ship to Singapore, USA & Australia with transparent pricing and photo verification.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://japanculture.com/">
+    <meta property="og:image" content="images/ogp.png">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="JapanCulture | Japan-Exclusive Anime Goods Delivered Worldwide">
+    <meta name="twitter:description" content="Your personal shopper in Tokyo's best anime stores. We buy Japan-exclusive merchandise directly from stores and ship worldwide.">
+    <meta name="twitter:image" content="images/ogp.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .category-card-naruto {
+            position: relative;
+            background-image: url('images/naruto-bg.png');
+            background-size: cover;
+            background-position: 50% 35%;
+            background-repeat: no-repeat;
+            min-height: 280px;
+        }
+        .category-card-naruto::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.85) 100%);
+            border-radius: inherit;
+        }
+        .category-card-naruto .category-icon,
+        .category-card-naruto h3,
+        .category-card-naruto .category-role,
+        .category-card-naruto .btn { position: relative; z-index: 1; }
+        .category-card-naruto h3 { color: #fff; }
+        .category-card-naruto .category-role { color: rgba(255,255,255,0.9); }
+        .category-card-pokemon {
+            position: relative;
+            background-image: url('images/pokemon-bg.png');
+            background-size: cover;
+            background-position: 30% 50%;
+            background-repeat: no-repeat;
+            min-height: 280px;
+        }
+        .category-card-pokemon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.85) 100%);
+            border-radius: inherit;
+        }
+        .category-card-pokemon h3,
+        .category-card-pokemon .category-role,
+        .category-card-pokemon .btn { position: relative; z-index: 1; }
+        .category-card-pokemon h3 { color: #fff; }
+        .category-card-pokemon .category-role { color: rgba(255,255,255,0.9); }
+        .category-card-demon-slayer {
+            position: relative;
+            background-image: url('images/demon-slayer-bg.png');
+            background-size: cover;
+            background-position: 50% 45%;
+            background-repeat: no-repeat;
+            min-height: 280px;
+        }
+        .category-card-demon-slayer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.85) 100%);
+            border-radius: inherit;
+        }
+        .category-card-demon-slayer h3,
+        .category-card-demon-slayer .category-role,
+        .category-card-demon-slayer .btn { position: relative; z-index: 1; }
+        .category-card-demon-slayer h3 { color: #fff; }
+        .category-card-demon-slayer .category-role { color: rgba(255,255,255,0.9); }
+        .category-card-jujutsu-kaisen {
+            position: relative;
+            background-image: url('images/jujutsu-kaisen-bg.png');
+            background-size: cover;
+            background-position: 50% 45%;
+            background-repeat: no-repeat;
+            min-height: 280px;
+        }
+        .category-card-jujutsu-kaisen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.85) 100%);
+            border-radius: inherit;
+        }
+        .category-card-jujutsu-kaisen h3,
+        .category-card-jujutsu-kaisen .category-role,
+        .category-card-jujutsu-kaisen .btn { position: relative; z-index: 1; }
+        .category-card-jujutsu-kaisen h3 { color: #fff; }
+        .category-card-jujutsu-kaisen .category-role { color: rgba(255,255,255,0.9); }
+    </style>
+    <script src="js/config.js"></script>
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#hero" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="6" fill="currentColor"/>
+                        <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                    </svg>
+                    <span>JapanCulture</span>
+                </a>
+
+                <nav class="nav" id="nav">
+                    <a href="#how-it-works">How it works</a>
+                    <a href="#pricing">Fees</a>
+                    <a href="category/news.html">News</a>
+                    <a href="category/store-items.html">Store Items</a>
+                    <a href="category/bonus-items.html">Bonus</a>
+                    <a href="category/weekly-pickups.html">Pickups</a>
+                </nav>
+
+                <button class="btn btn-primary" onclick="openRequestForm()">Request</button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================
+         SECTION 1: HERO (Attention)
+         Clear value prop, single CTA, urgency bar, trust signals
+         ============================================ -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">Next Store Run: This Friday</div>
+                <h1 class="hero-title">
+                    Japan-Exclusive Anime Goods,<br>
+                    <span class="gradient-text">Delivered to Your Door</span>
+                </h1>
+                <p class="hero-subtitle">We visit Tokyo's top anime stores every Friday. Tell us what you want &mdash; we buy it, verify it, and ship it to you.</p>
+
+                <button class="btn btn-large" onclick="openRequestForm()">
+                    Request Your First Item
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+
+                <!-- Urgency Bar -->
+                <div class="upcoming-info" style="margin-top: var(--space-lg);">
+                    <div class="info-item">
+                        <strong>Order Deadline:</strong> Thursday 11:59 PM JST
+                    </div>
+                    <div class="info-item">
+                        <strong>Store Visit:</strong> Friday &mdash; Akihabara Animate, Ikebukuro &amp; 6 more stops
+                    </div>
+                </div>
+
+                <!-- Countdown (reuses existing JS) -->
+                <div class="countdown" id="countdown" style="margin-top: var(--space-md);">
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="days">00</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="hours">00</div>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="minutes">00</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="seconds">00</div>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+
+                <!-- Trust Signals Bar -->
+                <div class="hero-promises">
+                    <span>100% Authentic</span>
+                    <span>Full Refund if Unavailable</span>
+                    <span>PayPal Protected</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 2: SOCIAL PROOF BAR (Interest - quick)
+         Horizontal trust bar with country badges
+         ============================================ -->
+    <section class="section section-dark" style="padding: var(--space-lg) 0;">
+        <div class="container">
+            <div style="text-align: center;">
+                <p style="font-size: 1.125rem; color: var(--color-text-gray); margin-bottom: var(--space-md);">Serving anime collectors worldwide</p>
+                <div class="hero-promises" style="justify-content: center; color: var(--color-text-light); gap: var(--space-xl);">
+                    <span>Singapore</span>
+                    <span>USA</span>
+                    <span>Australia</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 3: HOW IT WORKS (Interest)
+         Simplified 4 steps
+         ============================================ -->
+    <section class="section section-light" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>From request to delivery in 4 simple steps</p>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div class="step-icon">📝</div>
+                    <h3>Tell Us What You Want</h3>
+                    <p>Send us the item name, a photo or link, and your budget. Any anime merchandise available in Japanese stores is fair game.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div class="step-icon">💰</div>
+                    <h3>Get Your Quote in 10 Min</h3>
+                    <p>Receive a detailed, all-inclusive quote within 10 minutes. Item cost, service fee, shipping &mdash; everything upfront. No surprises.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div class="step-icon">🏃</div>
+                    <h3>We Buy It at the Store</h3>
+                    <p>Every Friday, we visit 8+ stores across Tokyo &mdash; Akihabara, Ikebukuro, Shibuya and more. We purchase your items directly.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">04</div>
+                    <div class="step-icon">📦</div>
+                    <h3>Verified &amp; Shipped to You</h3>
+                    <p>Every item is photographed for verification, stored free for up to 30 days, then shipped internationally with tracking and insurance.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="how-it-works.html" class="link-arrow">Read the full guide</a>
+                <span style="margin: 0 var(--space-md); color: #6b7280;">|</span>
+                <a href="store-schedule.html" class="link-arrow">View store visit schedule</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 4: WHAT WE FIND (Interest -> Desire)
+         4 franchise cards + rare item CTA
+         ============================================ -->
+    <section class="section section-dark" id="what-we-find">
+        <div class="container">
+            <div class="section-header">
+                <h2>What We Find For You</h2>
+                <p>Japan-exclusive figures, acrylic stands, plush, and limited-edition goods from your favorite franchises</p>
+            </div>
+
+            <div class="category-grid">
+                <div class="category-card category-card-naruto">
+                    <h3>Naruto</h3>
+                    <p class="category-role">Naruto &amp; Boruto figures, acrylic stands, and limited-edition goods from Animate &amp; Jump Shop</p>
+                    <a href="category/naruto-items.html" class="btn btn-primary">Browse Naruto Items</a>
+                </div>
+
+                <div class="category-card category-card-pokemon">
+                    <h3>Pokemon</h3>
+                    <p class="category-role">Pokemon Center exclusives, plush toys, and collaboration merchandise you can only get in Japan</p>
+                    <a href="category/pokemon-items.html" class="btn btn-primary">Browse Pokemon Items</a>
+                </div>
+
+                <div class="category-card category-card-demon-slayer">
+                    <h3>Demon Slayer</h3>
+                    <p class="category-role">Kimetsu no Yaiba figures, keychains, ufotable Cafe goods, and store-exclusive bonuses</p>
+                    <a href="category/demon-slayer-items.html" class="btn btn-primary">Browse Demon Slayer Items</a>
+                </div>
+
+                <div class="category-card category-card-jujutsu-kaisen">
+                    <h3>Jujutsu Kaisen</h3>
+                    <p class="category-role">Jujutsu Kaisen figures, acrylic stands, limited releases, and Animate-exclusive specials</p>
+                    <a href="category/jujutsu-kaisen-items.html" class="btn btn-primary">Browse JJK Items</a>
+                </div>
+            </div>
+
+            <!-- Rare Item CTA -->
+            <div style="text-align: center; padding: var(--space-xl); background: rgba(255,255,255,0.05); border: 2px dashed var(--color-border); border-radius: var(--radius-lg);">
+                <h3 style="margin-bottom: var(--space-sm);">Can't Find What You're Looking For?</h3>
+                <p style="color: var(--color-text-gray); margin-bottom: var(--space-lg);">We also search for rare, discontinued, and vintage anime merchandise across Tokyo. From 10-year-old artbooks to sold-out convention exclusives &mdash; if it exists in Japan, we'll track it down.</p>
+                <button class="btn btn-primary" onclick="openRequestForm('rare')">
+                    Request a Rare Item Search
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 5: WHY US vs. OTHERS (Desire)
+         Comparison table + shipping savings visualization
+         ============================================ -->
+    <section class="section section-gradient" id="why-us">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose JapanCulture</h2>
+                <p>How we compare to other proxy services</p>
+            </div>
+
+            <!-- Comparison: Us vs Others -->
+            <div style="max-width: 900px; margin: 0 auto var(--space-2xl);">
+                <div class="comparison">
+                    <div class="comparison-card bad">
+                        <div class="comparison-label">Other Proxy Services</div>
+                        <div class="comparison-items">
+                            <div>You need a product URL to order</div>
+                            <div>Hidden fees added after purchase</div>
+                            <div>No store-exclusive or event items</div>
+                            <div>Days to respond to your inquiry</div>
+                            <div>No photo verification</div>
+                        </div>
+                    </div>
+
+                    <div class="comparison-arrow">&rarr;</div>
+
+                    <div class="comparison-card good">
+                        <div class="comparison-label">JapanCulture</div>
+                        <div class="comparison-items">
+                            <div>Just tell us what you want</div>
+                            <div>All-inclusive quote upfront</div>
+                            <div>Store-exclusive + event items</div>
+                            <div>Quote in 10 minutes</div>
+                            <div>Every item photographed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Features -->
+            <div class="trust-grid" style="margin-bottom: var(--space-2xl);">
+                <div class="trust-card" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);">
+                    <div class="trust-icon">📸</div>
+                    <h3>Photo Verification</h3>
+                    <p>Every item photographed after purchase. You see proof of authenticity before we ship.</p>
+                </div>
+
+                <div class="trust-card" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);">
+                    <div class="trust-icon">💳</div>
+                    <h3>PayPal Protection</h3>
+                    <p>Pay securely via PayPal or Stripe. PayPal Buyer Protection covers every purchase.</p>
+                </div>
+
+                <div class="trust-card" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);">
+                    <div class="trust-icon">🎟️</div>
+                    <h3>Lottery &amp; Event Access</h3>
+                    <p>We enter store lotteries, attend Comiket, and queue at pop-up events on your behalf.</p>
+                </div>
+            </div>
+
+            <!-- Shipping Savings Visualization -->
+            <div class="savings-content">
+                <div class="savings-header">
+                    <div class="badge badge-success">Save Money</div>
+                    <h2>Save up to 66% on Shipping</h2>
+                    <p>Free 30-day storage lets you combine orders into a single shipment</p>
+                </div>
+
+                <div class="comparison">
+                    <div class="comparison-card bad">
+                        <div class="comparison-label">Shipping Each Item Separately</div>
+                        <div class="comparison-items">
+                            <div>Week 1: $19</div>
+                            <div>Week 2: $19</div>
+                            <div>Week 3: $19</div>
+                            <div>Week 4: $19</div>
+                            <div>Week 5: $19</div>
+                        </div>
+                        <div class="comparison-total">Total: $95</div>
+                    </div>
+
+                    <div class="comparison-arrow">&rarr;</div>
+
+                    <div class="comparison-card good">
+                        <div class="comparison-label">Combine with JapanCulture</div>
+                        <div class="comparison-items">
+                            <div>Free storage for 5 weeks</div>
+                            <div>One combined shipment</div>
+                        </div>
+                        <div class="comparison-total highlight">Total: $35</div>
+                        <div class="savings-badge">Save $60</div>
+                    </div>
+                </div>
+
+                <div class="shipping-features">
+                    <div class="feature">
+                        <div class="feature-icon">📦</div>
+                        <div class="feature-text">
+                            <strong>30-Day Free Storage</strong>
+                            <p>We hold your items at no charge while you wait for more purchases</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📅</div>
+                        <div class="feature-text">
+                            <strong>Fixed Shipping Dates</strong>
+                            <p>We ship twice per month on scheduled dates so you can plan ahead</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">💰</div>
+                        <div class="feature-text">
+                            <strong>Predictable Costs</strong>
+                            <p>Shipping estimate included in your quote before payment</p>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="shipping.html" class="link-arrow-light" style="margin-top: var(--space-lg); display: inline-flex;">See full shipping guide</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 6: PRICING (Desire -> Action)
+         Standard plan prominent, Rare/Event secondary
+         ============================================ -->
+    <section class="section section-light" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Transparent Pricing</h2>
+                <p>No hidden fees. You see the full cost before you pay.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Standard: MOST COMMON - visually dominant -->
+                <div class="pricing-card featured">
+                    <div class="badge badge-hot">Most Popular</div>
+                    <div class="pricing-type">Standard Service</div>
+                    <div class="pricing-amount">$45</div>
+                    <div class="pricing-commission">+ 15% (1-2 items) / 12% (3+ items)</div>
+                    <ul class="pricing-features">
+                        <li>Regular store items</li>
+                        <li>Weekly store visits (8+ stores)</li>
+                        <li>Photo verification included</li>
+                        <li>30-day free storage</li>
+                        <li>All-inclusive quote upfront</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="openRequestForm('standard')">Request Standard Service</button>
+
+                    <details class="pricing-details">
+                        <summary>See calculation example</summary>
+                        <div class="example">
+                            <p><strong>Example: 2 items, $100 total</strong></p>
+                            <div>Base fee: $45</div>
+                            <div>Commission (15%): $15</div>
+                            <div>Item cost: $100</div>
+                            <div>Shipping: ~$28</div>
+                            <div>Packaging: $4</div>
+                            <hr>
+                            <div><strong>Total: ~$192</strong></div>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Rare Item Search: secondary -->
+                <div class="pricing-card">
+                    <div class="pricing-type">Rare Item Search</div>
+                    <div class="pricing-amount">$65</div>
+                    <div class="pricing-commission">+ 18% on purchase</div>
+                    <ul class="pricing-features">
+                        <li>Hard-to-find merchandise</li>
+                        <li>Multi-store + online search</li>
+                        <li>Vintage/discontinued items</li>
+                        <li>Expert sourcing network</li>
+                        <li>Only $20 if not found</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="openRequestForm('rare')">Request Rare Search</button>
+
+                    <details class="pricing-details">
+                        <summary>How rare search works</summary>
+                        <div class="example">
+                            <p>We search multiple stores, online shops, and auctions across Japan.</p>
+                            <p><strong>If found:</strong> $65 + 18% commission</p>
+                            <p><strong>If not found:</strong> Only $20 for our research effort</p>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Event Proxy: secondary -->
+                <div class="pricing-card">
+                    <div class="pricing-type">Event Proxy</div>
+                    <div class="pricing-amount">$80</div>
+                    <div class="pricing-commission">+ 20% per event</div>
+                    <ul class="pricing-features">
+                        <li>Comiket participation</li>
+                        <li>Convention attendance</li>
+                        <li>Early morning queuing</li>
+                        <li>3+ circles: $60 each + 18%</li>
+                        <li>Book 2 weeks before event</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="openRequestForm('event')">Request Event Proxy</button>
+
+                    <details class="pricing-details">
+                        <summary>Important: advance booking required</summary>
+                        <div class="example">
+                            <p><strong>Comiket 105 (May 2026):</strong> Book by April 17</p>
+                            <p>If lottery fails: $30 refund automatically</p>
+                            <p>Multi-circle discount available for 3+ circles at same event</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <div class="pricing-note">
+                + Shipping ($18-58 depending on country/size), packaging ($2-6), and customs duties (buyer's responsibility)
+            </div>
+
+            <!-- Service Selector Flow -->
+            <div class="service-selector">
+                <h3>Which service do I need?</h3>
+                <div class="flow">
+                    <div class="flow-step">
+                        <strong>Is it currently in stores?</strong>
+                        <div class="flow-options">
+                            <button class="flow-btn" onclick="selectService('standard')">Yes &rarr; Standard</button>
+                            <button class="flow-btn" onclick="showQ2()">No &rarr; Next question</button>
+                        </div>
+                    </div>
+                    <div class="flow-step" id="q2" style="display: none;">
+                        <strong>Is it at an event (Comiket, convention)?</strong>
+                        <div class="flow-options">
+                            <button class="flow-btn" onclick="selectService('event')">Yes &rarr; Event Proxy</button>
+                            <button class="flow-btn" onclick="selectService('rare')">No &rarr; Rare Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="fees.html" class="link-arrow">See complete fee breakdown</a>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 7: REVIEWS + FAQ (Desire reinforcement)
+         3 reviews + 4 essential FAQs
+         ============================================ -->
+    <section class="section section-dark" id="reviews">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Customers Say</h2>
+            </div>
+
+            <div class="reviews-grid" style="margin-bottom: var(--space-2xl);">
+                <div class="review-card" style="background: var(--color-bg-dark); border-color: var(--color-border);">
+                    <div class="review-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</div>
+                    <p class="review-text" style="color: var(--color-text-light);">"Finally got the limited Demon Slayer figure that sold out in 2 hours. They even participated in the lottery for me. Worth every penny!"</p>
+                    <div class="review-author" style="border-color: var(--color-border);">
+                        <strong style="color: var(--color-text-light);">Sarah K.</strong>
+                        <span style="color: var(--color-text-gray);">Singapore</span>
+                    </div>
+                </div>
+
+                <div class="review-card" style="background: var(--color-bg-dark); border-color: var(--color-border);">
+                    <div class="review-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</div>
+                    <p class="review-text" style="color: var(--color-text-light);">"I was skeptical about the storage feature, but combining 4 orders saved me $50+ on shipping. Game changer for students like me."</p>
+                    <div class="review-author" style="border-color: var(--color-border);">
+                        <strong style="color: var(--color-text-light);">Mike T.</strong>
+                        <span style="color: var(--color-text-gray);">USA</span>
+                    </div>
+                </div>
+
+                <div class="review-card" style="background: var(--color-bg-dark); border-color: var(--color-border);">
+                    <div class="review-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</div>
+                    <p class="review-text" style="color: var(--color-text-light);">"They found a 10-year-old artbook I've been searching for years. The rare search service is incredible. Photos before shipping gave me peace of mind."</p>
+                    <div class="review-author" style="border-color: var(--color-border);">
+                        <strong style="color: var(--color-text-light);">Emma L.</strong>
+                        <span style="color: var(--color-text-gray);">Australia</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ (4 most important questions only) -->
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <details class="faq-item">
+                    <summary>What if the item is sold out?</summary>
+                    <div class="faq-content">
+                        <p>If we can't purchase your requested item, we'll try other nearby stores first. If it's truly unavailable, you choose: <strong>full refund</strong> or <strong>store credit</strong> (valid 90 days). You're never stuck paying for something we couldn't get.</p>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>How long does shipping take?</summary>
+                    <div class="faq-content">
+                        <p>We ship twice per month on fixed dates. Delivery takes 7-14 days depending on your country and shipping method (EMS/DHL/FedEx). You'll receive a tracking number as soon as the package is shipped. Use our free 30-day storage to combine orders and save on shipping.</p>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Can I cancel after payment?</summary>
+                    <div class="faq-content">
+                        <p><strong>Before we purchase:</strong> Full refund, no questions asked.</p>
+                        <p><strong>After we purchase at the store:</strong> We issue store credit (valid 90 days, transferable). Since we already own the item at that point, cash refunds are not available after purchase.</p>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>How much does shipping cost?</summary>
+                    <div class="faq-content">
+                        <p>Shipping varies by destination and package size:</p>
+                        <ul>
+                            <li><strong>Singapore:</strong> $18 - $45</li>
+                            <li><strong>USA:</strong> $22 - $55</li>
+                            <li><strong>Australia:</strong> $24 - $58</li>
+                        </ul>
+                        <p>You'll see the exact shipping cost in your quote before paying. Combine multiple orders with our free 30-day storage to save up to 66% on shipping.</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="faq-cta" style="border-color: var(--color-border);">
+                <p style="color: var(--color-text-light);">Still have questions?</p>
+                <a href="faq.html" class="btn btn-outline-light">View Full FAQ</a>
+                <a href="mailto:orders@japanculture.com" class="link-arrow-light" style="margin-left: var(--space-md);">Contact Support</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 8: FINAL CTA (Action)
+         Strong closing + urgency + risk reversal + newsletter
+         ============================================ -->
+    <section class="section section-cta" id="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Your Next Favorite Figure Is Waiting in Tokyo</h2>
+                <p>Join this Friday's store run. We'll find it, buy it, verify it, and ship it &mdash; so you don't miss out.</p>
+
+                <button class="btn btn-large" onclick="openRequestForm()">
+                    Request Your First Item
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+
+                <p class="cta-note" style="margin-top: var(--space-lg);">Secure payment via PayPal or Stripe &bull; Quote within 10 minutes &bull; Full refund if we can't buy it</p>
+
+                <!-- Newsletter signup (merged from separate section) -->
+                <div style="margin-top: var(--space-2xl); padding-top: var(--space-xl); border-top: 1px solid var(--color-border);">
+                    <div class="newsletter-content">
+                        <h3 style="margin-bottom: var(--space-sm);">Never Miss a Release</h3>
+                        <p style="color: var(--color-text-gray);">Get weekly updates on store schedules, new releases, and exclusive bonus information</p>
+                        <form class="newsletter-form" onsubmit="return false;">
+                            <input type="email" placeholder="Enter your email" required>
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <rect width="32" height="32" rx="6" fill="currentColor"/>
+                            <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                        </svg>
+                        <span>JapanCulture</span>
+                    </div>
+                    <p>Your personal shopper in Tokyo's best anime stores. We buy Japan-exclusive merchandise and ship worldwide.</p>
+                    <div class="footer-social">
+                        <a href="#">Twitter</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">Discord</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Service</h4>
+                    <ul>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="shipping.html">Shipping Info</a></li>
+                        <li><a href="store-schedule.html">Store Schedule</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="category/news.html">News</a></li>
+                        <li><a href="category/store-items.html">Store Items</a></li>
+                        <li><a href="category/bonus-items.html">Bonus Items</a></li>
+                        <li><a href="category/weekly-pickups.html">Weekly Pickups</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="tokushoho.html">Specified Commercial Transactions Act</a></li>
+                        <li><a href="fees.html">Refund Policy</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:orders@japanculture.com">orders@japanculture.com</a></li>
+                        <li>Singapore &bull; USA &bull; Australia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p><strong>Important:</strong> Customs duties and import taxes are the buyer's responsibility. Amounts vary by country.</p>
+                <p>&copy; 2026 JapanCulture. This is a proxy purchase service, not a retail store. All trademarks belong to their respective owners.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&uarr;</button>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naruto — JapanCulture</title>
+    <meta name="description" content="Naruto & Boruto figures, acrylic stands, and Japan-exclusive merchandise. We proxy from Japanese stores to Singapore, USA, and Australia.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .naruto-hero {
+            position: relative;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('../images/naruto-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .naruto-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%);
+            pointer-events: none;
+        }
+        .naruto-hero .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: #fff;
+        }
+        .naruto-hero h1 {
+            color: #fff;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+        }
+        .naruto-hero p {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="6" fill="currentColor"/>
+                        <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                    </svg>
+                    <span>JapanCulture</span>
+                </a>
+                <nav class="nav" id="nav">
+                    <a href="../index.html#how-it-works">How it works</a>
+                    <a href="../index.html#pricing">Fees</a>
+                    <a href="store-items.html">Store Items</a>
+                    <a href="../index.html#what-we-find">What We Find</a>
+                    <a href="../index.html#cta">Request</a>
+                </nav>
+                <button class="btn btn-primary" onclick="openRequestForm()">Request</button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Naruto Hero (background image) -->
+    <section class="naruto-hero">
+        <div class="container">
+            <h1>Naruto</h1>
+            <p>Figures, acrylic stands & Japan-exclusive merchandise</p>
+            <a href="../index.html#cta" class="btn btn-primary">Request Naruto Items</a>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-header">
+                <h2>Naruto & Boruto Merchandise</h2>
+                <p>We source official Naruto goods from Japanese stores—figures, keychains, apparel, and limited editions. Request any item and we'll quote within 10 minutes.</p>
+            </div>
+            <p style="text-align: center;">
+                <a href="../index.html#cta" class="btn btn-primary">Request an Item</a>
+                <a href="../index.html#what-we-find" class="btn btn-outline" style="margin-left: 0.5rem;">Back to What We Find</a>
+            </p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p><a href="../index.html">JapanCulture</a> — Your gateway to Japan-exclusive merchandise.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request an Item — JapanCulture</title>
+    <meta name="description" content="Request Japan-exclusive anime merchandise. Fill out the form and receive a quote within 10 minutes.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .request-hero {
+            padding: calc(80px + 3rem) 0 2rem;
+            text-align: center;
+            background: var(--color-bg-medium);
+            border-bottom: 1px solid var(--color-border);
+        }
+        .request-hero h1 { margin-bottom: 0.5rem; }
+        .request-hero p { color: var(--color-text-gray); margin: 0; font-size: 1.1rem; }
+
+        .form-section {
+            padding: var(--space-2xl) 0;
+        }
+
+        .request-form {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        .form-group label .required {
+            color: var(--color-primary);
+            margin-left: 2px;
+        }
+
+        .form-group .hint {
+            display: block;
+            font-size: 0.8125rem;
+            color: var(--color-text-gray);
+            margin-top: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: var(--color-bg-dark);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            color: var(--color-text-light);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #6b7280;
+        }
+
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%239ca3af' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        .form-group select option {
+            background: var(--color-bg-dark);
+            color: var(--color-text-light);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .conditional-field {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .conditional-field.visible {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-submit-btn {
+            width: 100%;
+            padding: 1.125rem;
+            font-size: 1.125rem;
+            margin-top: var(--space-md);
+        }
+
+        .form-note {
+            text-align: center;
+            font-size: 0.8125rem;
+            color: var(--color-text-gray);
+            margin-top: var(--space-md);
+        }
+
+        .form-trust {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-lg);
+            flex-wrap: wrap;
+            margin-top: var(--space-lg);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .form-trust span {
+            font-size: 0.875rem;
+            color: var(--color-success);
+            font-weight: 500;
+        }
+
+        .service-info {
+            padding: var(--space-md);
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--space-lg);
+            font-size: 0.9rem;
+            color: var(--color-text-gray);
+            display: none;
+        }
+
+        .service-info.visible {
+            display: block;
+        }
+
+        .service-info strong {
+            color: var(--color-text-light);
+        }
+
+        /* Success state */
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: var(--space-2xl);
+        }
+
+        .form-success.visible {
+            display: block;
+        }
+
+        .form-success h2 {
+            color: var(--color-success);
+            margin-bottom: var(--space-md);
+        }
+
+        .form-success p {
+            color: var(--color-text-gray);
+            margin-bottom: var(--space-sm);
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: var(--space-md);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="6" fill="currentColor"/>
+                        <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                    </svg>
+                    <span>JapanCulture</span>
+                </a>
+
+                <nav class="nav" id="nav">
+                    <a href="index.html#how-it-works">How it works</a>
+                    <a href="index.html#pricing">Fees</a>
+                    <a href="category/news.html">News</a>
+                    <a href="category/store-items.html">Store Items</a>
+                    <a href="category/bonus-items.html">Bonus</a>
+                    <a href="category/weekly-pickups.html">Pickups</a>
+                </nav>
+
+                <a href="request.html" class="btn btn-primary">Request</a>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="request-hero">
+            <div class="container">
+                <h1>Request an Item</h1>
+                <p>Tell us what you want from Japan. We'll reply with a quote within 10 minutes.</p>
+            </div>
+        </section>
+
+        <section class="form-section">
+            <div class="container">
+                <!-- Request Form -->
+                <form id="requestForm" class="request-form" action="https://formsubmit.co/YOUR_EMAIL@example.com" method="POST">
+                    <!-- FormSubmit config -->
+                    <input type="hidden" name="_subject" value="New Item Request - JapanCulture">
+                    <input type="hidden" name="_captcha" value="true">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_next" id="successRedirect">
+                    <!-- Honeypot anti-spam -->
+                    <input type="text" name="_honey" style="display:none">
+
+                    <!-- Name & Email -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+
+                    <!-- Country & Service Type -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="country">Your Country <span class="required">*</span></label>
+                            <select id="country" name="country" required>
+                                <option value="" disabled selected>Select your country</option>
+                                <option value="Singapore">Singapore</option>
+                                <option value="USA">USA</option>
+                                <option value="Australia">Australia</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="serviceType">Service Type <span class="required">*</span></label>
+                            <select id="serviceType" name="service_type" required>
+                                <option value="" disabled selected>Select service</option>
+                                <option value="Standard">Standard ($45 + 12-15%)</option>
+                                <option value="Rare Item Search">Rare Item Search ($65 + 18%)</option>
+                                <option value="Event Proxy">Event Proxy ($80 + 20%)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Service-specific info boxes -->
+                    <div id="infoStandard" class="service-info">
+                        <strong>Standard Service:</strong> We purchase items currently available at Japanese anime stores during our weekly Friday store run. $45 base fee + 15% commission (12% for 3+ items). Includes photo verification and 30-day free storage.
+                    </div>
+                    <div id="infoRare" class="service-info">
+                        <strong>Rare Item Search:</strong> We search multiple stores, online shops, and auctions across Japan for hard-to-find items. $65 base fee + 18% commission. If we can't find it, you only pay $20 for our research effort.
+                    </div>
+                    <div id="infoEvent" class="service-info">
+                        <strong>Event Proxy:</strong> We attend events like Comiket and conventions on your behalf. $80 base fee + 20% commission. Requires 2-week advance booking. If lottery entry fails, $30 is refunded automatically.
+                    </div>
+
+                    <!-- Product Details -->
+                    <div class="form-group">
+                        <label for="productName">What do you want us to buy? <span class="required">*</span></label>
+                        <span class="hint">Product name, character name, or description. Be as specific as possible.</span>
+                        <input type="text" id="productName" name="product_name" placeholder="e.g. Demon Slayer Tanjiro Acrylic Stand - Animate Exclusive" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productRef">Reference Link or Image URL</label>
+                        <span class="hint">Paste a link to the product page, a tweet, or an image showing the item.</span>
+                        <input type="url" id="productRef" name="product_reference" placeholder="https://...">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="budget">Budget Limit (USD)</label>
+                            <span class="hint">Max you're willing to spend (item + fees + shipping)</span>
+                            <input type="number" id="budget" name="budget_usd" placeholder="e.g. 200" min="0" step="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" id="quantity" name="quantity" placeholder="1" min="1" value="1">
+                        </div>
+                    </div>
+
+                    <!-- Event-specific fields (conditional) -->
+                    <div id="eventFields" class="conditional-field">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="eventName">Event Name <span class="required">*</span></label>
+                                <input type="text" id="eventName" name="event_name" placeholder="e.g. Comiket 105">
+                            </div>
+                            <div class="form-group">
+                                <label for="eventDate">Event Date</label>
+                                <input type="date" id="eventDate" name="event_date">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="circleName">Circle / Booth Name</label>
+                            <span class="hint">For doujinshi events. List multiple circles separated by commas.</span>
+                            <input type="text" id="circleName" name="circle_name" placeholder="e.g. Circle A, Circle B">
+                        </div>
+                    </div>
+
+                    <!-- Rare-specific fields (conditional) -->
+                    <div id="rareFields" class="conditional-field">
+                        <div class="form-group">
+                            <label for="lastSeen">When was this item last available?</label>
+                            <span class="hint">Helps us know where to look.</span>
+                            <input type="text" id="lastSeen" name="last_available" placeholder="e.g. Released in 2020, sold out within a week">
+                        </div>
+                    </div>
+
+                    <!-- Preferred Store -->
+                    <div class="form-group">
+                        <label for="preferredStore">Preferred Store</label>
+                        <select id="preferredStore" name="preferred_store">
+                            <option value="Any">Any store (we'll check all)</option>
+                            <option value="Animate">Animate</option>
+                            <option value="Pokemon Center">Pokemon Center</option>
+                            <option value="ufotable Cafe">ufotable Cafe</option>
+                            <option value="Gamers">Gamers</option>
+                            <option value="Kotobukiya">Kotobukiya</option>
+                            <option value="Mandarake">Mandarake</option>
+                            <option value="Nakano Broadway">Nakano Broadway</option>
+                            <option value="Other">Other (specify in notes)</option>
+                        </select>
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <span class="hint">Anything else we should know? Special packaging requests, multiple items, group order, etc.</span>
+                        <textarea id="notes" name="notes" placeholder="e.g. I'd also like to add 2 more items to this order if possible. Can you check both Animate locations?"></textarea>
+                    </div>
+
+                    <!-- How did you find us -->
+                    <div class="form-group">
+                        <label for="source">How did you find us?</label>
+                        <select id="source" name="referral_source">
+                            <option value="" disabled selected>Select one</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="TikTok">TikTok</option>
+                            <option value="Reddit">Reddit</option>
+                            <option value="Discord">Discord</option>
+                            <option value="Twitter/X">Twitter / X</option>
+                            <option value="Google Search">Google Search</option>
+                            <option value="Friend">Friend / Word of mouth</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="btn btn-primary form-submit-btn">
+                        Send Request — Get Quote in 10 Minutes
+                    </button>
+
+                    <p class="form-note">Free to request &bull; No account needed &bull; No obligation to buy</p>
+
+                    <div class="form-trust">
+                        <span>100% Authentic</span>
+                        <span>Full Refund if Unavailable</span>
+                        <span>PayPal Protected</span>
+                    </div>
+                </form>
+
+                <!-- Success Message (shown after submit) -->
+                <div id="formSuccess" class="request-form form-success">
+                    <div class="success-icon">&#10003;</div>
+                    <h2>Request Received!</h2>
+                    <p><strong>We'll send your quote within 10 minutes</strong> to the email you provided.</p>
+                    <p>Check your inbox (and spam folder) shortly.</p>
+                    <p style="margin-top: var(--space-lg); font-size: 0.875rem;">Order deadline for this Friday's store run: <strong>Thursday 11:59 PM JST</strong></p>
+                    <a href="index.html" class="btn btn-outline-light" style="margin-top: var(--space-xl);">Back to Home</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <rect width="32" height="32" rx="6" fill="currentColor"/>
+                            <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="white"/>
+                        </svg>
+                        <span>JapanCulture</span>
+                    </div>
+                    <p>Your personal shopper in Tokyo's best anime stores.</p>
+                    <div class="footer-social">
+                        <a href="#">Twitter</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">Discord</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Service</h4>
+                    <ul>
+                        <li><a href="index.html#how-it-works">How It Works</a></li>
+                        <li><a href="index.html#pricing">Pricing</a></li>
+                        <li><a href="shipping.html">Shipping Info</a></li>
+                        <li><a href="store-schedule.html">Store Schedule</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="tokushoho.html">Specified Commercial Transactions Act</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:orders@japanculture.com">orders@japanculture.com</a></li>
+                        <li>Singapore &bull; USA &bull; Australia</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 JapanCulture. Proxy purchase service. All trademarks belong to their respective owners.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&uarr;</button>
+
+    <script>
+    // Conditional fields based on service type
+    document.getElementById('serviceType').addEventListener('change', function() {
+        var val = this.value;
+        var eventFields = document.getElementById('eventFields');
+        var rareFields = document.getElementById('rareFields');
+        var infoStd = document.getElementById('infoStandard');
+        var infoRare = document.getElementById('infoRare');
+        var infoEvent = document.getElementById('infoEvent');
+
+        // Hide all
+        eventFields.classList.remove('visible');
+        rareFields.classList.remove('visible');
+        infoStd.classList.remove('visible');
+        infoRare.classList.remove('visible');
+        infoEvent.classList.remove('visible');
+
+        // Remove required from conditional fields
+        document.getElementById('eventName').removeAttribute('required');
+
+        if (val === 'Event Proxy') {
+            eventFields.classList.add('visible');
+            infoEvent.classList.add('visible');
+            document.getElementById('eventName').setAttribute('required', '');
+        } else if (val === 'Rare Item Search') {
+            rareFields.classList.add('visible');
+            infoRare.classList.add('visible');
+        } else if (val === 'Standard') {
+            infoStd.classList.add('visible');
+        }
+    });
+
+    // Pre-fill service type from URL params
+    (function() {
+        var params = new URLSearchParams(window.location.search);
+        var service = params.get('service_type');
+        if (service) {
+            var map = { 'standard': 'Standard', 'rare': 'Rare Item Search', 'event': 'Event Proxy' };
+            var val = map[service] || service;
+            var sel = document.getElementById('serviceType');
+            for (var i = 0; i < sel.options.length; i++) {
+                if (sel.options[i].value === val) {
+                    sel.selectedIndex = i;
+                    sel.dispatchEvent(new Event('change'));
+                    break;
+                }
+            }
+        }
+        var itemName = params.get('item_name');
+        if (itemName) document.getElementById('productName').value = itemName;
+
+        // Set success redirect URL
+        document.getElementById('successRedirect').value = window.location.href.split('?')[0] + '?success=1';
+
+        // Show success message if redirected back
+        if (params.get('success') === '1') {
+            document.getElementById('requestForm').style.display = 'none';
+            document.getElementById('formSuccess').classList.add('visible');
+        }
+    })();
+    </script>
+    <script src="js/main.js" defer></script>
+</body>
+</html>
