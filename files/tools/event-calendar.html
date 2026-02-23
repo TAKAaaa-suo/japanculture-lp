@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Calendar - JapanCulture</title>
+  <meta name="description" content="Upcoming anime events, collaboration cafes, pop-up shops, and ichiban kuji in Japan. Plan your proxy purchases.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Variables ────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg-card: #141414;
+      --bg-card-hover: #1c1c1c;
+      --bg-section: #111111;
+      --text: #ffffff;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --border: #262626;
+      --border-light: #374151;
+      --accent: #ef4444;
+      --accent-hover: #dc2626;
+      --green: #10b981;
+      --green-bg: rgba(16, 185, 129, 0.12);
+      --amber: #f59e0b;
+      --amber-bg: rgba(245, 158, 11, 0.12);
+      --gray-badge: #6b7280;
+      --gray-badge-bg: rgba(107, 114, 128, 0.15);
+      --blue: #3b82f6;
+      --blue-bg: rgba(59, 130, 246, 0.12);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── Header ───────────────────────────────────────────────── */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .logo svg { flex-shrink: 0; }
+    .header-nav { display: flex; align-items: center; gap: 24px; }
+    .header-nav a {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+    .header-nav a:hover { color: var(--text); }
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+      transition: all 0.2s;
+    }
+    .btn-back:hover { background: var(--bg-card-hover); color: var(--text); }
+
+    /* ── Page Layout ──────────────────────────────────────────── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .page-header {
+      padding: 48px 0 32px;
+      text-align: center;
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .page-header p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .last-updated {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Today Banner ─────────────────────────────────────────── */
+    .today-banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 20px;
+      background: var(--blue-bg);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-radius: var(--radius-sm);
+      margin-bottom: 32px;
+      font-size: 0.9rem;
+      color: var(--blue);
+      font-weight: 500;
+    }
+    .today-banner .dot {
+      width: 8px; height: 8px;
+      background: var(--blue);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ── Filter Tabs ──────────────────────────────────────────── */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .filter-tab {
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .filter-tab:hover { background: var(--bg-card-hover); color: var(--text); }
+    .filter-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* ── Week Section ─────────────────────────────────────────── */
+    .week-section {
+      margin-bottom: 40px;
+    }
+    .week-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: var(--bg-section);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+    .week-header .week-icon { font-size: 1.1rem; }
+    .week-header .week-count {
+      margin-left: auto;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* ── Day Group ────────────────────────────────────────────── */
+    .day-group {
+      margin-bottom: 24px;
+      margin-left: 16px;
+      padding-left: 20px;
+      border-left: 2px solid var(--border);
+      position: relative;
+    }
+    .day-group.is-today { border-left-color: var(--blue); }
+    .day-group::before {
+      content: '';
+      position: absolute;
+      left: -6px; top: 6px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+      border: 2px solid var(--bg);
+    }
+    .day-group.is-today::before {
+      background: var(--blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    }
+    .day-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+    .day-group.is-today .day-label { color: var(--blue); }
+
+    /* ── Event Card ───────────────────────────────────────────── */
+    .event-card {
+      display: flex;
+      gap: 14px;
+      padding: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 10px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .event-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-light);
+      transform: translateY(-1px);
+    }
+    .event-thumb {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: var(--bg-section);
+    }
+    .event-thumb-placeholder {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      background: var(--bg-section);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--text-muted);
+    }
+    .event-info { flex: 1; min-width: 0; }
+    .event-title-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .event-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1.4;
+      flex: 1;
+    }
+    .event-original {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+      margin-bottom: 6px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .event-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+    .event-meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+    /* ── Status Badges ────────────────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .badge-now {
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    .badge-soon {
+      background: var(--amber-bg);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+    .badge-ended {
+      background: var(--gray-badge-bg);
+      color: var(--gray-badge);
+      border: 1px solid rgba(107, 114, 128, 0.2);
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* ── Store Tag ─────────────────────────────────────────────── */
+    .store-tag {
+      display: inline-flex;
+      padding: 1px 7px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Empty State ──────────────────────────────────────────── */
+    .empty-state {
+      text-align: center;
+      padding: 64px 24px;
+      color: var(--text-muted);
+    }
+    .empty-state .empty-icon { font-size: 3rem; margin-bottom: 16px; }
+    .empty-state h3 { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 8px; }
+
+    /* ── Loading ──────────────────────────────────────────────── */
+    .loading {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--text-muted);
+    }
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Footer ───────────────────────────────────────────────── */
+    .footer {
+      margin-top: 64px;
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8125rem;
+    }
+    .footer a { color: var(--text-secondary); }
+    .footer a:hover { color: var(--text); }
+
+    /* ── Stats Bar ────────────────────────────────────────────── */
+    .stats-bar {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+    }
+    .stat-value { font-weight: 700; color: var(--text); }
+    .stat-label { color: var(--text-muted); }
+
+    /* ── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .page-header h1 { font-size: 1.5rem; }
+      .header-nav { display: none; }
+      .event-card { flex-direction: row; }
+      .event-thumb, .event-thumb-placeholder { width: 50px; height: 50px; }
+      .event-meta { gap: 8px; }
+      .filter-bar { gap: 6px; }
+      .filter-tab { padding: 6px 14px; font-size: 0.75rem; }
+      .stats-bar { gap: 8px; }
+      .stat { padding: 5px 10px; font-size: 0.75rem; }
+      .day-group { margin-left: 8px; padding-left: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+          <rect width="32" height="32" rx="6" fill="currentColor"/>
+          <path d="M16 8L20 16L16 24L12 16L16 8Z" fill="#0a0a0a"/>
+        </svg>
+        <span>JapanCulture</span>
+      </a>
+      <nav class="header-nav">
+        <a href="../category/news.html">News</a>
+        <a href="../category/store-items.html">Store Items</a>
+        <a href="../category/weekly-pickups.html">Pickups</a>
+      </nav>
+      <a href="../category/news.html" class="btn-back">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to News
+      </a>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <main class="container">
+    <div class="page-header">
+      <h1>Event Calendar</h1>
+      <p>Upcoming anime events, collaboration cafes, pop-up shops and ichiban kuji in Japan</p>
+      <div class="last-updated" id="last-updated"></div>
+    </div>
+
+    <!-- Today Banner -->
+    <div class="today-banner" id="today-banner">
+      <span class="dot"></span>
+      <span id="today-text"></span>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-bar" id="stats-bar"></div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-bar" id="filter-bar">
+      <button class="filter-tab active" data-filter="all">All Events</button>
+      <button class="filter-tab" data-filter="cafe">Cafes &amp; Restaurants</button>
+      <button class="filter-tab" data-filter="popup">Pop-up Shops</button>
+      <button class="filter-tab" data-filter="animate">Animate Events</button>
+      <button class="filter-tab" data-filter="kuji">Ichiban Kuji</button>
+    </div>
+
+    <!-- Calendar Content -->
+    <div id="calendar-content">
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Loading events...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Data updated automatically from official sources. <a href="../index.html">Back to JapanCulture</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* ── Helpers ──────────────────────────────────────────── */
+
+      const $ = (sel, ctx) => (ctx || document).querySelector(sel);
+      const $$ = (sel, ctx) => Array.from((ctx || document).querySelectorAll(sel));
+
+      const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+      function today() {
+        const d = new Date();
+        return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      }
+
+      function parseDate(str) {
+        if (!str) return null;
+        const d = new Date(str);
+        return isNaN(d.getTime()) ? null : d;
+      }
+
+      function fmtDate(d) {
+        return `${MONTH_NAMES[d.getMonth()]} ${d.getDate()}`;
+      }
+
+      function fmtDateFull(d) {
+        return `${MONTH_NAMES[d.getMonth()]} ${d.getDate()} (${DAY_NAMES[d.getDay()]})`;
+      }
+
+      function fmtDateRange(start, end) {
+        if (!start) return '';
+        const s = fmtDate(start);
+        if (!end) return s + ' ~';
+        return s + ' - ' + fmtDate(end);
+      }
+
+      function dateKey(d) {
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      }
+
+      function isSameDay(a, b) {
+        return a.getFullYear() === b.getFullYear() &&
+               a.getMonth() === b.getMonth() &&
+               a.getDate() === b.getDate();
+      }
+
+      /** Get Monday of the week containing date d */
+      function weekStart(d) {
+        const wd = new Date(d);
+        const day = wd.getDay();
+        const diff = day === 0 ? -6 : 1 - day; // Monday = start
+        wd.setDate(wd.getDate() + diff);
+        return new Date(wd.getFullYear(), wd.getMonth(), wd.getDate());
+      }
+
+      function addDays(d, n) {
+        const r = new Date(d);
+        r.setDate(r.getDate() + n);
+        return r;
+      }
+
+      /* ── Categorize event ─────────────────────────────────── */
+
+      function eventCategory(item) {
+        const t = `${item.title || ''} ${item.summary || ''} ${item.originalTitle || ''} ${item.category || ''} ${item.storeTag || ''}`.toLowerCase();
+
+        if (t.includes('一番くじ') || t.includes('ichiban kuji') || t.includes('kuji')) return 'kuji';
+        if (t.includes('cafe') || t.includes('カフェ') || t.includes('restaurant') || item.category === 'cafe') return 'cafe';
+        if (t.includes('popup') || t.includes('pop-up') || t.includes('pop up') || t.includes('ポップアップ') || item.category === 'popup-shop') return 'popup';
+        if (t.includes('animate') || t.includes('アニメイト') || t.includes('gratte') || item.source === 'Animate OnlyShop' || item.source === 'Animate Gratte' || item.source === 'Animate Cafe') return 'animate';
+        return 'other';
+      }
+
+      /* ── Status badge ────────────────────────────────────── */
+
+      function eventStatus(item, now) {
+        const start = parseDate(item.eventStart);
+        const end = parseDate(item.eventEnd);
+
+        if (start && end) {
+          if (now >= start && now <= end) return 'now';
+          if (now < start) return 'soon';
+          return 'ended';
+        }
+        if (start) {
+          if (now >= start) return 'now';
+          return 'soon';
+        }
+        // No event dates - use publishedAt as rough guide
+        const pub = parseDate(item.publishedAt);
+        if (pub) {
+          const daysSincePub = (now - pub) / (1000 * 60 * 60 * 24);
+          if (daysSincePub > 30) return 'ended';
+        }
+        return 'soon';
+      }
+
+      function statusBadge(status) {
+        const map = {
+          now: { cls: 'badge-now', label: 'Now Open' },
+          soon: { cls: 'badge-soon', label: 'Opening Soon' },
+          ended: { cls: 'badge-ended', label: 'Ended' },
+        };
+        const { cls, label } = map[status] || map.soon;
+        return `<span class="badge ${cls}"><span class="badge-dot"></span>${label}</span>`;
+      }
+
+      /* ── Render ───────────────────────────────────────────── */
+
+      let allEvents = [];
+      let currentFilter = 'all';
+
+      function getEffectiveDate(item) {
+        const d = parseDate(item.eventStart) || parseDate(item.publishedAt);
+        return d || today();
+      }
+
+      function renderCalendar() {
+        const now = today();
+        const thisWeekMon = weekStart(now);
+        const nextWeekMon = addDays(thisWeekMon, 7);
+        const nextWeekEnd = addDays(nextWeekMon, 6);
+
+        // Filter by tab
+        let events = allEvents;
+        if (currentFilter !== 'all') {
+          events = events.filter(ev => eventCategory(ev) === currentFilter);
+        }
+
+        // Sort by event start date (soonest first)
+        events.sort((a, b) => {
+          const da = getEffectiveDate(a);
+          const db = getEffectiveDate(b);
+          return da - db;
+        });
+
+        // Group into weeks
+        const thisWeek = [];
+        const nextWeek = [];
+        const comingSoon = [];
+        const past = [];
+
+        events.forEach(ev => {
+          const d = getEffectiveDate(ev);
+          const status = eventStatus(ev, new Date());
+
+          if (status === 'ended') {
+            past.push(ev);
+          } else if (d >= thisWeekMon && d < nextWeekMon) {
+            thisWeek.push(ev);
+          } else if (d >= nextWeekMon && d <= addDays(nextWeekEnd, 1)) {
+            nextWeek.push(ev);
+          } else if (d < thisWeekMon) {
+            // Already started before this week but still open
+            thisWeek.push(ev);
+          } else {
+            comingSoon.push(ev);
+          }
+        });
+
+        const container = $('#calendar-content');
+
+        if (events.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon">&#128197;</div>
+              <h3>No events found</h3>
+              <p>No events match the current filter. Try "All Events" to see everything.</p>
+            </div>`;
+          return;
+        }
+
+        let html = '';
+
+        if (thisWeek.length > 0) {
+          const label = `This Week (${fmtDate(thisWeekMon)} - ${fmtDate(addDays(thisWeekMon, 6))})`;
+          html += renderWeekSection(label, '&#128198;', thisWeek, now);
+        }
+
+        if (nextWeek.length > 0) {
+          const label = `Next Week (${fmtDate(nextWeekMon)} - ${fmtDate(nextWeekEnd)})`;
+          html += renderWeekSection(label, '&#128197;', nextWeek, now);
+        }
+
+        if (comingSoon.length > 0) {
+          html += renderWeekSection('Coming Soon', '&#128640;', comingSoon, now);
+        }
+
+        if (past.length > 0) {
+          html += renderWeekSection('Recently Ended', '&#128336;', past, now);
+        }
+
+        container.innerHTML = html;
+      }
+
+      function renderWeekSection(title, icon, events, now) {
+        // Group by day
+        const dayMap = new Map();
+        events.forEach(ev => {
+          const d = getEffectiveDate(ev);
+          const key = dateKey(d);
+          if (!dayMap.has(key)) dayMap.set(key, { date: d, items: [] });
+          dayMap.get(key).items.push(ev);
+        });
+
+        // Sort days
+        const days = Array.from(dayMap.values()).sort((a, b) => a.date - b.date);
+
+        let html = `
+          <div class="week-section">
+            <div class="week-header">
+              <span class="week-icon">${icon}</span>
+              <span>${title}</span>
+              <span class="week-count">${events.length} event${events.length !== 1 ? 's' : ''}</span>
+            </div>`;
+
+        days.forEach(({ date, items }) => {
+          const isToday = isSameDay(date, now);
+          html += `
+            <div class="day-group${isToday ? ' is-today' : ''}">
+              <div class="day-label">${isToday ? 'Today - ' : ''}${fmtDateFull(date)}</div>`;
+
+          items.forEach(ev => {
+            html += renderEventCard(ev, now);
+          });
+
+          html += '</div>';
+        });
+
+        html += '</div>';
+        return html;
+      }
+
+      function renderEventCard(ev, now) {
+        const status = eventStatus(ev, new Date());
+        const start = parseDate(ev.eventStart);
+        const end = parseDate(ev.eventEnd);
+        const period = (start || end) ? fmtDateRange(start, end) : '';
+        const store = ev.storeTag || ev.source || '';
+        const cat = eventCategory(ev);
+
+        const thumbHtml = ev.image
+          ? `<img class="event-thumb" src="${ev.image}" alt="" loading="lazy" onerror="this.outerHTML='<div class=\\'event-thumb-placeholder\\'>&#127900;</div>'">`
+          : '<div class="event-thumb-placeholder">&#127900;</div>';
+
+        const originalHtml = ev.originalTitle
+          ? `<div class="event-original" title="${ev.originalTitle}">${ev.originalTitle}</div>`
+          : '';
+
+        return `
+          <a class="event-card" href="${ev.link}" target="_blank" rel="noopener noreferrer">
+            ${thumbHtml}
+            <div class="event-info">
+              <div class="event-title-row">
+                <div class="event-title">${ev.title}</div>
+                ${statusBadge(status)}
+              </div>
+              ${originalHtml}
+              <div class="event-meta">
+                ${period ? `<span>&#128197; ${period}</span>` : ''}
+                ${store ? `<span class="store-tag">${store}</span>` : ''}
+              </div>
+            </div>
+          </a>`;
+      }
+
+      /* ── Stats ────────────────────────────────────────────── */
+
+      function renderStats(events) {
+        const now = new Date();
+        let nowCount = 0, soonCount = 0, endedCount = 0;
+        events.forEach(ev => {
+          const s = eventStatus(ev, now);
+          if (s === 'now') nowCount++;
+          else if (s === 'soon') soonCount++;
+          else endedCount++;
+        });
+
+        const bar = $('#stats-bar');
+        bar.innerHTML = `
+          <div class="stat">
+            <span class="stat-value" style="color:var(--green)">${nowCount}</span>
+            <span class="stat-label">Open Now</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" style="color:var(--amber)">${soonCount}</span>
+            <span class="stat-label">Opening Soon</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">${events.length}</span>
+            <span class="stat-label">Total Events</span>
+          </div>`;
+      }
+
+      /* ── Filter tabs ──────────────────────────────────────── */
+
+      function setupFilters() {
+        $$('.filter-tab').forEach(tab => {
+          tab.addEventListener('click', () => {
+            $$('.filter-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentFilter = tab.dataset.filter;
+            renderCalendar();
+          });
+        });
+      }
+
+      /* ── Init ─────────────────────────────────────────────── */
+
+      async function init() {
+        // Today banner
+        const now = today();
+        $('#today-text').textContent = `Today is ${fmtDateFull(now)}`;
+
+        try {
+          const resp = await fetch('../data/news.json');
+          if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+          const data = await resp.json();
+
+          allEvents = data.items || [];
+
+          // Show last updated
+          if (data.lastUpdated) {
+            const upd = new Date(data.lastUpdated);
+            $('#last-updated').textContent = `Last updated: ${upd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`;
+          }
+
+          renderStats(allEvents);
+          renderCalendar();
+          setupFilters();
+        } catch (err) {
+          $('#calendar-content').innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon">&#9888;&#65039;</div>
+              <h3>Failed to load events</h3>
+              <p>Could not fetch event data. Please try again later.</p>
+              <p style="font-size: 0.75rem; margin-top: 8px; color: var(--text-muted)">${err.message}</p>
+            </div>`;
+        }
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
