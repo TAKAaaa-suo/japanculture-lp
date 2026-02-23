@@ -17,22 +17,18 @@
     fullLoadMoreCount: 6
   };
 
-  // Source badge color map
+  // Source badge color map - store-focused sources
   var SOURCE_COLORS = {
-    'Anime News Network': '#1a73e8',
-    'Crunchyroll':        '#f47521',
-    'MyAnimeList':        '#2e51a2',
-    'ANN':                '#1a73e8',
-    'Natalie':            '#e4007f',
-    'Comic Natalie':      '#e4007f',
-    'Oricon':             '#00a1e9',
-    'PR Times':           '#0072bc',
-    'MFC':                '#5c6bc0',
-    'Tokyo Otaku Mode':   '#e91e63',
-    'Good Smile Company': '#ff6600',
+    'Hobby Dengeki':      '#ff6600',
+    'Figsoku':            '#4caf50',
+    'Animate':            '#e91e63',
+    'Animate OnlyShop':   '#e91e63',
     'Kotobukiya':         '#c62828',
-    'Animate Times':      '#ff4081',
-    'Official':           '#ef4444',
+    'Kotobukiya Events':  '#c62828',
+    'Good Smile Company': '#ff6600',
+    'Banpresto Prize':    '#1565c0',
+    'Jump Shop':          '#ff9800',
+    'Pokemon Goods':      '#fdd835',
     'default':            '#6b7280'
   };
 
@@ -135,6 +131,43 @@
       '  text-transform: uppercase;',
       '  backdrop-filter: blur(4px);',
       '  -webkit-backdrop-filter: blur(4px);',
+      '}',
+
+      /* Store tag badge */
+      '.nw-store-tag {',
+      '  display: inline-flex;',
+      '  align-items: center;',
+      '  gap: 0.25rem;',
+      '  padding: 0.15rem 0.5rem;',
+      '  border-radius: 50px;',
+      '  font-size: 0.625rem;',
+      '  font-weight: 600;',
+      '  color: #9ca3af;',
+      '  border: 1px solid rgba(255,255,255,0.15);',
+      '  background: rgba(255,255,255,0.05);',
+      '  margin-bottom: 0.5rem;',
+      '  white-space: nowrap;',
+      '}',
+      '.section-light .nw-store-tag {',
+      '  color: #6b7280;',
+      '  border-color: rgba(0,0,0,0.12);',
+      '  background: rgba(0,0,0,0.03);',
+      '}',
+
+      /* Price badge */
+      '.nw-price {',
+      '  display: inline-block;',
+      '  padding: 0.1rem 0.4rem;',
+      '  border-radius: 4px;',
+      '  font-size: 0.75rem;',
+      '  font-weight: 700;',
+      '  color: #ef4444;',
+      '  background: rgba(239,68,68,0.1);',
+      '  margin-left: 0.5rem;',
+      '}',
+      '.section-light .nw-price {',
+      '  color: #dc2626;',
+      '  background: rgba(239,68,68,0.08);',
       '}',
 
       /* Card body */
@@ -370,8 +403,24 @@
       ? '<span class="nw-badge" style="background:' + badgeColor + ';">' + escapeHtml(item.source) + '</span>'
       : '';
 
-    var linkUrl = item.url ? escapeHtml(item.url) : '#';
-    var target = item.url ? ' target="_blank" rel="noopener noreferrer"' : '';
+    // Use link field (new format) with url fallback (old format)
+    var linkUrl = item.link || item.url || '#';
+    var target = linkUrl !== '#' ? ' target="_blank" rel="noopener noreferrer"' : '';
+
+    // Store tag badge
+    var storeTagHtml = '';
+    if (item.storeTag) {
+      storeTagHtml = '<span class="nw-store-tag">\ud83d\udccd ' + escapeHtml(item.storeTag) + '</span>';
+    }
+
+    // Price badge
+    var priceHtml = '';
+    if (item.price) {
+      priceHtml = '<span class="nw-price">' + escapeHtml(item.price) + '</span>';
+    }
+
+    // Date: support publishedAt (new), date, published_date (legacy)
+    var dateStr = item.publishedAt || item.date || item.published_date || '';
 
     return (
       '<article class="nw-card">' +
@@ -380,9 +429,10 @@
           badgeHtml +
         '</div>' +
         '<div class="nw-card-body">' +
-          '<h3 class="nw-card-title"><a href="' + linkUrl + '"' + target + '>' + escapeHtml(item.title || 'Untitled') + '</a></h3>' +
+          storeTagHtml +
+          '<h3 class="nw-card-title"><a href="' + escapeHtml(linkUrl) + '"' + target + '>' + escapeHtml(item.title || 'Untitled') + '</a>' + priceHtml + '</h3>' +
           '<p class="nw-card-summary">' + escapeHtml(item.summary || '') + '</p>' +
-          '<p class="nw-card-date">' + formatDate(item.date || item.published_date) + '</p>' +
+          '<p class="nw-card-date">' + formatDate(dateStr) + '</p>' +
         '</div>' +
       '</article>'
     );

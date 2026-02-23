@@ -1,57 +1,50 @@
 /**
- * Content filtering module.
- * Filters items to only include anime goods, merchandise, and event related content.
+ * Content filtering module (simplified).
+ *
+ * Since ALL sources are now merchandise/store-specific, keyword filtering
+ * is no longer needed. This module only:
+ *   - Removes items with no title or no link
+ *   - Removes exact duplicates (same title from different sources)
  */
 
-const { GOODS_KEYWORDS } = require('./config');
-
-// Product sources that should always pass through the filter
-const PRODUCT_SOURCES = ['Good Smile Company', 'Kotobukiya'];
-
 /**
- * Check if a text string matches any of the goods-related keywords.
- * Matching is case-insensitive.
- * @param {string} text - Text to check
- * @returns {boolean} True if any keyword matches
- */
-function matchesKeywords(text) {
-  if (!text) return false;
-  const lower = text.toLowerCase();
-  return GOODS_KEYWORDS.some((keyword) => lower.includes(keyword.toLowerCase()));
-}
-
-/**
- * Filter items to only include anime goods, merchandise, and event content.
+ * Filter and deduplicate items.
  *
  * Rules:
- * - Items from product sources (Good Smile, Kotobukiya) always pass.
- * - Items from general news sources must match at least one keyword in title or summary.
- * - Items that don't match any keyword from general news sources are excluded.
+ * - Remove items with no title or no link
+ * - Remove exact title duplicates (first occurrence wins)
  *
  * @param {Array} items - Array of news/product items
  * @returns {Array} Filtered items
  */
 function filterAnimeGoods(items) {
   const before = items.length;
+  let removedInvalid = 0;
+  let removedDuplicates = 0;
 
-  const filtered = items.filter((item) => {
-    // Product sources always pass
-    if (PRODUCT_SOURCES.includes(item.source)) {
-      return true;
+  const seenTitles = new Set();
+  const filtered = [];
+
+  for (const item of items) {
+    // Remove items with no title or no link
+    if (!item.title || !item.title.trim() || !item.link || !item.link.trim()) {
+      removedInvalid++;
+      continue;
     }
 
-    // Items with category 'products' always pass
-    if (item.category === 'products') {
-      return true;
+    // Remove exact title duplicates (case-insensitive)
+    const normalizedTitle = item.title.trim().toLowerCase();
+    if (seenTitles.has(normalizedTitle)) {
+      removedDuplicates++;
+      continue;
     }
+    seenTitles.add(normalizedTitle);
 
-    // For general news sources, check keyword match in title + summary
-    const combinedText = `${item.title || ''} ${item.summary || ''}`;
-    return matchesKeywords(combinedText);
-  });
+    filtered.push(item);
+  }
 
   const after = filtered.length;
-  console.log(`  Filtered: ${before} items -> ${after} items (removed ${before - after} non-matching)`);
+  console.log(`  Filtered: ${before} items -> ${after} items (removed ${removedInvalid} invalid, ${removedDuplicates} duplicates)`);
 
   return filtered;
 }

@@ -1,119 +1,124 @@
 /**
- * Configuration for the anime news collector.
- * Defines data sources, keywords, and output settings.
+ * Configuration for the store-focused product/event news collector.
+ * Sources are specific to stores on the Friday proxy purchasing route in Tokyo.
+ *
+ * Route: Akihabara -> Ikebukuro -> Shibuya/Harajuku -> Nakano Broadway
  */
 
 const path = require('path');
 
-// RSS feed sources ordered by priority
+// RSS feed sources - merchandise/figure specific
 const RSS_SOURCES = [
   {
-    name: 'Anime News Network',
-    url: 'https://www.animenewsnetwork.com/all/rss.xml',
-    language: 'en',
-    priority: 1,
-    category: 'news',
-  },
-  {
-    name: 'Crunchyroll News',
-    url: 'https://www.crunchyroll.com/newsrss?lang=en',
-    language: 'en',
-    priority: 1,
-    category: 'news',
-  },
-  {
-    name: 'MyAnimeList News',
-    url: 'https://myanimelist.net/rss/news.xml',
-    language: 'en',
-    priority: 2,
-    category: 'news',
-  },
-  {
-    name: 'Natalie Comic',
-    url: 'https://natalie.mu/comic/feed',
+    name: 'Hobby Dengeki',
+    url: 'https://hobby.dengeki.com/feed/',
     language: 'ja',
-    priority: 3,
-    category: 'news',
+    priority: 1,
+    category: 'products',
+    storeTag: 'All Stores',
   },
   {
-    name: 'Animate Times',
-    url: 'https://www.animatetimes.com/rss.xml',
+    name: 'Figsoku',
+    url: 'https://figsoku.net/feed/',
     language: 'ja',
-    priority: 3,
-    category: 'news',
+    priority: 1,
+    category: 'products',
+    storeTag: 'All Stores',
   },
 ];
 
-// Product pages to scrape
+// Store pages to scrape
 const SCRAPE_SOURCES = [
   {
-    name: 'Good Smile Company',
-    url: 'https://www.goodsmile.info/en/products/announced',
-    language: 'en',
-    category: 'products',
+    name: 'Animate',
+    type: 'animate-news',
+    urls: [
+      'https://www.animate.co.jp/news/',
+    ],
+    language: 'ja',
+    category: 'store-news',
+    storeTag: 'Animate Akihabara / Ikebukuro',
+  },
+  {
+    name: 'Animate OnlyShop',
+    type: 'animate-onlyshop',
+    urls: [
+      'https://www.animate.co.jp/onlyshop/',
+    ],
+    language: 'ja',
+    category: 'events',
+    storeTag: 'Animate',
   },
   {
     name: 'Kotobukiya',
-    url: 'https://www.kotobukiya.co.jp/en/product-category/figure/',
+    type: 'kotobukiya',
+    urls: [
+      'https://www.kotobukiya.co.jp/product/',
+    ],
+    language: 'ja',
+    category: 'products',
+    storeTag: 'Kotobukiya Akihabara',
+  },
+  {
+    name: 'Kotobukiya Events',
+    type: 'kotobukiya-events',
+    urls: [
+      'https://www.kotobukiya.co.jp/event/',
+    ],
+    language: 'ja',
+    category: 'events',
+    storeTag: 'Kotobukiya Akihabara',
+  },
+  {
+    name: 'Good Smile Company',
+    type: 'goodsmile',
+    urls: [
+      'https://www.goodsmile.info/en/products/announced',
+    ],
     language: 'en',
     category: 'products',
+    storeTag: 'Akihabara / Online',
+  },
+  {
+    name: 'Banpresto Prize',
+    type: 'banpresto',
+    urls: [
+      'https://bsp-prize.jp/',
+    ],
+    language: 'ja',
+    category: 'products',
+    storeTag: 'Game Centers / Stores',
+  },
+  {
+    name: 'Jump Shop',
+    type: 'jumpshop',
+    urls: [
+      'https://jumpshop-online.com/products.json',
+    ],
+    language: 'ja',
+    category: 'products',
+    storeTag: 'Jump Shop Shibuya',
+  },
+  {
+    name: 'Pokemon Goods',
+    type: 'pokemon',
+    urls: [
+      'https://www.pokemon.co.jp/goods/',
+    ],
+    language: 'ja',
+    category: 'products',
+    storeTag: 'Pokemon Center Shibuya',
   },
 ];
 
-// Keywords used to filter anime goods / merchandise / event content
-const GOODS_KEYWORDS = [
-  // Product types
-  'figure', 'figurine', 'nendoroid', 'figma', 'statue',
-  'scale figure', 'plush', 'plushie', 'stuffed',
-  'merchandise', 'merch', 'goods', 'collectible',
-  'model kit', 'gunpla', 'plastic model',
-  'artbook', 'art book',
-  'dakimakura', 'tapestry', 'poster',
-  'keychain', 'strap', 'badge', 'pin',
-  'acrylic stand', 'acrylic block',
-  'trading card', 'card game', 'tcg',
-  'gashapon', 'gacha', 'capsule toy',
-  'prize figure', 'crane game', 'ichiban kuji',
-  'cosplay', 'costume',
-  'soundtrack', 'ost', 'vinyl',
-  't-shirt', 'apparel', 'clothing',
-  'mug', 'tumbler', 'cup',
-  'towel', 'blanket',
-  'tote bag', 'backpack',
-  // Events
-  'event', 'exhibition', 'expo', 'convention',
-  'anime expo', 'comiket', 'comic market',
-  'anime japan', 'wonder festival', 'wonfes',
-  'jump festa', 'tokyo game show',
-  'collaboration', 'collab', 'pop-up shop',
-  'cafe', 'store event', 'signing',
-  // Commerce
-  'pre-order', 'preorder', 'pre order',
-  'release date', 'on sale', 'limited edition',
-  'exclusive', 'shop', 'store',
-  'proxy', 'buying service',
-  'import', 'japan exclusive',
-  // Japanese keywords (for untranslated content)
-  'フィギュア', 'ねんどろいど', 'グッズ',
-  '予約', '発売', '限定',
-  'イベント', 'コラボ', '展示',
-  'プライズ', 'アクリルスタンド',
-  'ガシャポン', 'ガチャ', '一番くじ',
-];
+// No keyword filtering needed - all sources are already merchandise-specific
+const GOODS_KEYWORDS = []; // kept for backwards compat
 
-// Output settings
 const OUTPUT = {
   dir: path.join(__dirname, '..', 'files', 'data'),
   file: path.join(__dirname, '..', 'files', 'data', 'news.json'),
 };
 
-// Maximum number of items to keep in the output
 const MAX_ITEMS = 50;
 
-module.exports = {
-  RSS_SOURCES,
-  SCRAPE_SOURCES,
-  GOODS_KEYWORDS,
-  OUTPUT,
-  MAX_ITEMS,
-};
+module.exports = { RSS_SOURCES, SCRAPE_SOURCES, GOODS_KEYWORDS, OUTPUT, MAX_ITEMS };

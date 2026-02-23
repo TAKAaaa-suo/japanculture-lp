@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 
 /**
- * Main orchestrator script for the anime news collector.
+ * Main orchestrator script for the store-focused news collector.
  *
  * Flow:
- *   1. Fetch RSS feeds from configured sources
- *   2. Scrape product pages from configured sources
+ *   1. Fetch RSS feeds (Hobby Dengeki, Figsoku)
+ *   2. Scrape store product/event pages (Animate, Kotobukiya, GSC, etc.)
  *   3. Combine all items
- *   4. Filter to anime goods / merchandise / event content
+ *   4. Filter (remove invalid items and exact duplicates)
  *   5. Translate Japanese items (if DeepL key is available)
  *   6. Deduplicate by ID
  *   7. Sort by publishedAt (newest first)
- *   8. Limit to MAX_ITEMS
+ *   8. Limit to MAX_ITEMS (50)
  *   9. Write JSON to files/data/news.json
  *
  * Usage:
@@ -53,13 +53,13 @@ function deduplicateById(items) {
  */
 async function main() {
   const startTime = Date.now();
-  console.log('=== Anime News Collector ===');
+  console.log('=== Store Product & Event News Collector ===');
   console.log(`Started at: ${new Date().toISOString()}`);
   console.log(`Mode: ${isDryRun ? 'DRY RUN' : 'LIVE'}`);
   console.log('');
 
   // Step 1: Fetch RSS feeds
-  console.log('[1/6] Fetching RSS feeds...');
+  console.log('[1/6] Fetching RSS feeds (Hobby Dengeki, Figsoku)...');
   let rssItems = [];
   try {
     rssItems = await fetchRSSFeeds(RSS_SOURCES);
@@ -69,15 +69,15 @@ async function main() {
   console.log(`  Total RSS items: ${rssItems.length}`);
   console.log('');
 
-  // Step 2: Scrape product pages
-  console.log('[2/6] Scraping product pages...');
+  // Step 2: Scrape store product/event pages
+  console.log('[2/6] Scraping store pages...');
   let productItems = [];
   try {
     productItems = await fetchNewProducts(SCRAPE_SOURCES);
   } catch (err) {
-    console.error(`[ERROR] Product scraping failed entirely: ${err.message}`);
+    console.error(`[ERROR] Store scraping failed entirely: ${err.message}`);
   }
-  console.log(`  Total product items: ${productItems.length}`);
+  console.log(`  Total store items: ${productItems.length}`);
   console.log('');
 
   // Step 3: Combine all items
@@ -86,8 +86,8 @@ async function main() {
   console.log(`  Combined total: ${allItems.length}`);
   console.log('');
 
-  // Step 4: Filter to anime goods content
-  console.log('[4/6] Filtering for anime goods/merchandise/events...');
+  // Step 4: Filter (remove invalid + title duplicates)
+  console.log('[4/6] Filtering and deduplicating...');
   allItems = filterAnimeGoods(allItems);
   console.log('');
 
@@ -96,10 +96,10 @@ async function main() {
   allItems = await translateTexts(allItems);
   console.log('');
 
-  // Step 6: Deduplicate, sort, and limit
+  // Step 6: Deduplicate by ID, sort, and limit
   console.log('[6/6] Finalizing...');
   allItems = deduplicateById(allItems);
-  console.log(`  After deduplication: ${allItems.length}`);
+  console.log(`  After ID deduplication: ${allItems.length}`);
 
   // Sort by publishedAt descending (newest first)
   allItems.sort((a, b) => {
@@ -114,7 +114,7 @@ async function main() {
     console.log(`  Trimmed to ${MAX_ITEMS} items`);
   }
 
-  // Build output object
+  // Build output object with storeTag and price fields
   const output = {
     lastUpdated: new Date().toISOString(),
     count: allItems.length,
@@ -125,9 +125,12 @@ async function main() {
       link: item.link,
       image: item.image || null,
       source: item.source,
+      storeTag: item.storeTag || null,
       publishedAt: item.publishedAt,
       category: item.category,
+      language: item.language || 'ja',
       translated: item.translated || false,
+      price: item.price || null,
       ...(item.originalTitle ? { originalTitle: item.originalTitle } : {}),
     })),
   };
@@ -138,14 +141,16 @@ async function main() {
     console.log('=== DRY RUN: Output Preview ===');
     console.log(`Items: ${output.count}`);
     console.log('');
-    output.items.slice(0, 10).forEach((item, i) => {
+    output.items.slice(0, 15).forEach((item, i) => {
       console.log(`  ${i + 1}. [${item.source}] ${item.title}`);
+      console.log(`     Store: ${item.storeTag || 'N/A'} | Category: ${item.category}`);
       console.log(`     ${item.link}`);
-      console.log(`     ${item.publishedAt} | ${item.category}`);
+      console.log(`     ${item.publishedAt}${item.price ? ' | Price: ' + item.price : ''}`);
+      console.log(`     Image: ${item.image ? 'YES' : 'NO'}`);
       console.log('');
     });
-    if (output.count > 10) {
-      console.log(`  ... and ${output.count - 10} more items`);
+    if (output.count > 15) {
+      console.log(`  ... and ${output.count - 15} more items`);
     }
   } else {
     // Ensure output directory exists
