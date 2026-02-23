@@ -1,0 +1,15 @@
+{
+  "name": "japanculture-news-collector",
+  "version": "1.0.0",
+  "description": "Automated anime news collector for JapanCulture LP",
+  "scripts": {
+    "fetch": "node scripts/fetch-news.js",
+    "fetch:dry-run": "node scripts/fetch-news.js --dry-run"
+  },
+  "dependencies": {
+    "rss-parser": "^3.13.0",
+    "cheerio": "^1.0.0",
+    "axios": "^1.7.0",
+    "dayjs": "^1.11.0"
+  }
+}
