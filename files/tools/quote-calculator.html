@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japan Culture - Quote Calculator (Internal Tool)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ---- Reset & Variables ---- */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-medium: #1a1a1a;
+            --bg-card: #141414;
+            --bg-input: #1e1e1e;
+            --color-primary: #ef4444;
+            --color-primary-dark: #dc2626;
+            --color-secondary: #f59e0b;
+            --color-success: #10b981;
+            --color-info: #3b82f6;
+            --color-text: #ffffff;
+            --color-text-muted: #9ca3af;
+            --color-border: #2a2a2a;
+            --color-border-focus: #ef4444;
+            --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --radius: 0.5rem;
+            --radius-lg: 1rem;
+            --transition: all 0.2s ease;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--color-text);
+            background: var(--bg-dark);
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* ---- Layout ---- */
+        .app-header {
+            background: var(--bg-medium);
+            border-bottom: 1px solid var(--color-border);
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .app-header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .app-logo {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+        .app-logo span { color: var(--color-primary); }
+        .app-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: var(--color-primary);
+            color: #fff;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        /* ---- Cards ---- */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+        }
+        .card + .card { margin-top: 1.5rem; }
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card-title .icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        /* ---- Form Elements ---- */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .form-row.single { grid-template-columns: 1fr; }
+        .form-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+
+        .form-group { margin-bottom: 0; }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.35rem;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: var(--bg-input);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            color: var(--color-text);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--color-border-focus);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+        }
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.8rem center;
+            padding-right: 2rem;
+        }
+        .form-group select option {
+            background: var(--bg-medium);
+            color: var(--color-text);
+        }
+        .form-group input::placeholder { color: #555; }
+
+        /* ---- Items Table ---- */
+        .items-section { margin-top: 0; }
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0.75rem;
+        }
+        .items-table thead th {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            text-align: left;
+            padding: 0.5rem 0.5rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .items-table thead th:last-child { text-align: center; width: 40px; }
+        .items-table tbody td {
+            padding: 0.4rem 0.5rem;
+            vertical-align: middle;
+        }
+        .items-table tbody td input {
+            width: 100%;
+            padding: 0.5rem 0.6rem;
+            background: var(--bg-input);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            color: var(--color-text);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+        .items-table tbody td input:focus {
+            outline: none;
+            border-color: var(--color-border-focus);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+        }
+        .items-table tbody td input::placeholder { color: #555; }
+        .items-table .usd-cell {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            min-width: 80px;
+            text-align: right;
+            padding-right: 0.75rem;
+        }
+        .items-table .col-name { width: 40%; }
+        .items-table .col-store { width: 20%; }
+        .items-table .col-qty { width: 8%; }
+        .items-table .col-jpy { width: 15%; }
+        .items-table .col-usd { width: 12%; }
+        .items-table .col-del { width: 5%; }
+
+        .btn-remove-item {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: transparent;
+            color: #666;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-remove-item:hover { background: rgba(239, 68, 68, 0.15); color: var(--color-primary); }
+
+        .btn-add-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px dashed #444;
+            border-radius: var(--radius);
+            color: var(--color-text-muted);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-add-item:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+        /* ---- Sidebar / Results ---- */
+        .sidebar { position: sticky; top: 80px; }
+
+        .result-card {
+            background: linear-gradient(135deg, #1a1a1a, #141414);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        .result-row .label { color: var(--color-text-muted); }
+        .result-row .value { font-weight: 600; font-variant-numeric: tabular-nums; }
+        .result-row.subtotal {
+            border-top: 1px solid var(--color-border);
+            margin-top: 0.25rem;
+            padding-top: 0.75rem;
+        }
+        .result-row.total {
+            border-top: 2px solid var(--color-border);
+            margin-top: 0.5rem;
+            padding-top: 0.75rem;
+            font-size: 1.15rem;
+        }
+        .result-row.total .value { color: var(--color-primary); font-size: 1.3rem; }
+        .result-row.profit {
+            margin-top: 0.25rem;
+            padding-top: 0.5rem;
+        }
+        .result-row.profit .value { color: var(--color-success); }
+
+        .result-divider {
+            border: none;
+            border-top: 1px solid var(--color-border);
+            margin: 0.75rem 0;
+        }
+
+        .discount-badge {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--color-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            margin-left: 0.5rem;
+        }
+
+        /* ---- Buttons ---- */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-top: 1.25rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: var(--radius);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: var(--color-primary);
+            color: #fff;
+        }
+        .btn-primary:hover { background: var(--color-primary-dark); }
+        .btn-secondary {
+            background: var(--bg-input);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+        .btn-secondary:hover { border-color: #555; background: #222; }
+        .btn-ghost {
+            background: transparent;
+            color: var(--color-text-muted);
+            border: 1px solid var(--color-border);
+        }
+        .btn-ghost:hover { border-color: #555; color: var(--color-text); }
+
+        /* ---- Toast ---- */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--color-success);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 9999;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* ---- Rate Info ---- */
+        .rate-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .rate-info small {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+        .rate-save-btn {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: rgba(59,130,246,0.15);
+            color: var(--color-info);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .rate-save-btn:hover { background: rgba(59,130,246,0.25); }
+
+        /* ---- Rare/Event Info Boxes ---- */
+        .info-box {
+            background: rgba(59,130,246,0.08);
+            border: 1px solid rgba(59,130,246,0.2);
+            border-radius: var(--radius);
+            padding: 0.75rem 1rem;
+            font-size: 0.8rem;
+            color: var(--color-info);
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .info-box.warn {
+            background: rgba(245,158,11,0.08);
+            border-color: rgba(245,158,11,0.2);
+            color: var(--color-secondary);
+        }
+
+        /* ---- Email Preview Modal ---- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal {
+            background: var(--bg-medium);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            max-width: 700px;
+            width: 100%;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .modal-header h3 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+        }
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            color: var(--color-text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .modal-close:hover { background: var(--bg-input); color: var(--color-text); }
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .modal-body pre {
+            font-family: 'SF Mono', 'Menlo', monospace;
+            font-size: 0.8rem;
+            line-height: 1.7;
+            color: #ddd;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        /* ---- Print Styles ---- */
+        @media print {
+            body { background: #fff; color: #000; font-size: 12px; }
+            .app-header, .sidebar .btn-group, .btn-add-item, .btn-remove-item,
+            .toast, .modal-overlay, .no-print { display: none !important; }
+            .app-container { grid-template-columns: 1fr; max-width: 100%; }
+            .card, .result-card { border: 1px solid #ddd; background: #fff; }
+            .card-title { color: #000; border-color: #ddd; }
+            .result-row .label { color: #666; }
+            .result-row .value { color: #000; }
+            .result-row.total .value { color: var(--color-primary); }
+            .form-group label { color: #666; }
+            .form-group input, .form-group select { border-color: #ddd; background: #fafafa; color: #000; }
+            .items-table thead th { color: #666; border-color: #ddd; }
+            .items-table tbody td input { border-color: #ddd; background: #fafafa; color: #000; }
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 960px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar { position: static; }
+        }
+        @media (max-width: 640px) {
+            .form-row { grid-template-columns: 1fr; }
+            .form-row.triple { grid-template-columns: 1fr; }
+            .app-container { padding: 1rem; }
+            .items-table .col-store { display: none; }
+            .items-table thead th:nth-child(2) { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="app-header">
+    <div class="app-header-inner">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+            <div class="app-logo">Japan<span>Culture</span></div>
+            <span class="app-badge">Internal Tool</span>
+        </div>
+        <div style="font-size:0.8rem;color:var(--color-text-muted);">Quote Calculator v1.0</div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="app-container">
+    <!-- Left Column - Form -->
+    <div class="form-area">
+
+        <!-- Customer Info -->
+        <div class="card">
+            <div class="card-title">
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg>
+                Customer Info
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="customerName" placeholder="e.g. John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="customerEmail" placeholder="e.g. john@example.com">
+                </div>
+            </div>
+            <div class="form-row triple">
+                <div class="form-group">
+                    <label>Country</label>
+                    <select id="country" onchange="calculate()">
+                        <option value="SG">Singapore</option>
+                        <option value="AU">Australia</option>
+                        <option value="US">USA</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Service Type</label>
+                    <select id="serviceType" onchange="onServiceTypeChange()">
+                        <option value="standard">Standard</option>
+                        <option value="rare">Rare Item Search</option>
+                        <option value="event">Event Proxy</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Discount (Repeater)</label>
+                    <select id="discount" onchange="calculate()">
+                        <option value="0">None</option>
+                        <option value="40">3rd Order ($40 flat fee)</option>
+                        <option value="35">5th Order ($35 flat fee)</option>
+                    </select>
+                </div>
+            </div>
+            <div id="infoRare" class="info-box">
+                Rare Item Search: If item is <strong>not found</strong>, only a <strong>$20 research fee</strong> is charged.
+            </div>
+            <div id="infoEvent" class="info-box warn">
+                Event Proxy: If lottery ticket is <strong>not selected</strong>, <strong>$30 is refunded</strong> to the customer.
+            </div>
+        </div>
+
+        <!-- Event-specific fields -->
+        <div class="card" id="eventFields" style="display:none;">
+            <div class="card-title">
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+                Event Details
+            </div>
+            <div class="form-row triple">
+                <div class="form-group">
+                    <label>Event Name</label>
+                    <input type="text" id="eventName" placeholder="e.g. Comiket C105">
+                </div>
+                <div class="form-group">
+                    <label>Event Date</label>
+                    <input type="date" id="eventDate">
+                </div>
+                <div class="form-group">
+                    <label>Event Location</label>
+                    <input type="text" id="eventLocation" placeholder="e.g. Tokyo Big Sight">
+                </div>
+            </div>
+        </div>
+
+        <!-- Items -->
+        <div class="card items-section">
+            <div class="card-title">
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor"><path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/></svg>
+                Items
+            </div>
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th class="col-name">Item Name</th>
+                        <th class="col-store">Store / Circle</th>
+                        <th class="col-qty">Qty</th>
+                        <th class="col-jpy">Price (JPY)</th>
+                        <th class="col-usd">USD</th>
+                        <th class="col-del"></th>
+                    </tr>
+                </thead>
+                <tbody id="itemsBody">
+                    <!-- Rows added via JS -->
+                </tbody>
+            </table>
+            <button class="btn-add-item no-print" onclick="addItemRow()">+ Add Item</button>
+        </div>
+
+        <!-- Shipping & Packaging -->
+        <div class="card">
+            <div class="card-title">
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor"><path d="M5 8a1 1 0 011-1h1V6a1 1 0 012 0v1h1a1 1 0 110 2H9v1a1 1 0 11-2 0V9H6a1 1 0 01-1-1z"/><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm14 0H4v8h12V6z" clip-rule="evenodd"/></svg>
+                Shipping & Packaging
+            </div>
+            <div class="form-row triple">
+                <div class="form-group">
+                    <label>Packing Size</label>
+                    <select id="packSize" onchange="calculate()">
+                        <option value="S">Small - $2 (Acrylic stands, badges)</option>
+                        <option value="M">Medium - $4 (Plush, books)</option>
+                        <option value="L">Large - $6 (Figures, BOX sets)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Weight</label>
+                    <select id="weight" onchange="calculate()">
+                        <option value="500">500g</option>
+                        <option value="1000">1kg</option>
+                        <option value="2000">2kg</option>
+                        <option value="3000">3kg</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Exchange Rate (1 USD = ? JPY)</label>
+                    <input type="number" id="exchangeRate" value="150" step="0.1" min="1" oninput="calculate()">
+                    <div class="rate-info">
+                        <small id="rateStatus">Default rate</small>
+                        <button class="rate-save-btn" onclick="saveRate()">Save Rate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Right Column - Results -->
+    <div class="sidebar">
+        <div class="result-card">
+            <div class="card-title" style="border-bottom-color:var(--color-border);">
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/></svg>
+                Cost Breakdown
+            </div>
+
+            <div class="result-row">
+                <span class="label">Items Total (JPY)</span>
+                <span class="value" id="totalJpy">--</span>
+            </div>
+            <div class="result-row">
+                <span class="label">Items Total (USD)</span>
+                <span class="value" id="totalUsd">--</span>
+            </div>
+
+            <hr class="result-divider">
+
+            <div class="result-row">
+                <span class="label">
+                    Flat Service Fee
+                    <span class="discount-badge" id="discountBadge" style="display:none;"></span>
+                </span>
+                <span class="value" id="flatFee">--</span>
+            </div>
+            <div class="result-row">
+                <span class="label">Commission (<span id="rateLabel">15%</span>)</span>
+                <span class="value" id="commission">--</span>
+            </div>
+            <div class="result-row">
+                <span class="label">Packing Fee (<span id="packLabel">S</span>)</span>
+                <span class="value" id="packFee">--</span>
+            </div>
+            <div class="result-row">
+                <span class="label">Shipping (<span id="shipLabel">EMS to SG</span>)</span>
+                <span class="value" id="shipFee">--</span>
+            </div>
+
+            <div class="result-row total">
+                <span class="label">Total</span>
+                <span class="value" id="grandTotal">--</span>
+            </div>
+            <div class="result-row profit">
+                <span class="label">Profit (Fees + Commission)</span>
+                <span class="value" id="profit">--</span>
+            </div>
+
+            <div class="btn-group no-print">
+                <button class="btn btn-primary" onclick="generateEmail()">Copy Quote Email</button>
+                <button class="btn btn-secondary" onclick="window.print()">Print Quote</button>
+                <button class="btn btn-ghost" onclick="resetForm()">Reset</button>
+            </div>
+        </div>
+
+        <!-- Quick Reference -->
+        <div class="card" style="margin-top:1.5rem;">
+            <div class="card-title" style="font-size:0.85rem;">Quick Reference</div>
+            <div style="font-size:0.75rem;color:var(--color-text-muted);line-height:1.8;">
+                <div><strong style="color:var(--color-text);">Standard:</strong> $45 flat + 15% (1-2 items) / 12% (3+)</div>
+                <div><strong style="color:var(--color-text);">Rare:</strong> $65 flat + 18% | Not found: $20 only</div>
+                <div><strong style="color:var(--color-text);">Event:</strong> $80 flat + 20% (1-2) / 18% (3+ circles) | Lottery fail: -$30</div>
+                <hr class="result-divider" style="margin:0.5rem 0;">
+                <div><strong style="color:var(--color-text);">Pack:</strong> S=$2 / M=$4 / L=$6</div>
+                <div><strong style="color:var(--color-text);">Repeater:</strong> 3rd=$40 flat / 5th=$35 flat</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Email Preview Modal -->
+<div class="modal-overlay" id="emailModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Quote Email Preview</h3>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <pre id="emailPreview"></pre>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal()">Close</button>
+            <button class="btn btn-primary" onclick="copyEmail()">Copy to Clipboard</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ========================
+// Data / Config
+// ========================
+const SERVICE_CONFIG = {
+    standard: { baseFee: 45, rateSmall: 0.15, rateBulk: 0.12, bulkThreshold: 3, label: 'Standard' },
+    rare:     { baseFee: 65, rateSmall: 0.18, rateBulk: 0.18, bulkThreshold: 999, label: 'Rare Item Search' },
+    event:    { baseFee: 80, rateSmall: 0.20, rateBulk: 0.18, bulkThreshold: 3, label: 'Event Proxy' }
+};
+
+const PACKING_FEES = { S: 2, M: 4, L: 6 };
+const PACKING_LABELS = { S: 'Small', M: 'Medium', L: 'Large' };
+
+const SHIPPING = {
+    SG: { carrier: 'EMS', label: 'Singapore', 500: 12, 1000: 18, 2000: 25, 3000: 32 },
+    AU: { carrier: 'EMS', label: 'Australia', 500: 14, 1000: 22, 2000: 30, 3000: 38 },
+    US: { carrier: 'DHL', label: 'USA',       500: 25, 1000: 35, 2000: 50, 3000: 65 }
+};
+
+const DISCOUNT_MAP = { 0: null, 40: '3rd Order', 35: '5th Order' };
+
+// ========================
+// Initialization
+// ========================
+document.addEventListener('DOMContentLoaded', () => {
+    // Load saved exchange rate from localStorage
+    const savedRate = localStorage.getItem('jc_exchange_rate');
+    if (savedRate) {
+        document.getElementById('exchangeRate').value = savedRate;
+        document.getElementById('rateStatus').textContent = 'Loaded from saved';
+    }
+
+    // Add initial item rows
+    addItemRow();
+    addItemRow();
+    calculate();
+});
+
+// ========================
+// Item Row Management
+// ========================
+let itemCounter = 0;
+
+function addItemRow() {
+    itemCounter++;
+    const tbody = document.getElementById('itemsBody');
+    const tr = document.createElement('tr');
+    tr.id = `item-row-${itemCounter}`;
+    tr.innerHTML = `
+        <td><input type="text" placeholder="Item name" oninput="calculate()"></td>
+        <td><input type="text" placeholder="Store / Circle" oninput="calculate()"></td>
+        <td><input type="number" value="1" min="1" style="text-align:center;" oninput="calculate()"></td>
+        <td><input type="number" placeholder="0" min="0" oninput="calculate()"></td>
+        <td class="usd-cell">$0.00</td>
+        <td style="text-align:center;"><button class="btn-remove-item no-print" onclick="removeItemRow('item-row-${itemCounter}')">&times;</button></td>
+    `;
+    tbody.appendChild(tr);
+    calculate();
+}
+
+function removeItemRow(id) {
+    const row = document.getElementById(id);
+    if (row) {
+        row.remove();
+        // Ensure at least one row
+        if (document.getElementById('itemsBody').children.length === 0) {
+            addItemRow();
+        }
+        calculate();
+    }
+}
+
+// ========================
+// Calculation Engine
+// ========================
+function getItems() {
+    const rows = document.getElementById('itemsBody').querySelectorAll('tr');
+    const items = [];
+    rows.forEach(row => {
+        const inputs = row.querySelectorAll('input');
+        const name = inputs[0].value.trim();
+        const store = inputs[1].value.trim();
+        const qty = parseInt(inputs[2].value) || 1;
+        const priceJpy = parseFloat(inputs[3].value) || 0;
+        items.push({ name, store, qty, priceJpy, row });
+    });
+    return items;
+}
+
+function getRate() {
+    return parseFloat(document.getElementById('exchangeRate').value) || 150;
+}
+
+function calculate() {
+    const items = getItems();
+    const rate = getRate();
+    const serviceType = document.getElementById('serviceType').value;
+    const country = document.getElementById('country').value;
+    const packSize = document.getElementById('packSize').value;
+    const weight = document.getElementById('weight').value;
+    const discountVal = parseInt(document.getElementById('discount').value) || 0;
+
+    const config = SERVICE_CONFIG[serviceType];
+    const shipping = SHIPPING[country];
+
+    // Calculate item totals
+    let totalJpy = 0;
+    let totalItemCount = 0;
+    items.forEach(item => {
+        const lineTotal = item.priceJpy * item.qty;
+        totalJpy += lineTotal;
+        totalItemCount += item.qty;
+        // Update USD display per row
+        const usdCell = item.row.querySelector('.usd-cell');
+        if (usdCell) {
+            usdCell.textContent = lineTotal > 0 ? `$${(lineTotal / rate).toFixed(2)}` : '$0.00';
+        }
+    });
+
+    const totalUsd = totalJpy / rate;
+
+    // Determine commission rate
+    let commissionRate;
+    if (serviceType === 'event') {
+        // For event: 3+ circles (distinct stores/circles) get bulk rate
+        const uniqueCircles = new Set(items.filter(i => i.name).map(i => i.store || i.name));
+        commissionRate = uniqueCircles.size >= config.bulkThreshold ? config.rateBulk : config.rateSmall;
+    } else {
+        commissionRate = totalItemCount >= config.bulkThreshold ? config.rateBulk : config.rateSmall;
+    }
+
+    const commission = totalUsd * commissionRate;
+
+    // Flat fee (with discount override)
+    let flatFee = config.baseFee;
+    if (discountVal > 0) {
+        flatFee = discountVal;
+    }
+
+    // Packing & shipping
+    const packFee = PACKING_FEES[packSize];
+    const shipFee = shipping[weight];
+
+    // Total
+    const grandTotal = totalUsd + flatFee + commission + packFee + shipFee;
+    const profit = flatFee + commission;
+
+    // Update DOM
+    document.getElementById('totalJpy').textContent = totalJpy > 0 ? `\u00a5${totalJpy.toLocaleString()}` : '--';
+    document.getElementById('totalUsd').textContent = totalUsd > 0 ? `$${totalUsd.toFixed(2)}` : '--';
+    document.getElementById('flatFee').textContent = `$${flatFee.toFixed(2)}`;
+    document.getElementById('rateLabel').textContent = `${(commissionRate * 100).toFixed(0)}%`;
+    document.getElementById('commission').textContent = commission > 0 ? `$${commission.toFixed(2)}` : '--';
+    document.getElementById('packLabel').textContent = PACKING_LABELS[packSize];
+    document.getElementById('packFee').textContent = `$${packFee.toFixed(2)}`;
+    document.getElementById('shipLabel').textContent = `${shipping.carrier} to ${country}`;
+    document.getElementById('shipFee').textContent = `$${shipFee.toFixed(2)}`;
+    document.getElementById('grandTotal').textContent = totalUsd > 0 ? `$${grandTotal.toFixed(2)}` : '--';
+    document.getElementById('profit').textContent = profit > 0 ? `$${profit.toFixed(2)}` : '--';
+
+    // Discount badge
+    const badge = document.getElementById('discountBadge');
+    if (discountVal > 0) {
+        badge.style.display = 'inline';
+        badge.textContent = DISCOUNT_MAP[discountVal];
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
+// ========================
+// Service Type Change
+// ========================
+function onServiceTypeChange() {
+    const type = document.getElementById('serviceType').value;
+    document.getElementById('infoRare').style.display = type === 'rare' ? 'block' : 'none';
+    document.getElementById('infoEvent').style.display = type === 'event' ? 'block' : 'none';
+    document.getElementById('eventFields').style.display = type === 'event' ? 'block' : 'none';
+    calculate();
+}
+
+// ========================
+// Exchange Rate Persistence
+// ========================
+function saveRate() {
+    const rate = document.getElementById('exchangeRate').value;
+    localStorage.setItem('jc_exchange_rate', rate);
+    document.getElementById('rateStatus').textContent = `Saved (1 USD = ${rate} JPY)`;
+    showToast('Exchange rate saved');
+}
+
+// ========================
+// Email Generation
+// ========================
+function generateEmail() {
+    const serviceType = document.getElementById('serviceType').value;
+    let emailText = '';
+
+    if (serviceType === 'standard') {
+        emailText = generateStandardEmail();
+    } else if (serviceType === 'rare') {
+        emailText = generateRareEmail();
+    } else if (serviceType === 'event') {
+        emailText = generateEventEmail();
+    }
+
+    document.getElementById('emailPreview').textContent = emailText;
+    document.getElementById('emailModal').classList.add('show');
+}
+
+function generateStandardEmail() {
+    const name = document.getElementById('customerName').value || '[CUSTOMER_NAME]';
+    const country = document.getElementById('country').value;
+    const items = getItems().filter(i => i.name);
+    const rate = getRate();
+    const packSize = document.getElementById('packSize').value;
+    const weight = document.getElementById('weight').value;
+    const discountVal = parseInt(document.getElementById('discount').value) || 0;
+
+    const config = SERVICE_CONFIG.standard;
+    const shipping = SHIPPING[country];
+
+    let totalJpy = 0;
+    let totalItemCount = 0;
+    items.forEach(i => { totalJpy += i.priceJpy * i.qty; totalItemCount += i.qty; });
+    const totalUsd = totalJpy / rate;
+    const commissionRate = totalItemCount >= config.bulkThreshold ? config.rateBulk : config.rateSmall;
+    const commission = totalUsd * commissionRate;
+    let flatFee = discountVal > 0 ? discountVal : config.baseFee;
+    const packFee = PACKING_FEES[packSize];
+    const shipFee = shipping[weight];
+    const total = totalUsd + flatFee + commission + packFee + shipFee;
+
+    let itemsTable = '';
+    items.forEach(i => {
+        const usd = (i.priceJpy * i.qty / rate).toFixed(2);
+        itemsTable += `| ${i.name} | ${i.store || '-'} | ${i.qty} | $${usd} |\n`;
+    });
+
+    return `Subject: Your Japan Culture Quote (Ref: [ORDER_ID])
+
+Hi ${name},
+
+Thank you for your purchase request! Here is your quote for the items you requested.
+
+--- Order Summary ---
+
+| Item | Store | Qty | Price (USD) |
+|------|-------|-----|-------------|
+${itemsTable}
+--- Cost Breakdown ---
+
+| Fee | Amount |
+|-----|--------|
+| Item(s) total | $${totalUsd.toFixed(2)} |
+| Service fee (flat) | $${flatFee.toFixed(2)} |
+| Commission (${(commissionRate * 100).toFixed(0)}% of item total) | $${commission.toFixed(2)} |
+| Packing fee (${PACKING_LABELS[packSize]}) | $${packFee.toFixed(2)} |
+| Shipping (${shipping.carrier} to ${shipping.label}) | $${shipFee.toFixed(2)} |
+| TOTAL | $${total.toFixed(2)} |
+
+Note on customs duties: Import duties and taxes may apply upon arrival in ${shipping.label}. These charges are determined by your local customs authority and are the responsibility of the recipient.
+
+This quote is valid for 24 hours from the time of this email. If we do not receive payment within that period, the quote will expire and a new one may be issued at updated rates.
+
+--- How to Pay ---
+
+Please complete your payment via PayPal using the link below:
+
+[PAYPAL_PAYMENT_LINK]
+
+Once payment is confirmed, your item(s) will be purchased on our next store run on [NEXT_STORE_RUN_DATE].
+
+Your order will be shipped on the next scheduled shipping date: [NEXT_SHIPPING_DATE].
+
+If you have any questions, feel free to reply to this email.
+
+Best regards,
+[STAFF_NAME]
+Japan Culture
+[SERVICE_EMAIL]`;
+}
+
+function generateRareEmail() {
+    const name = document.getElementById('customerName').value || '[CUSTOMER_NAME]';
+    const country = document.getElementById('country').value;
+    const items = getItems().filter(i => i.name);
+    const rate = getRate();
+    const packSize = document.getElementById('packSize').value;
+    const weight = document.getElementById('weight').value;
+
+    const config = SERVICE_CONFIG.rare;
+    const shipping = SHIPPING[country];
+
+    let totalJpy = 0;
+    items.forEach(i => { totalJpy += i.priceJpy * i.qty; });
+    const totalUsd = totalJpy / rate;
+    const commission = totalUsd * config.rateSmall;
+    const flatFee = config.baseFee;
+    const packFee = PACKING_FEES[packSize];
+    const shipFee = shipping[weight];
+    const total = totalUsd + flatFee + commission + packFee + shipFee;
+
+    const itemDesc = items.length > 0 ? items.map(i => i.name).join(', ') : '[ITEM_DESCRIPTION]';
+
+    return `Subject: Your Rare Item Search Quote (Ref: [ORDER_ID])
+
+Hi ${name},
+
+Thank you for reaching out about your rare item request! We have reviewed your inquiry and prepared the following quote.
+
+--- What You Are Looking For ---
+
+- Item: ${itemDesc}
+- Condition: [NEW / USED / ANY]
+- Reference: [REFERENCE_IMAGE_OR_LINK]
+
+--- How Rare Item Search Works ---
+
+This request falls under our Rare / Used Item Search service, which operates on a success-based pricing model:
+
+- If we find your item: You pay the full fees listed below.
+- If we cannot find your item: You only pay a $20 research fee to cover the time and effort spent searching specialty shops, vintage stores, and second-hand markets across Tokyo.
+
+--- Search Scope ---
+
+Our team will search the following locations on your behalf:
+- Akihabara specialty shops (Mandarake, Surugaya, Lashinbang, etc.)
+- Nakano Broadway vintage stores
+- Online second-hand marketplaces (Mercari, Yahoo Auctions, Surugaya Online)
+- Other specialty retailers as appropriate
+
+--- Cost Breakdown (If Found) ---
+
+| Fee | Amount |
+|-----|--------|
+| Item price (estimated) | $${totalUsd.toFixed(2)} |
+| Service fee (Rare Item Search) | $${flatFee.toFixed(2)} |
+| Commission (18% of item price) | $${commission.toFixed(2)} |
+| Packing fee (${PACKING_LABELS[packSize]}) | $${packFee.toFixed(2)} |
+| Shipping (${shipping.carrier} to ${shipping.label}) | $${shipFee.toFixed(2)} |
+| TOTAL (if found) | $${total.toFixed(2)} |
+
+--- If Not Found ---
+
+| Fee | Amount |
+|-----|--------|
+| Research fee | $20.00 |
+
+This quote is valid for 24 hours. To proceed, please confirm by completing payment via the link below:
+
+[PAYPAL_PAYMENT_LINK]
+
+We will begin searching upon payment confirmation and keep you updated on our progress.
+
+Best regards,
+[STAFF_NAME]
+Japan Culture
+[SERVICE_EMAIL]`;
+}
+
+function generateEventEmail() {
+    const name = document.getElementById('customerName').value || '[CUSTOMER_NAME]';
+    const country = document.getElementById('country').value;
+    const items = getItems().filter(i => i.name);
+    const rate = getRate();
+    const packSize = document.getElementById('packSize').value;
+    const weight = document.getElementById('weight').value;
+
+    const eventName = document.getElementById('eventName').value || '[EVENT_NAME]';
+    const eventDate = document.getElementById('eventDate').value || '[EVENT_DATE]';
+    const eventLocation = document.getElementById('eventLocation').value || '[EVENT_LOCATION]';
+
+    const config = SERVICE_CONFIG.event;
+    const shipping = SHIPPING[country];
+
+    let totalJpy = 0;
+    items.forEach(i => { totalJpy += i.priceJpy * i.qty; });
+    const totalUsd = totalJpy / rate;
+
+    const uniqueCircles = new Set(items.map(i => i.store || i.name));
+    const circleCount = uniqueCircles.size;
+    const commissionRate = circleCount >= config.bulkThreshold ? config.rateBulk : config.rateSmall;
+    const commission = totalUsd * commissionRate;
+    const flatFee = config.baseFee;
+    const packFee = PACKING_FEES[packSize];
+    const shipFee = shipping[weight];
+    const total = totalUsd + flatFee + commission + packFee + shipFee;
+
+    const bulkApplied = circleCount >= config.bulkThreshold ? 'APPLIED' : 'NOT APPLIED';
+
+    let circlesTable = '';
+    items.forEach((item, idx) => {
+        const usd = (item.priceJpy * item.qty / rate).toFixed(2);
+        circlesTable += `| ${idx + 1} | ${item.store || '-'} | ${item.name} | $${usd} |\n`;
+    });
+
+    return `Subject: Your Event Proxy Quote -- ${eventName} (Ref: [ORDER_ID])
+
+Hi ${name},
+
+Thank you for your event proxy request! Here are the details and your quote for ${eventName} on ${eventDate}.
+
+--- Event Details ---
+
+- Event: ${eventName}
+- Date: ${eventDate}
+- Location: ${eventLocation}
+
+--- Requested Circles / Booths ---
+
+| # | Circle / Booth | Item(s) Requested | Est. Price |
+|---|----------------|-------------------|------------|
+${circlesTable}
+--- Cost Breakdown ---
+
+| Fee | Amount |
+|-----|--------|
+| Item(s) total (estimated) | $${totalUsd.toFixed(2)} |
+| Event proxy fee | $${flatFee.toFixed(2)} |
+| Commission (${(commissionRate * 100).toFixed(0)}% of item total) | $${commission.toFixed(2)} |
+| Packing fee (${PACKING_LABELS[packSize]}) | $${packFee.toFixed(2)} |
+| Shipping (${shipping.carrier} to ${shipping.label}) | $${shipFee.toFixed(2)} |
+| TOTAL | $${total.toFixed(2)} |
+
+Pricing notes:
+- Base event proxy fee: $80 per event + 20% commission.
+- Bulk discount (3+ circles at the same event): $60 per circle + 18% commission. [${bulkApplied}]
+- If a lottery / numbered ticket is required and we are not selected, $30 will be refunded to you.
+
+Note on customs duties: Import duties and taxes may apply upon arrival in ${shipping.label} and are the responsibility of the recipient.
+
+This quote is valid for 24 hours. Please complete your payment to secure your reservation:
+
+[PAYPAL_PAYMENT_LINK]
+
+Best regards,
+[STAFF_NAME]
+Japan Culture
+[SERVICE_EMAIL]`;
+}
+
+// ========================
+// Copy & Toast
+// ========================
+function copyEmail() {
+    const text = document.getElementById('emailPreview').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        showToast('Email copied to clipboard');
+        closeModal();
+    }).catch(() => {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('Email copied to clipboard');
+        closeModal();
+    });
+}
+
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ========================
+// Modal
+// ========================
+function closeModal() {
+    document.getElementById('emailModal').classList.remove('show');
+}
+
+// Close modal on overlay click
+document.addEventListener('click', (e) => {
+    if (e.target.id === 'emailModal') closeModal();
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+});
+
+// ========================
+// Reset
+// ========================
+function resetForm() {
+    document.getElementById('customerName').value = '';
+    document.getElementById('customerEmail').value = '';
+    document.getElementById('country').value = 'SG';
+    document.getElementById('serviceType').value = 'standard';
+    document.getElementById('discount').value = '0';
+    document.getElementById('packSize').value = 'S';
+    document.getElementById('weight').value = '500';
+    document.getElementById('eventName').value = '';
+    document.getElementById('eventDate').value = '';
+    document.getElementById('eventLocation').value = '';
+
+    // Reset info boxes and event fields
+    document.getElementById('infoRare').style.display = 'none';
+    document.getElementById('infoEvent').style.display = 'none';
+    document.getElementById('eventFields').style.display = 'none';
+
+    // Clear items and re-add two empty rows
+    document.getElementById('itemsBody').innerHTML = '';
+    itemCounter = 0;
+    addItemRow();
+    addItemRow();
+
+    // Restore exchange rate from localStorage or default
+    const savedRate = localStorage.getItem('jc_exchange_rate');
+    document.getElementById('exchangeRate').value = savedRate || 150;
+
+    calculate();
+    showToast('Form reset');
+}
+</script>
+
+</body>
+</html>
