@@ -1,21 +1,15 @@
 /**
  * RSS feed fetcher module.
- * Fetches and normalizes items from Japanese merchandise RSS sources.
- * Optimized for WordPress feeds (Hobby Dengeki, Figsoku) which use
- * content:encoded with full HTML containing images and product details.
+ * Fetches and normalizes items from Japanese event/store RSS sources.
  *
- * Includes OG image fallback for items without images in their feed content.
+ * Optimized for nijimen RSS feed with category-based filtering.
+ * Only includes items whose categories match the configured filterTags
+ * (e.g., events, cafes, collaborations, limited goods).
  */
 
 const crypto = require('crypto');
-const axios = require('axios');
 const cheerio = require('cheerio');
 const RSSParser = require('rss-parser');
-
-/** Max number of article pages to fetch for OG image extraction per source */
-const OG_IMAGE_FETCH_LIMIT = 10;
-/** Timeout for individual article page fetches (ms) */
-const OG_IMAGE_FETCH_TIMEOUT = 5000;
 
 /**
  * Generate a deterministic ID from a URL string.
@@ -57,54 +51,36 @@ function truncate(str, maxLen) {
 }
 
 /**
- * Extract the FIRST image URL from content:encoded HTML.
- * Japanese WordPress feeds (Hobby Dengeki, Figsoku) embed full HTML
- * with multiple images in content:encoded.
- * @param {string} contentEncoded - The content:encoded HTML string
- * @returns {string|null} First image URL or null
+ * Normalize an image URL:
+ * - Prepend https: if URL starts with //
+ * - Fix double // in path (not in protocol)
+ * @param {string|null} url - Raw image URL
+ * @returns {string|null} Normalized URL or null
  */
-function extractImageFromContent(contentEncoded) {
-  if (!contentEncoded) return null;
-
-  // Try to parse with cheerio for robust extraction
-  try {
-    const $ = cheerio.load(contentEncoded);
-    const $img = $('img').first();
-    if ($img.length) {
-      // Check data attributes first (lazy loading), then src
-      const src = $img.attr('data-original')
-        || $img.attr('data-src')
-        || $img.attr('data-lazy')
-        || $img.attr('src')
-        || null;
-      return src;
-    }
-  } catch (_) {
-    // Fall through to regex
+function normalizeImageUrl(url) {
+  if (!url) return null;
+  let normalized = url.trim();
+  if (normalized.startsWith('//')) {
+    normalized = 'https:' + normalized;
   }
-
-  // Fallback: regex extraction
-  const imgMatch = contentEncoded.match(/<img[^>]+src=["']([^"']+)["']/i);
-  if (imgMatch) {
-    return imgMatch[1];
+  const protoMatch = normalized.match(/^(https?:\/\/)/);
+  if (protoMatch) {
+    const proto = protoMatch[1];
+    const rest = normalized.slice(proto.length);
+    normalized = proto + rest.replace(/\/\//g, '/');
   }
-
-  return null;
+  return normalized;
 }
 
 /**
- * Extract the first image URL from RSS item fields.
- * Checks enclosure, media:content, content:encoded, and content in order.
+ * Extract image URL from an RSS item.
+ * Checks media:content, enclosure, content:encoded, and content in order.
+ * Optimized for nijimen which uses media:content with url attribute.
  * @param {Object} item - Parsed RSS item
  * @returns {string|null} Image URL or null
  */
 function extractImage(item) {
-  // Check enclosure
-  if (item.enclosure && item.enclosure.url && item.enclosure.type && item.enclosure.type.startsWith('image')) {
-    return item.enclosure.url;
-  }
-
-  // Check media:content or media:thumbnail
+  // Check media:content (nijimen uses this)
   if (item['media:content'] && item['media:content']['$'] && item['media:content']['$'].url) {
     return item['media:content']['$'].url;
   }
@@ -112,16 +88,27 @@ function extractImage(item) {
     return item['media:thumbnail']['$'].url;
   }
 
-  // Check itunes:image
-  if (item.itunes && item.itunes.image) {
-    return item.itunes.image;
+  // Check enclosure
+  if (item.enclosure && item.enclosure.url && item.enclosure.type && item.enclosure.type.startsWith('image')) {
+    return item.enclosure.url;
   }
 
-  // Extract FIRST image from content:encoded (primary for Japanese WP feeds)
+  // Extract first image from content:encoded
   const contentEncoded = item['content:encoded'] || '';
-  const imgFromContent = extractImageFromContent(contentEncoded);
-  if (imgFromContent) {
-    return imgFromContent;
+  if (contentEncoded) {
+    try {
+      const $ = cheerio.load(contentEncoded);
+      const $img = $('img').first();
+      if ($img.length) {
+        const src = $img.attr('data-original')
+          || $img.attr('data-src')
+          || $img.attr('src')
+          || null;
+        if (src) return src;
+      }
+    } catch (_) {
+      // Fall through
+    }
   }
 
   // Fallback: try content field
@@ -135,108 +122,33 @@ function extractImage(item) {
 }
 
 /**
- * Extract price from content if mentioned.
- * Looks for Japanese price patterns like "価格：3,500円", "税込3,500円",
- * "¥3,500", etc.
- * @param {string} text - Text content to search
- * @returns {string|null} Formatted price string or null
+ * Check if an RSS item's categories match any of the configured filter tags.
+ * @param {Object} item - Parsed RSS item
+ * @param {string[]} filterTags - Array of allowed category strings
+ * @returns {boolean} True if at least one category matches
  */
-function extractPrice(text) {
-  if (!text) return null;
+function matchesFilterTags(item, filterTags) {
+  if (!filterTags || filterTags.length === 0) return true;
 
-  // Pattern: number followed by 円
-  const yenMatch = text.match(/([\d,]+)\s*円/);
-  if (yenMatch) {
-    return '\u00a5' + yenMatch[1]; // ¥ prefix
-  }
+  // rss-parser stores categories as an array of strings
+  const categories = item.categories || [];
+  if (categories.length === 0) return false;
 
-  // Pattern: ¥ or ￥ followed by number
-  const symbolMatch = text.match(/[¥￥]\s*([\d,]+)/);
-  if (symbolMatch) {
-    return '\u00a5' + symbolMatch[1];
-  }
-
-  return null;
-}
-
-/**
- * Normalize an image URL:
- * - Prepend https: if URL starts with //
- * - Fix double // in path (not in protocol)
- * @param {string|null} url - Raw image URL
- * @returns {string|null} Normalized URL or null
- */
-function normalizeImageUrl(url) {
-  if (!url) return null;
-  let normalized = url.trim();
-  if (normalized.startsWith('//')) {
-    normalized = 'https:' + normalized;
-  }
-  // Fix double // in path (but not in protocol like https://)
-  const protoMatch = normalized.match(/^(https?:\/\/)/);
-  if (protoMatch) {
-    const proto = protoMatch[1];
-    const rest = normalized.slice(proto.length);
-    normalized = proto + rest.replace(/\/\//g, '/');
-  }
-  return normalized;
-}
-
-/**
- * Fetch the og:image meta tag from an article page.
- * @param {string} url - Article URL
- * @returns {Promise<string|null>} OG image URL or null
- */
-async function fetchOgImage(url) {
-  try {
-    const response = await axios.get(url, {
-      timeout: OG_IMAGE_FETCH_TIMEOUT,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; JapanCulture-Bot/1.0)',
-        'Accept': 'text/html',
-      },
-      // Only download the first 100KB to avoid fetching huge pages
-      maxContentLength: 100 * 1024,
-    });
-    const $ = cheerio.load(response.data);
-    const ogImage = $('meta[property="og:image"]').attr('content')
-      || $('meta[name="twitter:image"]').attr('content')
-      || null;
-    return normalizeImageUrl(ogImage);
-  } catch (_) {
-    return null;
-  }
-}
-
-/**
- * For items that have no image, try to fetch the og:image from their article page.
- * Limited to the first OG_IMAGE_FETCH_LIMIT items to avoid excessive requests.
- * @param {Array} items - Array of normalized items
- * @returns {Promise<Array>} Items with images filled in where possible
- */
-async function fillMissingImages(items) {
-  let fetched = 0;
-  for (const item of items) {
-    if (item.image) continue; // Already has an image
-    if (fetched >= OG_IMAGE_FETCH_LIMIT) break;
-    if (!item.link) continue;
-
-    fetched++;
-    const ogImage = await fetchOgImage(item.link);
-    if (ogImage) {
-      item.image = ogImage;
+  for (const cat of categories) {
+    const catLower = (cat || '').toLowerCase();
+    for (const tag of filterTags) {
+      if (catLower.includes(tag.toLowerCase())) {
+        return true;
+      }
     }
   }
-  if (fetched > 0) {
-    const filled = items.filter((i) => i.image).length;
-    console.log(`    Fetched OG images for ${fetched} articles (${filled} now have images)`);
-  }
-  return items;
+
+  return false;
 }
 
 /**
  * Fetch and parse RSS feeds from the given sources.
- * Optimized for Japanese WordPress feeds with content:encoded.
+ * Supports category-based filtering via source.filterTags.
  * @param {Array} sources - Array of source config objects
  * @returns {Promise<Array>} Normalized items
  */
@@ -262,27 +174,26 @@ async function fetchRSSFeeds(sources) {
     try {
       console.log(`  Fetching RSS: ${source.name} (${source.url})`);
       const feed = await parser.parseURL(source.url);
-      let items = (feed.items || []).map((item) => {
-        const link = item.link || item.guid || '';
+      let feedItems = feed.items || [];
 
-        // For Japanese WP feeds, content:encoded has the full article HTML
+      // Apply category filter if filterTags are configured
+      if (source.filterTags && source.filterTags.length > 0) {
+        const before = feedItems.length;
+        feedItems = feedItems.filter((item) => matchesFilterTags(item, source.filterTags));
+        console.log(`    Tag filter: ${before} -> ${feedItems.length} items (tags: ${source.filterTags.join(', ')})`);
+      }
+
+      const items = feedItems.map((item) => {
+        const link = item.link || item.guid || '';
         const contentEncoded = item['content:encoded'] || '';
         const rawContent = item.contentSnippet || item.content || item.description || '';
-
-        // Strip HTML for summary from content:encoded first, then fallback
         const summarySource = contentEncoded || rawContent;
         const summary = truncate(stripHtml(summarySource), 200);
-
         const title = stripHtml(item.title || '');
         const pubDate = item.isoDate || item.pubDate || null;
 
-        // Extract and normalize image URL (content:encoded first)
         const rawImage = extractImage(item);
         const image = normalizeImageUrl(rawImage);
-
-        // Extract price from content
-        const priceText = stripHtml(contentEncoded || rawContent);
-        const price = extractPrice(priceText);
 
         return {
           id: generateId(link),
@@ -294,29 +205,19 @@ async function fetchRSSFeeds(sources) {
           storeTag: source.storeTag || null,
           publishedAt: pubDate ? new Date(pubDate).toISOString() : new Date().toISOString(),
           language: source.language,
-          category: source.category || 'products',
+          category: source.category || 'events',
           translated: false,
-          price,
         };
       });
 
       console.log(`    Found ${items.length} items from ${source.name}`);
-
-      // If many items lack images, try fetching OG images from article pages
-      const missingCount = items.filter((i) => !i.image).length;
-      if (missingCount > 0) {
-        console.log(`    ${missingCount} items lack images, fetching OG images (up to ${OG_IMAGE_FETCH_LIMIT})...`);
-        items = await fillMissingImages(items);
-      }
-
       allItems.push(...items);
     } catch (err) {
       console.error(`  [ERROR] Failed to fetch ${source.name}: ${err.message}`);
-      // Continue with other sources
     }
   }
 
   return allItems;
 }
 
-module.exports = { fetchRSSFeeds, generateId, stripHtml, truncate, normalizeImageUrl, extractPrice };
+module.exports = { fetchRSSFeeds, generateId, stripHtml, truncate, normalizeImageUrl };

@@ -17,19 +17,14 @@
     fullLoadMoreCount: 6
   };
 
-  // Source badge color map - store-focused sources
+  // Source badge color map - store-exclusive event sources
   var SOURCE_COLORS = {
-    'Hobby Dengeki':      '#ff6600',
-    'Figsoku':            '#4caf50',
-    'Animate':            '#e91e63',
-    'Animate OnlyShop':   '#e91e63',
-    'Kotobukiya':         '#c62828',
-    'Kotobukiya Events':  '#c62828',
-    'Good Smile Company': '#ff6600',
-    'Banpresto Prize':    '#1565c0',
-    'Jump Shop':          '#ff9800',
-    'Pokemon Goods':      '#fdd835',
-    'default':            '#6b7280'
+    'Collab Cafes & Events': '#e91e63',
+    'Animate OnlyShop':      '#ff4081',
+    'Animate Gratte':        '#ff6090',
+    'Animate Cafe':          '#f50057',
+    'nijimen':               '#7c4dff',
+    'default':               '#6b7280'
   };
 
   // ------------------------------------
@@ -152,6 +147,27 @@
       '  color: #6b7280;',
       '  border-color: rgba(0,0,0,0.12);',
       '  background: rgba(0,0,0,0.03);',
+      '}',
+
+      /* Event period badge */
+      '.nw-event-period {',
+      '  display: inline-flex;',
+      '  align-items: center;',
+      '  gap: 0.25rem;',
+      '  padding: 0.15rem 0.5rem;',
+      '  border-radius: 50px;',
+      '  font-size: 0.625rem;',
+      '  font-weight: 600;',
+      '  color: #f59e0b;',
+      '  border: 1px solid rgba(245,158,11,0.3);',
+      '  background: rgba(245,158,11,0.1);',
+      '  margin-left: 0.5rem;',
+      '  white-space: nowrap;',
+      '}',
+      '.section-light .nw-event-period {',
+      '  color: #d97706;',
+      '  border-color: rgba(217,119,6,0.25);',
+      '  background: rgba(245,158,11,0.08);',
       '}',
 
       /* Price badge */
@@ -365,6 +381,25 @@
     return div.innerHTML;
   }
 
+  function formatEventPeriod(startStr, endStr) {
+    if (!startStr) return '';
+    try {
+      var s = new Date(startStr);
+      if (isNaN(s.getTime())) return '';
+      var opts = { month: 'short', day: 'numeric' };
+      var text = s.toLocaleDateString('en-US', opts);
+      if (endStr) {
+        var e = new Date(endStr);
+        if (!isNaN(e.getTime())) {
+          text += ' \u2013 ' + e.toLocaleDateString('en-US', opts);
+        }
+      }
+      return text;
+    } catch (ex) {
+      return '';
+    }
+  }
+
   // ------------------------------------
   // Render helpers
   // ------------------------------------
@@ -413,10 +448,11 @@
       storeTagHtml = '<span class="nw-store-tag">\ud83d\udccd ' + escapeHtml(item.storeTag) + '</span>';
     }
 
-    // Price badge
-    var priceHtml = '';
-    if (item.price) {
-      priceHtml = '<span class="nw-price">' + escapeHtml(item.price) + '</span>';
+    // Event period badge
+    var eventPeriodHtml = '';
+    var periodText = formatEventPeriod(item.eventStart, item.eventEnd);
+    if (periodText) {
+      eventPeriodHtml = '<span class="nw-event-period">\ud83d\udcc5 ' + escapeHtml(periodText) + '</span>';
     }
 
     // Date: support publishedAt (new), date, published_date (legacy)
@@ -430,7 +466,7 @@
         '</div>' +
         '<div class="nw-card-body">' +
           storeTagHtml +
-          '<h3 class="nw-card-title"><a href="' + escapeHtml(linkUrl) + '"' + target + '>' + escapeHtml(item.title || 'Untitled') + '</a>' + priceHtml + '</h3>' +
+          '<h3 class="nw-card-title"><a href="' + escapeHtml(linkUrl) + '"' + target + '>' + escapeHtml(item.title || 'Untitled') + '</a>' + eventPeriodHtml + '</h3>' +
           '<p class="nw-card-summary">' + escapeHtml(item.summary || '') + '</p>' +
           '<p class="nw-card-date">' + formatDate(dateStr) + '</p>' +
         '</div>' +
@@ -495,7 +531,7 @@
         '<div class="nw-error">' +
           '<div class="nw-error-icon">&#128240;</div>' +
           '<div class="nw-error-title">No news yet</div>' +
-          '<div class="nw-error-msg">Check back soon for the latest anime merchandise updates.</div>' +
+          '<div class="nw-error-msg">Check back soon for the latest store-exclusive events and collaboration cafes.</div>' +
         '</div>';
       return;
     }

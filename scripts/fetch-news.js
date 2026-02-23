@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 /**
- * Main orchestrator script for the store-focused news collector.
+ * Main orchestrator script for the store-exclusive event news collector.
  *
  * Flow:
- *   1. Fetch RSS feeds (Hobby Dengeki, Figsoku)
- *   2. Scrape store product/event pages (Animate, Kotobukiya, GSC, etc.)
+ *   1. Fetch JSON APIs (collabo-cafe, Animate OnlyShop, Gratte, Animate Cafe)
+ *   2. Fetch RSS feeds (nijimen, filtered by event/store tags)
  *   3. Combine all items
  *   4. Filter (remove invalid items and exact duplicates)
  *   5. Translate Japanese items (if DeepL key is available)
@@ -22,7 +22,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const { RSS_SOURCES, SCRAPE_SOURCES, OUTPUT, MAX_ITEMS } = require('./config');
+const { API_SOURCES, RSS_SOURCES, OUTPUT, MAX_ITEMS } = require('./config');
 const { fetchRSSFeeds } = require('./fetch-rss');
 const { fetchNewProducts } = require('./fetch-products');
 const { translateTexts } = require('./translate');
@@ -53,13 +53,24 @@ function deduplicateById(items) {
  */
 async function main() {
   const startTime = Date.now();
-  console.log('=== Store Product & Event News Collector ===');
+  console.log('=== Store-Exclusive Event News Collector ===');
   console.log(`Started at: ${new Date().toISOString()}`);
   console.log(`Mode: ${isDryRun ? 'DRY RUN' : 'LIVE'}`);
   console.log('');
 
-  // Step 1: Fetch RSS feeds
-  console.log('[1/6] Fetching RSS feeds (Hobby Dengeki, Figsoku)...');
+  // Step 1: Fetch JSON API sources
+  console.log('[1/6] Fetching JSON API sources (collabo-cafe, Animate OnlyShop, Gratte, Animate Cafe)...');
+  let apiItems = [];
+  try {
+    apiItems = await fetchNewProducts(API_SOURCES);
+  } catch (err) {
+    console.error(`[ERROR] API fetch failed entirely: ${err.message}`);
+  }
+  console.log(`  Total API items: ${apiItems.length}`);
+  console.log('');
+
+  // Step 2: Fetch RSS feeds (nijimen)
+  console.log('[2/6] Fetching RSS feeds (nijimen)...');
   let rssItems = [];
   try {
     rssItems = await fetchRSSFeeds(RSS_SOURCES);
@@ -69,20 +80,9 @@ async function main() {
   console.log(`  Total RSS items: ${rssItems.length}`);
   console.log('');
 
-  // Step 2: Scrape store product/event pages
-  console.log('[2/6] Scraping store pages...');
-  let productItems = [];
-  try {
-    productItems = await fetchNewProducts(SCRAPE_SOURCES);
-  } catch (err) {
-    console.error(`[ERROR] Store scraping failed entirely: ${err.message}`);
-  }
-  console.log(`  Total store items: ${productItems.length}`);
-  console.log('');
-
   // Step 3: Combine all items
   console.log('[3/6] Combining items...');
-  let allItems = [...rssItems, ...productItems];
+  let allItems = [...apiItems, ...rssItems];
   console.log(`  Combined total: ${allItems.length}`);
   console.log('');
 
@@ -114,7 +114,7 @@ async function main() {
     console.log(`  Trimmed to ${MAX_ITEMS} items`);
   }
 
-  // Build output object with storeTag and price fields
+  // Build output object with eventStart/eventEnd fields
   const output = {
     lastUpdated: new Date().toISOString(),
     count: allItems.length,
@@ -130,7 +130,8 @@ async function main() {
       category: item.category,
       language: item.language || 'ja',
       translated: item.translated || false,
-      price: item.price || null,
+      eventStart: item.eventStart || null,
+      eventEnd: item.eventEnd || null,
       ...(item.originalTitle ? { originalTitle: item.originalTitle } : {}),
     })),
   };
@@ -145,7 +146,7 @@ async function main() {
       console.log(`  ${i + 1}. [${item.source}] ${item.title}`);
       console.log(`     Store: ${item.storeTag || 'N/A'} | Category: ${item.category}`);
       console.log(`     ${item.link}`);
-      console.log(`     ${item.publishedAt}${item.price ? ' | Price: ' + item.price : ''}`);
+      console.log(`     ${item.publishedAt}${item.eventStart ? ' | Event: ' + item.eventStart + ' to ' + (item.eventEnd || '?') : ''}`);
       console.log(`     Image: ${item.image ? 'YES' : 'NO'}`);
       console.log('');
     });

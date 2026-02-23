@@ -1,118 +1,87 @@
 /**
- * Configuration for the store-focused product/event news collector.
- * Sources are specific to stores on the Friday proxy purchasing route in Tokyo.
+ * Configuration for the store-exclusive event/goods news collector.
  *
- * Route: Akihabara -> Ikebukuro -> Shibuya/Harajuku -> Nakano Broadway
+ * BUSINESS CONTEXT: This is a proxy purchasing service for items that can
+ * ONLY be bought by physically being at a store in Japan.
+ *
+ * Sources focus exclusively on:
+ *   - Collaboration cafes with exclusive goods
+ *   - Pop-up shops / OnlyShops
+ *   - Store purchase bonuses
+ *   - Exhibition exclusive merchandise
+ *   - In-store-only events
  */
 
 const path = require('path');
 
-// RSS feed sources - merchandise/figure specific
-const RSS_SOURCES = [
+// JSON API sources - all return structured JSON, no HTML scraping needed
+const API_SOURCES = [
   {
-    name: 'Hobby Dengeki',
-    url: 'https://hobby.dengeki.com/feed/',
+    name: 'Collab Cafes & Events',
+    type: 'collabo-cafe',
+    url: 'https://collabo-cafe.com/wp-json/wp/v2/events',
+    params: { per_page: 20, orderby: 'modified', order: 'desc' },
+    pages: 2,
     language: 'ja',
-    priority: 1,
-    category: 'products',
-    storeTag: 'All Stores',
-  },
-  {
-    name: 'Figsoku',
-    url: 'https://figsoku.net/feed/',
-    language: 'ja',
-    priority: 1,
-    category: 'products',
-    storeTag: 'All Stores',
-  },
-];
-
-// Store pages to scrape
-const SCRAPE_SOURCES = [
-  {
-    name: 'Animate',
-    type: 'animate-news',
-    urls: [
-      'https://www.animate.co.jp/news/',
-    ],
-    language: 'ja',
-    category: 'store-news',
-    storeTag: 'Animate Akihabara / Ikebukuro',
+    category: 'events',
+    storeTag: 'Tokyo Events',
   },
   {
     name: 'Animate OnlyShop',
-    type: 'animate-onlyshop',
-    urls: [
-      'https://www.animate.co.jp/onlyshop/',
-    ],
+    type: 'animate-wp',
+    url: 'https://www.animate.co.jp/wp-json/wp/v2/onlyshop',
+    params: { per_page: 15, orderby: 'date', order: 'desc' },
+    pages: 1,
     language: 'ja',
-    category: 'events',
+    category: 'popup-shop',
     storeTag: 'Animate',
   },
   {
-    name: 'Kotobukiya',
-    type: 'kotobukiya',
-    urls: [
-      'https://www.kotobukiya.co.jp/product/',
-    ],
+    name: 'Animate Gratte',
+    type: 'animate-wp',
+    url: 'https://www.animate.co.jp/wp-json/wp/v2/gratte',
+    params: { per_page: 10, orderby: 'date', order: 'desc' },
+    pages: 1,
     language: 'ja',
-    category: 'products',
-    storeTag: 'Kotobukiya Akihabara',
+    category: 'store-exclusive',
+    storeTag: 'Animate',
   },
   {
-    name: 'Kotobukiya Events',
-    type: 'kotobukiya-events',
-    urls: [
-      'https://www.kotobukiya.co.jp/event/',
-    ],
+    name: 'Animate Cafe',
+    type: 'animate-cafe',
+    url: 'https://api.cafeweb.animatecafe.jp/api/v1/events',
     language: 'ja',
-    category: 'events',
-    storeTag: 'Kotobukiya Akihabara',
-  },
-  {
-    name: 'Good Smile Company',
-    type: 'goodsmile',
-    urls: [
-      'https://www.goodsmile.info/en/products/announced',
-    ],
-    language: 'en',
-    category: 'products',
-    storeTag: 'Akihabara / Online',
-  },
-  {
-    name: 'Banpresto Prize',
-    type: 'banpresto',
-    urls: [
-      'https://bsp-prize.jp/',
-    ],
-    language: 'ja',
-    category: 'products',
-    storeTag: 'Game Centers / Stores',
-  },
-  {
-    name: 'Jump Shop',
-    type: 'jumpshop',
-    urls: [
-      'https://jumpshop-online.com/products.json',
-    ],
-    language: 'ja',
-    category: 'products',
-    storeTag: 'Jump Shop Shibuya',
-  },
-  {
-    name: 'Pokemon Goods',
-    type: 'pokemon',
-    urls: [
-      'https://www.pokemon.co.jp/goods/',
-    ],
-    language: 'ja',
-    category: 'products',
-    storeTag: 'Pokemon Center Shibuya',
+    category: 'cafe',
+    storeTag: 'Animate Cafe',
   },
 ];
 
-// No keyword filtering needed - all sources are already merchandise-specific
-const GOODS_KEYWORDS = []; // kept for backwards compat
+// RSS feed sources - filtered by event/store-relevant tags
+const RSS_SOURCES = [
+  {
+    name: 'nijimen',
+    url: 'https://nijimen.kusuguru.co.jp/feed',
+    language: 'ja',
+    category: 'events',
+    storeTag: 'Various',
+    filterTags: [
+      'イベント',
+      'カフェ',
+      'グッズ',
+      'フェア_キャンペーン',
+      'コラボカフェ',
+      'コラボ',
+      'ポップアップ',
+      '限定',
+    ],
+  },
+];
+
+// No HTML scraping needed - all sources are JSON APIs or RSS
+const SCRAPE_SOURCES = [];
+
+// Not needed - all sources are event-specific
+const GOODS_KEYWORDS = [];
 
 const OUTPUT = {
   dir: path.join(__dirname, '..', 'files', 'data'),
@@ -121,4 +90,4 @@ const OUTPUT = {
 
 const MAX_ITEMS = 50;
 
-module.exports = { RSS_SOURCES, SCRAPE_SOURCES, GOODS_KEYWORDS, OUTPUT, MAX_ITEMS };
+module.exports = { API_SOURCES, RSS_SOURCES, SCRAPE_SOURCES, GOODS_KEYWORDS, OUTPUT, MAX_ITEMS };

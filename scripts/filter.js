@@ -1,10 +1,10 @@
 /**
- * Content filtering module (simplified).
+ * Content filtering module (simplified for event-specific sources).
  *
- * Since ALL sources are now merchandise/store-specific, keyword filtering
- * is no longer needed. This module only:
+ * Since ALL sources are now event/store-exclusive specific, no keyword
+ * filtering is needed. This module only:
  *   - Removes items with no title or no link
- *   - Removes exact duplicates (same title from different sources)
+ *   - Removes duplicate items (same title, case-insensitive)
  */
 
 /**
@@ -12,9 +12,9 @@
  *
  * Rules:
  * - Remove items with no title or no link
- * - Remove exact title duplicates (first occurrence wins)
+ * - Remove exact title duplicates (first occurrence wins, case-insensitive)
  *
- * @param {Array} items - Array of news/product items
+ * @param {Array} items - Array of event/product items
  * @returns {Array} Filtered items
  */
 function filterAnimeGoods(items) {
