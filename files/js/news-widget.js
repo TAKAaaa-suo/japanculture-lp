@@ -17,6 +17,24 @@
     fullLoadMoreCount: 6
   };
 
+  // Preferred order for store groups in full mode
+  var STORE_GROUP_ORDER = [
+    'Animate Ikebukuro',
+    'Animate Akihabara',
+    'Animate Cafe',
+    'Animate',
+    'Kotobukiya Akihabara',
+    'Pokemon Center',
+    'Jump Shop',
+    'Mandarake',
+    'Akihabara Area',
+    'Ikebukuro Area',
+    'Shibuya Area',
+    'Nakano Area',
+    'Various',
+    'Tokyo Events'
+  ];
+
   // Source badge color map - store-exclusive event sources
   var SOURCE_COLORS = {
     'Collab Cafes & Events': '#e91e63',
@@ -328,7 +346,23 @@
       '  transition: all 0.2s ease;',
       '}',
       '.nw-retry:hover { background: rgba(239,68,68,0.1); }',
-      '.section-light .nw-retry { border-color: rgba(0,0,0,0.12); }'
+      '.section-light .nw-retry { border-color: rgba(0,0,0,0.12); }',
+
+      /* Store section grouping (full mode) */
+      '.nw-store-section { margin-bottom: 2rem; }',
+      '.nw-store-heading {',
+      '  font-size: 1.25rem;',
+      '  font-weight: 700;',
+      '  color: #fff;',
+      '  margin: 2rem 0 1rem;',
+      '  padding-bottom: 0.5rem;',
+      '  border-bottom: 2px solid rgba(255,255,255,0.15);',
+      '}',
+      '.nw-store-section:first-child .nw-store-heading { margin-top: 0; }',
+      '.section-light .nw-store-heading {',
+      '  color: #111;',
+      '  border-bottom-color: rgba(0,0,0,0.1);',
+      '}'
     ].join('\n');
 
     var style = document.createElement('style');
@@ -475,6 +509,43 @@
   }
 
   // ------------------------------------
+  // Group items by store tag
+  // ------------------------------------
+  function groupByStore(items) {
+    var groups = {};
+    for (var i = 0; i < items.length; i++) {
+      var tag = items[i].storeTag || 'Tokyo Events';
+      if (!groups[tag]) groups[tag] = [];
+      groups[tag].push(items[i]);
+    }
+
+    // Sort groups by STORE_GROUP_ORDER
+    var orderedKeys = [];
+    for (var j = 0; j < STORE_GROUP_ORDER.length; j++) {
+      if (groups[STORE_GROUP_ORDER[j]]) {
+        orderedKeys.push(STORE_GROUP_ORDER[j]);
+      }
+    }
+    // Add any remaining groups not in the predefined order
+    for (var key in groups) {
+      if (orderedKeys.indexOf(key) === -1) {
+        orderedKeys.push(key);
+      }
+    }
+
+    // Sort items within each group by date (newest first)
+    for (var k = 0; k < orderedKeys.length; k++) {
+      groups[orderedKeys[k]].sort(function (a, b) {
+        var da = new Date(a.publishedAt || 0).getTime();
+        var db = new Date(b.publishedAt || 0).getTime();
+        return db - da;
+      });
+    }
+
+    return { keys: orderedKeys, groups: groups };
+  }
+
+  // ------------------------------------
   // Widget class
   // ------------------------------------
   function NewsWidget(container) {
@@ -536,11 +607,32 @@
       return;
     }
 
-    var html = '<div class="nw-grid">';
-    for (var i = 0; i < this.visibleCount; i++) {
-      html += renderCard(this.items[i]);
+    var html = '';
+    var visibleItems = this.items.slice(0, this.visibleCount);
+
+    if (this.mode === 'full') {
+      // Full mode: group events by storeTag with section headings
+      var result = groupByStore(visibleItems);
+      for (var g = 0; g < result.keys.length; g++) {
+        var storeKey = result.keys[g];
+        var storeItems = result.groups[storeKey];
+        html += '<div class="nw-store-section">';
+        html += '<h3 class="nw-store-heading">\ud83d\udccd ' + escapeHtml(storeKey) + '</h3>';
+        html += '<div class="nw-grid">';
+        for (var s = 0; s < storeItems.length; s++) {
+          html += renderCard(storeItems[s]);
+        }
+        html += '</div>';
+        html += '</div>';
+      }
+    } else {
+      // Compact mode: flat grid (no grouping, just show the most recent items)
+      html += '<div class="nw-grid">';
+      for (var i = 0; i < visibleItems.length; i++) {
+        html += renderCard(visibleItems[i]);
+      }
+      html += '</div>';
     }
-    html += '</div>';
 
     // Load More button (only in full mode and if more items exist)
     if (this.mode === 'full' && this.visibleCount < this.items.length) {

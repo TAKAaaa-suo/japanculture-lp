@@ -18,6 +18,56 @@ const { generateId, stripHtml, truncate } = require('./fetch-rss');
 const TIMEOUT = 15000;
 const UA = 'Mozilla/5.0 (compatible; JapanCulture-Bot/1.0)';
 
+// Known banner/ad images that should be filtered out
+const BANNER_PATTERNS = ['ver3-1.jpg', 'ver3-1.png', 'banner', 'logo'];
+
+/**
+ * Check if an image URL is a known site banner or ad image.
+ * @param {string} url - Image URL to check
+ * @returns {boolean} True if image is a known banner
+ */
+function isBannerImage(url) {
+  if (!url) return false;
+  const lower = url.toLowerCase();
+  return BANNER_PATTERNS.some(pattern => lower.includes(pattern));
+}
+
+// ============================================================
+// Route Store Detection
+// ============================================================
+
+const ROUTE_STORES = [
+  { tag: 'Animate Akihabara', keywords: ['アニメイト秋葉原', 'animate akihabara', '秋葉原'] },
+  { tag: 'Animate Ikebukuro', keywords: ['アニメイト池袋', 'animate ikebukuro', '池袋'] },
+  { tag: 'Kotobukiya Akihabara', keywords: ['コトブキヤ', 'kotobukiya', '秋葉原'] },
+  { tag: 'Pokemon Center', keywords: ['ポケモンセンター', 'pokemon center', 'ポケセン'] },
+  { tag: 'Jump Shop', keywords: ['ジャンプショップ', 'jump shop'] },
+  { tag: 'Mandarake', keywords: ['まんだらけ', 'mandarake', '中野'] },
+  { tag: 'Akihabara Area', keywords: ['秋葉原', 'akihabara'] },
+  { tag: 'Ikebukuro Area', keywords: ['池袋', 'ikebukuro'] },
+  { tag: 'Shibuya Area', keywords: ['渋谷', 'shibuya', '原宿', 'harajuku'] },
+  { tag: 'Nakano Area', keywords: ['中野', 'nakano'] },
+];
+
+/**
+ * Detect a route store tag based on keywords in the event text.
+ * @param {string} title - Event title
+ * @param {string} summary - Event summary
+ * @param {string} content - Raw content HTML (optional)
+ * @returns {string} Store tag or 'Tokyo Events' as default
+ */
+function detectStoreTag(title, summary, content) {
+  const text = `${title} ${summary} ${content || ''}`.toLowerCase();
+  for (const store of ROUTE_STORES) {
+    for (const keyword of store.keywords) {
+      if (text.includes(keyword.toLowerCase())) {
+        return store.tag;
+      }
+    }
+  }
+  return 'Tokyo Events'; // Default for events that can't be mapped
+}
+
 /**
  * Decode common HTML entities found in WordPress REST API title.rendered fields.
  * Also strips any residual HTML tags.
@@ -102,7 +152,7 @@ async function fetchCollaboCafe(source) {
 
   for (let page = 1; page <= pages; page++) {
     try {
-      const params = { ...source.params, page };
+      const params = { ...source.params, page, _embed: true };
       const res = await axios.get(source.url, {
         params,
         timeout: TIMEOUT,
@@ -112,12 +162,27 @@ async function fetchCollaboCafe(source) {
       for (const event of res.data) {
         const title = decodeEntities(event.title?.rendered || '');
         const link = event.link || '';
-        const image = extractImageFromHtml(event.content?.rendered) || null;
+
+        // Get featured image from _embedded (much more reliable than content HTML)
+        const featuredMedia = event._embedded?.['wp:featuredmedia']?.[0];
+        let image = featuredMedia?.source_url
+          || featuredMedia?.media_details?.sizes?.medium?.source_url
+          || extractImageFromHtml(event.content?.rendered)
+          || null;
+
+        // Filter out known banner/ad images
+        if (image && isBannerImage(image)) {
+          image = null;
+        }
+
         const summary = truncate(
           stripHtml(event.excerpt?.rendered || event.content?.rendered || ''),
           200
         );
         const period = formatEventPeriod(event.start, event.end);
+
+        // Detect store tag from event content
+        const storeTag = detectStoreTag(title, summary, event.content?.rendered || '');
 
         items.push({
           id: generateId(link),
@@ -126,7 +191,7 @@ async function fetchCollaboCafe(source) {
           link,
           image,
           source: source.name,
-          storeTag: source.storeTag,
+          storeTag,
           publishedAt: event.modified || event.start || new Date().toISOString(),
           category: source.category,
           language: source.language,
@@ -154,8 +219,9 @@ async function fetchAnimateWP(source) {
   const items = [];
 
   try {
+    const params = { ...source.params, _embed: true };
     const res = await axios.get(source.url, {
-      params: source.params,
+      params,
       timeout: TIMEOUT,
       headers: { 'User-Agent': UA },
     });
@@ -163,7 +229,19 @@ async function fetchAnimateWP(source) {
     for (const post of res.data) {
       const title = decodeEntities(post.title?.rendered || '');
       const link = post.link || '';
-      const image = extractImageFromHtml(post.content?.rendered) || null;
+
+      // Get featured image from _embedded first, fall back to content HTML
+      const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0];
+      let image = featuredMedia?.source_url
+        || featuredMedia?.media_details?.sizes?.medium?.source_url
+        || extractImageFromHtml(post.content?.rendered)
+        || null;
+
+      // Filter out known banner/ad images
+      if (image && isBannerImage(image)) {
+        image = null;
+      }
+
       const summary = truncate(
         stripHtml(post.excerpt?.rendered || post.content?.rendered || ''),
         200

@@ -8,7 +8,7 @@
  *   2. Fetch RSS feeds (nijimen, filtered by event/store tags)
  *   3. Combine all items
  *   4. Filter (remove invalid items and exact duplicates)
- *   5. Translate Japanese items (if DeepL key is available)
+ *   5. Translate Japanese items to English (via Google Translate)
  *   6. Deduplicate by ID
  *   7. Sort by publishedAt (newest first)
  *   8. Limit to MAX_ITEMS (50)
@@ -91,8 +91,8 @@ async function main() {
   allItems = filterAnimeGoods(allItems);
   console.log('');
 
-  // Step 5: Translate Japanese items
-  console.log('[5/6] Translating Japanese items...');
+  // Step 5: Translate Japanese items to English (Google Translate, no API key needed)
+  console.log('[5/6] Translating Japanese items to English...');
   allItems = await translateTexts(allItems);
   console.log('');
 
